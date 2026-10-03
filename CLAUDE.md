@@ -16,6 +16,7 @@ scripts/package.sh  builds dist/<skill>.zip for the Claude app
 .github/workflows/package.yml  checks frontmatter, builds zips, releases on tags v*
 preview/          visual check of the house style (open index.html)
 brand-source/     original brand files the assets were made from
+drafts/<skill>/   skills still being tested; not published (see drafts/README.md)
 ```
 
 ## Conventions
@@ -32,6 +33,8 @@ brand-source/     original brand files the assets were made from
 - **Colours and fonts** live in one place: `skills/ibs-huisstijl/assets/tokens/`. If you change a value,
   change it there and in the table in `SKILL.md`, and check contrast (WCAG AA ≥ 4.5:1 for text).
 - **No art deco** in the IBS house style; that belongs to individual products.
+- **New skills start in `drafts/`.** Only `skills/` is published (npx skills, plugin, release zips). Move a
+  skill to `skills/` once the owner has tested and approved it.
 
 ## New version
 
