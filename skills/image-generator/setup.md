@@ -2,6 +2,12 @@
 
 Read this only when no route is ready. Do not install anything or start a login without the user's consent.
 
+**Every user sets up their own access, in their own environment.** A login or API key belongs to one person
+and stays on the machine or in the environment where it was made (Codex keeps it in `~/.codex/auth.json`).
+Never reuse, copy or share someone else's login, key or login link, and never put them in a repository, a
+document or a chat with others. Login links and codes are single-use: always start a fresh login for the
+current user.
+
 ## Explain the choice first, including cost
 
 | Route | What it uses | Cost |
