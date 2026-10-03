@@ -1,7 +1,7 @@
 {
   "name": "ibs-skills",
-  "version": "1.2.0",
-  "description": "Skills used at IBS – Isatis Business Solutions: house style, writing style and tone of voice, and image generation with your own ChatGPT subscription.",
+  "version": "1.3.0",
+  "description": "Skills used at IBS – Isatis Business Solutions: house style, writing style and tone of voice, stock images in IBS style, and image generation with your own ChatGPT subscription.",
   "author": {
     "name": "IBS – Isatis Business Solutions"
   },
