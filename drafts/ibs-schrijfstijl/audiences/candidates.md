@@ -21,3 +21,5 @@ would not recognise.
 
 **Shape:** who you would work with and on what → what it is like → the facts → how to get in touch (low
 threshold).
+
+**Address:** je/jij/jullie.

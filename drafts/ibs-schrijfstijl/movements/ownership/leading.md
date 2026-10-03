@@ -1,20 +1,16 @@
 # Ownership — leading
 
-The text makes commitments. The reader finishes knowing what IBS will do, who does it, by when, and what
-happens if something changes.
+**Feel: committed, grounded, dependable.**
+- *Committed*: the text binds IBS to something concrete; it does not merely describe intentions.
+- *Grounded*: every claim can be backed; nothing is bigger than what we will deliver.
+- *Dependable*: the reader feels they can lean on this text and plan around it.
 
-- Active voice, with "we" (or a named person) as the subject of the verbs that matter.
-- Name the owner of every next step, including the reader's own.
-- State consequences and trade-offs plainly: what a choice costs, what it prevents, what it delivers.
-- Say where our part ends. Taking responsibility includes naming the scope.
-- End with a concrete next step and a date, not a hope.
+**Rules**
+- Active voice; a visible actor (we, or a named person) behind every action that matters.
+- Each next step has an owner and a moment, including the reader's own.
+- Consequences and trade-offs are stated, not implied.
+- Our scope is named, including where it ends.
+- The text closes on a concrete step, not on a hope.
+- Hedging is only allowed for real uncertainty, and then it is said plainly.
 
-Avoid hedges that dodge commitment ("we streven ernaar", "in principe", "waar mogelijk"). If the uncertainty
-is real, say so plainly and say what we do about it.
-
-**Firm, never bravado.** Promise only what we will keep; no superlatives, no "de beste", no guarantees we
-cannot back.
-
-> Niet: "Wij streven naar een hoogwaardige oplossing die aansluit bij uw wensen."
-> Wel: "We bouwen het datamodel in zes weken. Daarna draait het bij jullie, en blijven we drie maanden
-> jullie aanspreekpunt."
+**Boundary:** firm, never bravado. No superlatives, no promises we cannot keep.

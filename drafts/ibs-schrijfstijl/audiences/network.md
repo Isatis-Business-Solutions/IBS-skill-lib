@@ -17,3 +17,5 @@ idea worth their time.
 - Event invitation: lightness → leading, openness present for the facts.
 
 **Shape:** an observation or question → the idea → what it means in practice → an invitation to react.
+
+**Address:** je/jij/jullie.

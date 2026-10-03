@@ -14,6 +14,9 @@ Een concept testen:
 ### Opzet
 
 De skill noemt de kernwaarden niet. Hij vertaalt elke waarde naar een **beweging**: zichtbaar schrijfgedrag.
+Elke beweging is beschreven met **gevoelswoorden met een duidelijke definitie, regels en een grens. Bewust
+geen voorbeeldteksten**: voorbeelden sturen te veel één kant op, de skill moet voor elk onderwerp werken.
+Eén vaste taalregel: vakjargon uit data, AI en IT in het Engels, de rest Nederlands.
 
 | Kernwaarde (intern) | Beweging in de skill |
 |---|---|
@@ -50,13 +53,13 @@ De site kon niet direct gelezen worden; deze analyse is gebaseerd op samenvattin
 
 - U of je naar klanten: nu "volg de relatie, bij twijfel u". Klopt dat?
 - Doelgroepen: klanten, kandidaten, collega's, netwerk. Missen er (bijv. partners apart, investeerders)?
-- Woorden die IBS juist wel of juist nooit gebruikt (nu alleen een clichélijst).
 - Standaardmengsels per doelgroep: eerste voorstel, te kalibreren met de testrondes.
 
 ### Testplan
 
-1. **Varianten kiezen:** dezelfde opdracht in 2–3 varianten (huidige stijl, het voorgestelde mengsel, een
-   overdreven versie). De eigenaar kiest en zegt waarom; dat wordt een regel of voorbeeld.
+1. **Stabiliteit:** elke versie van de skill draait minstens 3 keer op dezelfde opdracht; het gevoel moet
+   in alle runs gelijk zijn. Het oordeel van de eigenaar wordt een regel of een scherpere definitie, nooit
+   een voorbeeld.
 2. **Overdrijftest:** één beweging op het hoogste niveau, om de grens te vinden.
 3. **Vaste testset:** ±6 opdrachten over de doelgroepen (propositie, klantmail, vacature, LinkedIn-werving,
    interne update, uitnodiging), met en zonder skill (`skill-creator`).

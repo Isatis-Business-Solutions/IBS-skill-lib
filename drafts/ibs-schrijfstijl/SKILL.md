@@ -22,18 +22,23 @@ Each movement has three levels:
 - **present** — clearly there in a few places; supports, does not steer;
 - **undertone** — felt, not seen: a word choice, a rhythm, one sentence. Never zero.
 
-**Show, don't claim.** Never describe IBS or the text with the movement words (transparant, verantwoordelijk,
-creatief, nieuwsgierig, leuk, fun, open, eerlijk). Make the text *be* that. Never name the movements or levels
-in the text itself.
+**Show, don't claim.** Never describe IBS or the text with the movement or feel words; make the text *be*
+that. Never name the movements or levels in the text itself.
+
+**Rules, not examples.** This skill describes a feel with defined words and rules, on purpose without sample
+texts. Interpret the feel words freshly for each text and subject; do not reuse wording from this skill or
+copy wording from the user's brief.
+
+**Language.** IBS is a data consultancy that also offers AI: professional jargon from data, AI and IT is
+always written in English, as professionals use it. Everything else is in the language of the text.
 
 ## How to write
 
 1. **Reader and goal.** Who will read this, and what should they know, feel or do afterwards? If the request,
    the source text or the conversation already makes this clear, do not ask. Otherwise ask **one** short
-   question that covers both, with options, e.g.: *"Voor wie is dit en wat moet het doen? Bijv. kandidaten
-   werven, collega's informeren, een klant overtuigen, ons netwerk inspireren."*
+   question that covers both, offering the audiences below as options.
 2. **Core message.** Write for yourself, in one sentence, what the reader must take away. Tone may never
-   cover this sentence up.
+   cover this sentence up. A brief tells you what to convey; translate it into the text, do not repeat it.
 3. **Choose the mix.** Read **only** the matching file in `audiences/`:
 
    | Reader | File |
@@ -47,20 +52,19 @@ in the text itself.
    3; the rest present or undertone. You choose; do not ask the user to choose.
 4. **Load only what the mix needs:** exactly one file per movement, `movements/<movement>/<level>.md`
    (five files). Add **one** channel file if it fits (`channels/linkedin.md`, `email.md`, `document.md`,
-   `slides.md`) and the language file (`language/nl.md` or `language/en.md`). Read nothing else.
+   `slides.md`, `ads.md`) and the language file (`language/nl.md` or `language/en.md`). Read nothing else.
 5. **Write.** Leading movements shape the structure and the first lines; present ones get a deliberate place;
    undertones live in word choice and rhythm.
 6. **Check.**
    - Is the core message clear in the first lines, and would the reader put it in the same words?
    - Does the reader know what to do next (if anything)?
    - Is every movement there at its level, and none louder than chosen?
-   - No movement words used as self-praise; no clichés (see the language file).
-7. **Show the mix** in one short line after the text, so the user can steer, e.g. *"Mix: openheid en
-   eigenaarschap leidend, luchtigheid aanwezig, rest ondertoon."* Leave it out when the user asked for only
+   - No movement or feel words used as self-praise; no stock phrases; jargon in English.
+7. **Show the mix** in one short line after the text, so the user can steer: which movements are leading,
+   present and undertone. Leave it out when the user asked for only
    the text or the text goes straight into a file.
 
-**Steering.** If the user says "meer fun", "zakelijker", "minder stellig" and so on, move that movement one
-level up or down, load the new level file, and rewrite. Keep the core message.
+**Steering.** If the user asks for more or less of a feel, move that movement one level up or down, load the new level file, and rewrite. Keep the core message.
 
 ## Related
 

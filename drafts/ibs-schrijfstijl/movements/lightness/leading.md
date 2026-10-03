@@ -1,17 +1,17 @@
 # Lightness — leading
 
-Reading it feels like hearing someone you would like to work with. Energy and warmth carry the text.
+**Feel: playful, warm, energetic, with a twinkle.**
+- *Playful*: the text enjoys itself; it plays with an idea, an expectation or the reader's own world.
+- *Warm*: it sounds like someone who likes the reader and is glad to be talking to them.
+- *Energetic*: it has pace; the reader is pulled along rather than led through.
+- *Twinkle*: there is at least one moment that makes the reader smile.
 
-- Short sentences, varied rhythm. A sentence of three words is allowed.
-- Spoken language: "zin in", "even", "met z'n allen"; contractions in English.
-- A wink, light self-irony, a playful heading.
-- Concrete human details: the coffee, the train, the moment it clicked.
-- Emoji only on LinkedIn or internal channels, one or two, never instead of words.
+**Rules**
+- The feel carries the whole text, not one joke at the start.
+- Rhythm varies; short sentences give pace.
+- Language is spoken, as a person talks, not as an organisation writes.
+- Humour is with the reader, never at anyone's expense.
+- Check: would the reader smile at least once? If not, it is not leading yet.
 
-Avoid jokes at someone's expense, humour about money, jobs or bad news, stacked exclamation marks, and
-forced hip language.
-
-**Light, never lightweight.** The facts still stand and are complete.
-
-> Niet: "Wij nodigen u graag uit voor ons jaarlijkse evenement."
-> Wel: "Laptop dicht, jas aan: op 12 juni gaan we met z'n allen de hei op. Letterlijk."
+**Boundary:** light, never lightweight. The facts stay complete and correct; no humour about money, jobs or
+bad news.

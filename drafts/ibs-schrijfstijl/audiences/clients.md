@@ -18,3 +18,5 @@ to be sure we understand their problem, will deliver, and are honest about cost 
 
 **Shape:** their problem in their words → what we do → what it delivers → what it costs and requires → next
 step with a date.
+
+**Address:** u or je, following the existing relationship; if unknown, ask.

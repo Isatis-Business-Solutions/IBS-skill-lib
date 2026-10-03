@@ -19,3 +19,5 @@ what they need to do.
 
 **Shape:** what is happening → what it means for you → what you need to do, by when → who to ask. The first
 two lines answer the first three.
+
+**Address:** je/jij/jullie.

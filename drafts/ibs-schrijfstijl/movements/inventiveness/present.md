@@ -1,6 +1,4 @@
 # Inventiveness — present
 
-One fresh image or angle, placed where it does the most work: the title, the opening line or the close.
-The rest is straightforward.
-
-> Kop: "Minder dashboards, meer antwoorden."
+**Feel: fresh.** One unexpected turn, placed where it does the most work: title, opening or close. The rest
+is straightforward.

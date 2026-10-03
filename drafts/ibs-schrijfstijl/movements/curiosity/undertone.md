@@ -1,4 +1,3 @@
 # Curiosity — undertone
 
-Specific to this reader: the text could not be sent to anyone else unchanged. That specificity shows we
-listened.
+**Feel: specific.** The text could not be sent unchanged to anyone else; that specificity shows we listened.
