@@ -76,6 +76,21 @@ Werkwijze:
 5. Is er geen enkele manier, dan geeft de skill een kant-en-klare prompt terug en zet hij een placeholder
    waar het beeld moet komen, zodat het later ingevuld kan worden.
 
+Uitgezocht (Codex CLI 0.160):
+- Beeldgeneratie is een stabiele functie van de Codex CLI (`image_generation`), te gebruiken via
+  `codex exec`.
+- Inloggen met een ChatGPT-account kan ook zonder browser in de omgeving: `codex login --device-auth`
+  (je krijgt een code die je op een ander apparaat invoert). Controleren: `codex login status`.
+- De cloudomgeving van deze sessie blokkeert nu de OpenAI-domeinen; daar werkt de skill pas als die
+  domeinen zijn toegestaan. Op een eigen computer speelt dat niet.
+- In de Claude-app (chat) is geen CLI beschikbaar; daar valt de skill altijd terug op prompt plus
+  placeholder.
+
+Zelf besloten (voorstel):
+- Beelden worden opgeslagen in de map waarin gewerkt wordt, tenzij de gebruiker iets anders vraagt.
+- "Een andere manier" betekent: een ander beeldgereedschap dat in de omgeving al beschikbaar is; de skill
+  installeert niets zonder te vragen.
+
 ## Ontwikkeling (onder de motorkap)
 
 Geen eigen release; gaat mee in de eerstvolgende release.
@@ -88,6 +103,8 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | # | Feature | Vraag | Antwoord |
 |---|---|---|---|
 | 1 | Releases | Zullen we v1.0.0 en v1.1.0 alsnog taggen, zodat collega's een downloadbare release hebben? | |
+| 2 | F3 | Testen: mag ik de OpenAI-domeinen in deze omgeving laten toestaan en log jij één keer in met `--device-auth`, zodat ik echte beelden kan maken? Of test ik alleen tot aan de inlogvraag? | |
+| 3 | F3 | Naam van de skill: `ibs-beeldgenerator` (Nederlands, zoals de andere) of `ibs-codex-images`? | |
 
 ## Besluitenlog
 
