@@ -5,7 +5,7 @@ Self-contained files: inline the CSS from `assets/tokens/tokens.css`. Load Poppi
 Logo: inline the SVG from `assets/logo/ibs-logo-on-dark.svg` (no external file references).
 
 ## Page / one-pager
-- Dark background with `.ibs-glow` (optionally with `.ibs-pattern`) behind the hero; content max-width ≈ 1100px.
+- Dark background with `.ibs-glow` behind the hero; content max-width ≈ 1100px.
 - Structure:
   1. Logo top-left.
   2. Eyebrow label.

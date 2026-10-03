@@ -65,21 +65,6 @@ on light backgrounds.
 - **Icons:** thin line icons (≈2px stroke) in cream, optionally inside a rounded-square outline.
 - **Big numbers:** key figures large, SemiBold, in yellow or cream, with a small muted label underneath.
 
-## Playful touches
-
-IBS is calm, never stiff. Add play with these, sparingly: one or two per piece.
-
-- **The mark as a recurring detail:** the mark alone, small, coming back now and then: marking a list, a
-  section, a corner, a loading state, the end of a document. In an IBS colour, never distorted. When
-  everything carries a mark, nothing does.
-- **The mark as a pattern:** a geometric repeat of the mark with a gradient from IBS yellow to amber, fading
-  out so it stays an accent (`.ibs-pattern` in `tokens.css`; `assets/pattern/` for SVG and a ready PNG
-  background). One accent area per page or slide (hero, title, section, cover). Never behind body text;
-  text on top keeps its contrast.
-- **Small animations** (digital only): short and quiet, when something arrives, responds or confirms.
-  150–300 ms, ease-out; no bouncing, no endless loops except loading. Reduced-motion settings switch them
-  off (`tokens.css` handles this).
-
 ## Logo
 
 Files are in `assets/logo/`:
@@ -102,22 +87,13 @@ Rules:
 - Placement: top-left in documents and pages; bottom-left or bottom-right on slides; centred only on title
   and cover pages.
 
-## Photos and images
-
-For photos and mood images where you would otherwise use a stock photo, use the `ibs-stockbeeld` skill if it
-is available. If it is not: a realistic, contemporary photo of the reader's sector in golden-hour light, with
-nature around it; no people, no text, no logos. Diagrams, infographics and icons are not photos: build them in
-the medium itself, in this house style.
-
 ## Assets
 
 - `assets/logo/`: see above.
 - `assets/fonts/`: Poppins Light, Regular, Medium, SemiBold, Bold (`.ttf`) + `OFL.txt` (free to use and
   embed).
-- `assets/tokens/tokens.css`: CSS variables, `@font-face` rules, the light variant (`.ibs-light`),
-  `.ibs-glow`, `.ibs-pattern` and the reduced-motion rule.
-- `assets/pattern/`: the mark pattern as a tileable SVG, and a dark 1920×1080 PNG background with glow,
-  pattern and the full logo bottom-right.
+- `assets/tokens/tokens.css`: CSS variables, `@font-face` rules, the light variant (`.ibs-light`) and
+  `.ibs-glow`.
 - `assets/tokens/tokens.json`: the same values for any code or tool.
 - `assets/tokens/tailwind.preset.js`: Tailwind preset.
 
@@ -146,6 +122,5 @@ mechanics and this skill for the look.
 - [ ] Poppins (or the fallback), light headings, SemiBold numbers, tracked uppercase labels.
 - [ ] Dark for screens, paper variant for print-like documents (with a dark header band).
 - [ ] Logo present, right variant for the background, clear space respected.
-- [ ] Rounded corners, space instead of lines, no shadows or gradients except the amber glow and the pattern.
-- [ ] At most one or two playful touches.
+- [ ] Rounded corners, space instead of lines, no shadows or gradients except the amber glow.
 - [ ] Calm: if it looks busy, remove something.
