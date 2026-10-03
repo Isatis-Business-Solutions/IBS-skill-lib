@@ -135,6 +135,7 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | De regel "geen art deco" is uit `CLAUDE.md`; het was een eenmalige instructie. |
 | 2026-10-03 | `image-generator`: algemene skill zonder `ibs-`, één skill met routes (Codex CLI aanbevolen, API, terugval). Setup alleen bij eerste gebruik, met uitleg over kosten. Beelden in de werkmap. |
 | 2026-10-03 | Inloggen op Codex zonder computer: browserlogin met het terugplakken van het callback-adres. |
+| 2026-10-03 | Fix: zonder ingestelde beeldservice vragen `image-generator` en `ibs-stockbeeld` eerst of de gebruiker er een wil instellen; pas na akkoord een prompt plus placeholder. Gaat mee in v1.3.0. Getest: 3 runs, alle drie vragen eerst. |
 | 2026-10-03 | Integratietest (one-pager met alle vier de skills) goedgekeurd; `ibs-stockbeeld` en de speelsheid samen uitgebracht als v1.3.0. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |

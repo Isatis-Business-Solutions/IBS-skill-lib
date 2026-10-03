@@ -32,8 +32,9 @@ photograph with **nature around it** and **a faint echo of yesterday's future**.
 1. Establish the sector from the request.
 2. Choose one scene that people in that sector would recognise at a glance.
 3. Write the image prompt with every element above, plus what to avoid. Write it in English.
-4. Make the image with the `image-generator` skill if it is available. If it is not, give the prompt and leave
-   a placeholder where the image goes.
+4. Make the image with the `image-generator` skill if it is available; it asks the user before it ever falls
+   back to a prompt. If that skill is not installed, ask the user whether they want the prompt and a
+   placeholder, and only then give them.
 5. Check the result against the list below; if one point clearly fails, regenerate with that point fixed.
 
 ## Check

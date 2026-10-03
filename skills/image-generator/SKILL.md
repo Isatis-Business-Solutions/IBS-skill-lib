@@ -15,8 +15,12 @@ Check in this order and stop at the first that works:
 1. `codex login status` reports logged in → read `routes/codex-cli.md`.
 2. The environment variable `OPENAI_API_KEY` exists (check that it is set; never print it) →
    read `routes/openai-api.md`.
-3. Neither → read `setup.md` and go through it with the user. Once set up, this step finds the route by
-   itself next time and `setup.md` is not needed again.
+3. Neither → **ask the user first**: read `setup.md`, explain that making the image needs a service, and
+   offer to set one up. Do not write a prompt or placeholder yet; wait for the answer. Once set up, this step
+   finds the route by itself next time and `setup.md` is not needed again.
+
+This applies however the image was requested: by the user directly or by another skill (a house style, a
+document or a page that needs an image).
 
 ## 2. Write the image prompt
 
@@ -37,8 +41,9 @@ Check in this order and stop at the first that works:
 ## When it fails
 
 - **Not logged in, invalid key:** go to `setup.md`.
-- **Usage limit reached:** say so plainly. Offer the other route (mention its cost, see `setup.md`) or the
-  fallback.
+- **Usage limit reached:** say so plainly and ask whether the user wants the other route (mention its cost,
+  see `setup.md`) or the prompt instead.
 - **Network blocked** (sandboxed or cloud environments): name the domains that must be allowed —
   `chatgpt.com` and `auth.openai.com` for the Codex CLI, `api.openai.com` for the API.
-- **No route possible:** read `fallback.md`.
+- **No route possible:** read `fallback.md` only after the user has said they cannot or do not want to set
+  up a service, or asks for the prompt. Never fall back on your own.

@@ -1,6 +1,6 @@
 # Fallback: prompt plus placeholder
 
-When no image model is available:
+Only after the user has agreed to go without an image model:
 
 1. Write the full image prompt as in `SKILL.md` step 2, ready to paste into any image tool.
 2. Put a placeholder where the image belongs, in the format of the deliverable: an empty frame with the
