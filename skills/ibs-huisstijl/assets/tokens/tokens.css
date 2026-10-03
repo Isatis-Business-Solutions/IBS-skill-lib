@@ -51,3 +51,33 @@
     radial-gradient(40% 40% at 0% 30%, rgba(249, 200, 82, .08), transparent 70%),
     var(--ibs-bg);
 }
+
+/* Playful accent: the IBS mark as a geometric repeat pattern, with a gradient from IBS yellow to amber.
+   Use on one accent area (hero, title or section slide, cover), never behind body text. */
+.ibs-pattern {
+  position: relative;
+  isolation: isolate;
+}
+.ibs-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(225deg, var(--ibs-accent) 0%, var(--ibs-accent) 35%, var(--ibs-glow) 100%);
+  /* The pattern fades out from the top-right corner, so it stays an accent. */
+  -webkit-mask:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><g transform='translate%2813 13%29 scale%280.1185%29 translate%28-30 -5%29' fill='%23F9C852'><path d='M37 42 L123 31 L103 100 L121 211 L55 190 Z'/><path d='M57 197 L121 217 L234 202 L214 266 L67 285 Z'/><path d='M130 31 L277 12 L290 99 L224 79 L110 96 Z'/><path d='M225 85 L291 106 L310 254 L222 264 L242 200 Z'/></g><g transform='translate%2873 73%29 scale%280.1185%29 translate%28-30 -5%29' fill='%23F9C852'><path d='M37 42 L123 31 L103 100 L121 211 L55 190 Z'/><path d='M57 197 L121 217 L234 202 L214 266 L67 285 Z'/><path d='M130 31 L277 12 L290 99 L224 79 L110 96 Z'/><path d='M225 85 L291 106 L310 254 L222 264 L242 200 Z'/></g></svg>") 0 0 / 120px 120px repeat,
+    radial-gradient(75% 100% at 100% 0%, #000 10%, transparent 80%);
+  -webkit-mask-composite: source-in;
+  mask:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><g transform='translate%2813 13%29 scale%280.1185%29 translate%28-30 -5%29' fill='%23F9C852'><path d='M37 42 L123 31 L103 100 L121 211 L55 190 Z'/><path d='M57 197 L121 217 L234 202 L214 266 L67 285 Z'/><path d='M130 31 L277 12 L290 99 L224 79 L110 96 Z'/><path d='M225 85 L291 106 L310 254 L222 264 L242 200 Z'/></g><g transform='translate%2873 73%29 scale%280.1185%29 translate%28-30 -5%29' fill='%23F9C852'><path d='M37 42 L123 31 L103 100 L121 211 L55 190 Z'/><path d='M57 197 L121 217 L234 202 L214 266 L67 285 Z'/><path d='M130 31 L277 12 L290 99 L224 79 L110 96 Z'/><path d='M225 85 L291 106 L310 254 L222 264 L242 200 Z'/></g></svg>") 0 0 / 120px 120px repeat,
+    radial-gradient(75% 100% at 100% 0%, #000 10%, transparent 80%);
+  mask-composite: intersect;
+  opacity: .32;
+}
+
+/* Small animations: quick and quiet; switched off for people who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

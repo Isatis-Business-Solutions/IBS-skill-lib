@@ -6,6 +6,7 @@ Skills voor AI-assistenten (Claude en andere agents) die we bij **IBS – Isatis
 | Skill | Wat het doet |
 |---|---|
 | [`ibs-huisstijl`](skills/ibs-huisstijl/SKILL.md) | De IBS-huisstijl voor software, websites, HTML-pagina's en -presentaties, HTML-e-mail, Word, PowerPoint, PDF en Excel. Met logo's, Poppins en kleurtokens (CSS/JSON/Tailwind). |
+| [`ibs-stockbeeld`](skills/ibs-stockbeeld/SKILL.md) | Beeldtaal voor foto's en sfeerbeelden waar je anders een stockfoto zou gebruiken: de sector van de lezer, realistisch, golden hour, natuur, met een knipoog naar de toekomst van gisteren. Maakt het beeld met `image-generator` als die er is. |
 | [`image-generator`](skills/image-generator/SKILL.md) | Beelden genereren met je eigen ChatGPT-abonnement via de Codex CLI (geen extra kosten), met de OpenAI API als alternatief. Helpt eenmalig bij het instellen en geeft anders een kant-en-klare prompt. Algemeen bruikbaar, niet alleen voor IBS. |
 | [`ibs-schrijfstijl`](skills/ibs-schrijfstijl/SKILL.md) | De schrijfstijl en tone of voice van IBS. Kiest de toon per lezer en doel (klanten, kandidaten, collega's, netwerk) en kanaal (LinkedIn, e-mail, document, slides, advertenties). |
 
@@ -54,6 +55,6 @@ Skills for AI assistants used at **IBS – Isatis Business Solutions**.
 
 Then ask for anything "in IBS style": software, web pages, HTML slides, e-mails, Word, PowerPoint, PDF or
 Excel, or for any text in the IBS tone of voice (LinkedIn posts, vacancies, propositions, internal updates).
-`image-generator` generates images with your own ChatGPT subscription via the Codex CLI.
+`ibs-stockbeeld` sets the look of photos and mood images; `image-generator` generates images with your own ChatGPT subscription via the Codex CLI.
 
 License: MIT for text and code. The IBS name and logo: see [`BRAND.md`](BRAND.md). Poppins: SIL OFL 1.1.

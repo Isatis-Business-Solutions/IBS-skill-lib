@@ -17,8 +17,7 @@ release.
 | v1.0.0 | `ibs-huisstijl` | op `main`, nog niet getagd |
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
-| v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) | testen |
-| v1.4.0 | F2 speelsheid in de huisstijl | testen |
+| v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -27,7 +26,7 @@ bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
 
 ### F1. Stockbeelden in IBS-stijl (`ibs-stockbeeld`)
 
-**Status:** testen (concept in `drafts/ibs-stockbeeld/`; de verwijzing in `ibs-huisstijl` staat in commit `df0eb16` en komt na v1.2.0 terug). **Release:** v1.3.0.
+**Status:** klaar (`skills/ibs-stockbeeld/`). **Release:** v1.3.0.
 
 Een skill die beschrijft hoe een beeld eruitziet dat je normaal als stockfoto zou gebruiken. De skill bepaalt
 de beeldtaal; het maken van het beeld zelf gebeurt via een beeldmodel (zie F3).
@@ -54,7 +53,7 @@ placeholder, en de vraag of de scène klopt. Nog niet getest: echte beelden.
 
 ### F2. Speelsheid in de huisstijl
 
-**Status:** testen. Tijdelijk teruggezet voor v1.2.0; staat in commit `975ca80` en komt na de release terug. **Release:** v1.4.0.
+**Status:** klaar. **Release:** v1.3.0 (samen met F1, op akkoord van de eigenaar).
 
 De huidige huisstijl is mooi maar straalt weinig plezier uit. Fun is een kernwaarde.
 
@@ -136,6 +135,8 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | De regel "geen art deco" is uit `CLAUDE.md`; het was een eenmalige instructie. |
 | 2026-10-03 | `image-generator`: algemene skill zonder `ibs-`, één skill met routes (Codex CLI aanbevolen, API, terugval). Setup alleen bij eerste gebruik, met uitleg over kosten. Beelden in de werkmap. |
 | 2026-10-03 | Inloggen op Codex zonder computer: browserlogin met het terugplakken van het callback-adres. |
+| 2026-10-03 | Fix: zonder ingestelde beeldservice vragen `image-generator` en `ibs-stockbeeld` eerst of de gebruiker er een wil instellen; pas na akkoord een prompt plus placeholder. Gaat mee in v1.3.0. Getest: 3 runs, alle drie vragen eerst. |
+| 2026-10-03 | Integratietest (one-pager met alle vier de skills) goedgekeurd; `ibs-stockbeeld` en de speelsheid samen uitgebracht als v1.3.0. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |

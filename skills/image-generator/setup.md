@@ -16,7 +16,9 @@ current user.
 | **OpenAI API** | An API key with billing on platform.openai.com | Always extra cost: paid per image, on top of any subscription |
 | **No image model** | — | Free: you get a ready-to-use prompt and a placeholder (`fallback.md`) |
 
-Recommend the Codex CLI when the user has a ChatGPT subscription. Ask which route they want.
+Recommend the Codex CLI when the user has a ChatGPT subscription. Ask which route they want, and wait for the
+answer. If this environment cannot run commands (for example a plain chat), say so: the Codex CLI and the API
+need Claude Code or Cowork; the user can set it up there or choose the prompt.
 
 ## Codex CLI
 
@@ -53,4 +55,4 @@ Summarise these steps and point to the OpenAI website for details:
 
 ## Neither
 
-Go to `fallback.md`.
+Only when the user chooses this: go to `fallback.md`.
