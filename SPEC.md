@@ -17,7 +17,7 @@ release.
 | v1.0.0 | `ibs-huisstijl` | op `main`, nog niet getagd |
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | testen |
-| v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) | voorstel |
+| v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) | testen |
 | v1.4.0 | F2 speelsheid in de huisstijl | voorstel |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
@@ -25,9 +25,9 @@ bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
 
 ## Features
 
-### F1. Stockbeelden in IBS-stijl (`ibs-stockbeeld`, werknaam)
+### F1. Stockbeelden in IBS-stijl (`ibs-stockbeeld`)
 
-**Status:** brainstorm. **Release:** v1.3.0.
+**Status:** testen (concept in `drafts/ibs-stockbeeld/`; verwijzing staat in `ibs-huisstijl`). **Release:** v1.3.0.
 
 Een skill die beschrijft hoe een beeld eruitziet dat je normaal als stockfoto zou gebruiken. De skill bepaalt
 de beeldtaal; het maken van het beeld zelf gebeurt via een beeldmodel (zie F3).
@@ -45,6 +45,12 @@ Besloten:
 - **Formaten** horen niet in deze skill; die verschillen per gebruik.
 - **Afbakening:** de skill zegt zelf dat hij niet bedoeld is voor infographics, schema's of iconen.
 - **`ibs-huisstijl` verwijst** naar deze skill als er een foto of sfeerbeeld nodig is (met terugvaloptie).
+
+Getest (3 opdrachten in verschillende sectoren, met `image-generator` en `ibs-huisstijl` erbij, zonder
+Codex-login): de skill werd elke keer geladen en riep zelf `image-generator` aan. Elke prompt bevatte alle
+elementen: een herkenbare scène uit de sector, geen mensen, golden hour, natuur zonder groene tint, één
+retro-futuristisch detail, rust, geen tekst of logo's. Zonder beeldmodel kwam er telkens een prompt plus
+placeholder, en de vraag of de scène klopt. Nog niet getest: echte beelden.
 
 ### F2. Speelsheid in de huisstijl
 

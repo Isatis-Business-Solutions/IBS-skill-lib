@@ -87,6 +87,13 @@ Rules:
 - Placement: top-left in documents and pages; bottom-left or bottom-right on slides; centred only on title
   and cover pages.
 
+## Photos and images
+
+For photos and mood images where you would otherwise use a stock photo, use the `ibs-stockbeeld` skill if it
+is available. If it is not: a realistic, contemporary photo of the reader's sector in golden-hour light, with
+nature around it; no people, no text, no logos. Diagrams, infographics and icons are not photos: build them in
+the medium itself, in this house style.
+
 ## Assets
 
 - `assets/logo/`: see above.
