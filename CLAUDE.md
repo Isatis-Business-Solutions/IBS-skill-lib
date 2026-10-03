@@ -40,7 +40,6 @@ SPEC.md           features, open questions, decisions, releases
   fallback for when the other skill is not installed.
 - **Colours and fonts** live in one place: `skills/ibs-huisstijl/assets/tokens/`. If you change a value,
   change it there and in the table in `SKILL.md`, and check contrast (WCAG AA ≥ 4.5:1 for text).
-- **No art deco** in the IBS house style; that belongs to individual products.
 - **New skills start in `drafts/`.** Only `skills/` is published (npx skills, plugin, release zips). Move a
   skill to `skills/` once the owner has tested and approved it.
 

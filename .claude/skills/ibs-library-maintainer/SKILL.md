@@ -30,6 +30,10 @@ Talk to the owner in **Dutch**; write skills in **English**.
 - Give options where possible, with your recommendation first.
 - Wait for answers before building what depends on them.
 
+Write instructions at the right level of abstraction: specific enough to act on, open enough that the skill
+fills in the details from the user's input. Define the key words well; do not add lists of examples (e.g. no
+list of sectors or subjects): they make a skill too concrete and steer it one way.
+
 ## 3. Build in `drafts/`
 
 - New skills go in `drafts/<skill-name>/`; only `skills/` is published (plugin, release zips).
