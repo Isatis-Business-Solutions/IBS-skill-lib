@@ -31,6 +31,6 @@
   brand accent).
 
 ## Feel
-- Hero sections may use `.ibs-glow` (amber glow top-right).
+- Hero sections may use `.ibs-glow` (amber glow top-right), optionally with `.ibs-pattern`.
 - Motion: subtle and quick (150–250 ms ease-out). No bouncing.
 - Accessibility: keep the AA pairs from `SKILL.md`, visible focus states, tap targets ≥ 44px.

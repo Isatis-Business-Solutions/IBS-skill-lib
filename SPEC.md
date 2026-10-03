@@ -18,7 +18,7 @@ release.
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | testen |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) | testen |
-| v1.4.0 | F2 speelsheid in de huisstijl | voorstel |
+| v1.4.0 | F2 speelsheid in de huisstijl | testen |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -54,7 +54,7 @@ placeholder, en de vraag of de scène klopt. Nog niet getest: echte beelden.
 
 ### F2. Speelsheid in de huisstijl
 
-**Status:** brainstorm. **Release:** v1.4.0.
+**Status:** testen (in `skills/ibs-huisstijl`, op de branch). **Release:** v1.4.0.
 
 De huidige huisstijl is mooi maar straalt weinig plezier uit. Fun is een kernwaarde.
 
@@ -64,6 +64,15 @@ Besloten:
   amber eroverheen. Een accent, nooit druk.
 - **Kleine animaties** in digitale uitingen.
 - **Geen tweede accentkleur.** Geen groen.
+
+Gebouwd:
+- Nieuwe sectie "Playful touches" in `SKILL.md`, met verwijzingen in de referenties voor web, HTML en
+  PowerPoint.
+- `.ibs-pattern` in `tokens.css`: het merkteken als herhaalpatroon, verloop van IBS-geel naar amber, dat
+  vanuit de rechterbovenhoek uitvloeit. Werkt samen met `.ibs-glow`.
+- `assets/pattern/`: het patroon als SVG-tegel en als donkere PNG-achtergrond (1920×1080) voor
+  PowerPoint en Word.
+- Een regel die animaties uitzet voor wie in zijn systeem minder beweging heeft ingesteld.
 
 ### F3. Beelden genereren (`image-generator`)
 

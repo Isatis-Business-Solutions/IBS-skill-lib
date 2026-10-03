@@ -10,7 +10,9 @@ Use a pptx skill or library for the mechanics; this file gives the look. **Slide
 - **Theme fonts:** Poppins Light (headings) / Poppins (body). Fallback Arial. Embed fonts if possible.
 - **Masters / layouts:**
   - **Title:** dark background with a soft amber glow from the top-right (radial gradient `#613F0F` →
-    transparent), `ibs-logo-on-dark.png` top-left, big Light title, eyebrow with date or occasion.
+    transparent), `ibs-logo-on-dark.png` top-left, big Light title, eyebrow with date or occasion. For a
+    playful variant, use `assets/pattern/ibs-pattern-dark-1920x1080.png` as the slide background (glow and
+    pattern in one).
   - **Section:** big heading, small yellow square + thin double line as divider.
   - **Content:**
     - title 32–40 pt Light, top-left;
