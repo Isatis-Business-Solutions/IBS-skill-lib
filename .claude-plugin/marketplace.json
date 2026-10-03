@@ -1,0 +1,12 @@
+{
+  "name": "ibs",
+  "owner": { "name": "IBS – Isatis Business Solutions" },
+  "metadata": { "description": "Skills used at IBS – Isatis Business Solutions." },
+  "plugins": [
+    {
+      "name": "ibs-skills",
+      "source": "./",
+      "description": "IBS skills: house style (ibs-huisstijl) and more."
+    }
+  ]
+}

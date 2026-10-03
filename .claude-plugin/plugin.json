@@ -1,0 +1,7 @@
+{
+  "name": "ibs-skills",
+  "version": "1.0.0",
+  "description": "Skills used at IBS – Isatis Business Solutions: house style for software, HTML, e-mail, Word, PowerPoint, PDF and Excel.",
+  "author": { "name": "IBS – Isatis Business Solutions" },
+  "license": "MIT"
+}

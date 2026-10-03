@@ -1,0 +1,39 @@
+name: Package skills
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check skills
+        run: |
+          for f in skills/*/SKILL.md; do
+            head -1 "$f" | grep -q '^---$' || { echo "$f: missing frontmatter"; exit 1; }
+            grep -q '^name: ' "$f" || { echo "$f: missing name"; exit 1; }
+            grep -q '^description: ' "$f" || { echo "$f: missing description"; exit 1; }
+          done
+
+      - name: Build zips
+        run: ./scripts/package.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: skills
+          path: dist/*.zip
+
+      # Tag v1.0.0 etc. → a release with the zips, for upload in the Claude app.
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --title "IBS skills $GITHUB_REF_NAME" --generate-notes

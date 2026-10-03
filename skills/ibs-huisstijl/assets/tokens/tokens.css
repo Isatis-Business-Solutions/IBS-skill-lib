@@ -1,0 +1,53 @@
+/* IBS – Isatis Business Solutions · design tokens
+ * Dark is the default. Add class "ibs-light" (or data-theme="light") for paper/print. */
+@font-face { font-family: "Poppins"; font-weight: 300; src: url("../fonts/Poppins-Light.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Poppins"; font-weight: 400; src: url("../fonts/Poppins-Regular.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Poppins"; font-weight: 500; src: url("../fonts/Poppins-Medium.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Poppins"; font-weight: 600; src: url("../fonts/Poppins-SemiBold.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Poppins"; font-weight: 700; src: url("../fonts/Poppins-Bold.ttf") format("truetype"); font-display: swap; }
+
+:root {
+  --ibs-yellow: #F9C852;
+  --ibs-on-yellow: #171717;
+  --ibs-cream: #FEF9ED;
+  --ibs-glow: #613F0F;
+
+  --ibs-bg: #171717;
+  --ibs-surface: #232323;
+  --ibs-surface-high: #3A3A3A;
+  --ibs-text: #FEF9ED;
+  --ibs-text-muted: #9A958C;
+  --ibs-line: #3A3A3A;
+  --ibs-accent: #F9C852;
+  --ibs-accent-text: #F9C852;   /* accent used as text colour */
+  --ibs-on-accent: #171717;
+
+  --ibs-positive: #7FB77E;
+  --ibs-negative: #D9725B;
+  --ibs-info: #8FB3D9;
+
+  --ibs-font: "Poppins", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --ibs-radius-card: 24px;
+  --ibs-radius-button: 16px;
+  --ibs-radius-input: 12px;
+  --ibs-space: 8px;
+  --ibs-label-tracking: 0.15em;
+}
+
+.ibs-light, [data-theme="light"] {
+  --ibs-bg: #FFFFFF;
+  --ibs-surface: #FBF7EE;
+  --ibs-surface-high: #F2EBDA;
+  --ibs-text: #171717;
+  --ibs-text-muted: #6B665E;
+  --ibs-line: #E4DCC8;
+  --ibs-accent-text: #8A6A12;   /* yellow text is unreadable on white: use this darker gold */
+}
+
+/* Signature backdrop: a soft amber glow top-right on the dark background. */
+.ibs-glow {
+  background:
+    radial-gradient(60% 50% at 100% 0%, rgba(97, 63, 15, .55), transparent 70%),
+    radial-gradient(40% 40% at 0% 30%, rgba(249, 200, 82, .08), transparent 70%),
+    var(--ibs-bg);
+}

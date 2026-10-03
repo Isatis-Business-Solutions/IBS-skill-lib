@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IBS huisstijl</title>
+<link rel="icon" href="../skills/ibs-huisstijl/assets/logo/favicon-32.png">
+<link rel="stylesheet" href="../skills/ibs-huisstijl/assets/tokens/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--ibs-font); background: var(--ibs-bg); color: var(--ibs-text); line-height: 1.5; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 48px 24px 96px; }
+  header.hero { padding: 72px 0 40px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: var(--ibs-label-tracking); text-transform: uppercase; color: var(--ibs-text-muted); margin: 0 0 8px; }
+  h1 { font-weight: 300; font-size: clamp(36px, 6vw, 56px); line-height: 1.1; margin: 0 0 16px; }
+  h2 { font-weight: 300; font-size: 28px; margin: 0 0 16px; }
+  p.lead { color: var(--ibs-text-muted); font-size: 18px; max-width: 640px; margin: 0; }
+  section { margin-top: 64px; }
+  .divider { display: flex; align-items: center; gap: 12px; margin: 48px 0; }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 5px; border-top: 1px solid var(--ibs-line); border-bottom: 1px solid var(--ibs-line); }
+  .divider span { width: 10px; height: 10px; background: var(--ibs-yellow); transform: rotate(-5deg); }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .card { background: var(--ibs-surface); border-radius: var(--ibs-radius-card); padding: 24px; }
+  .swatch { height: 72px; border-radius: 16px; margin-bottom: 12px; }
+  .mono { font-size: 13px; color: var(--ibs-text-muted); }
+  .num { font-weight: 600; font-size: 48px; color: var(--ibs-accent); font-variant-numeric: tabular-nums; line-height: 1; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: var(--ibs-radius-button); font: 500 16px var(--ibs-font); text-decoration: none; cursor: pointer; }
+  .btn.primary { background: var(--ibs-accent); color: var(--ibs-on-accent); border: 0; }
+  .btn.secondary { background: transparent; color: var(--ibs-text); border: 2px solid var(--ibs-text); }
+  a.link { color: var(--ibs-accent-text); text-decoration: none; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .logo-box { border-radius: var(--ibs-radius-card); padding: 32px; display: flex; align-items: center; justify-content: center; min-height: 160px; }
+  .logo-box img { max-width: 100%; height: 72px; }
+  .slide { aspect-ratio: 16 / 9; border-radius: 16px; padding: 6%; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .slide h3 { font-weight: 300; font-size: clamp(22px, 3.4vw, 40px); margin: 0; }
+  .slide img.mark { position: absolute; right: 4%; bottom: 6%; height: 8%; }
+  .slide img.logo { position: absolute; left: 6%; top: 8%; height: 10%; }
+  .paper { background: #fff; color: #171717; border-radius: 12px; overflow: hidden; }
+  .paper .band { background: #171717; padding: 20px 28px; }
+  .paper .band img { height: 32px; display: block; }
+  .paper .body { padding: 24px 28px 28px; font-size: 14px; }
+  .paper h4 { font-weight: 400; font-size: 22px; margin: 4px 0 8px; }
+  .paper .bar { width: 48px; height: 4px; background: #F9C852; margin-bottom: 16px; }
+  .paper .call { background: #FBF7EE; border-left: 3px solid #F9C852; padding: 10px 14px; margin-top: 12px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+  th { background: #171717; color: #FEF9ED; font-weight: 600; text-align: left; padding: 6px 8px; }
+  td { padding: 6px 8px; border-bottom: 1px solid #E4DCC8; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="ibs-glow">
+  <div class="wrap" style="padding-bottom:0">
+    <img src="../skills/ibs-huisstijl/assets/logo/ibs-logo-on-dark.svg" alt="IBS" height="44">
+    <header class="hero">
+      <p class="eyebrow">Isatis Business Solutions · huisstijl</p>
+      <h1>Donker, warm en rustig.<br>Eén accent: geel.</h1>
+      <p class="lead">Een overzicht van de IBS-huisstijl zoals de skill <code>ibs-huisstijl</code> hem toepast: kleuren, letters, logo en hoe dat eruitziet op scherm, slide en papier.</p>
+    </header>
+  </div>
+</div>
+<div class="wrap">
+  <div class="row"><a class="btn primary">Primaire actie</a><a class="btn secondary">Secundair ›</a><a class="link">Meer info ›</a></div>
+
+  <div class="divider"><span></span></div>
+
+  <section>
+    <p class="eyebrow">Kleuren</p>
+    <h2>Donker (standaard)</h2>
+    <div class="grid">
+      <div class="card"><div class="swatch" style="background:#F9C852"></div>Geel · accent<div class="mono">#F9C852</div></div>
+      <div class="card"><div class="swatch" style="background:#171717;border:1px solid #3A3A3A"></div>Achtergrond<div class="mono">#171717</div></div>
+      <div class="card"><div class="swatch" style="background:#232323;border:1px solid #3A3A3A"></div>Kaart<div class="mono">#232323</div></div>
+      <div class="card"><div class="swatch" style="background:#FEF9ED"></div>Tekst · crème<div class="mono">#FEF9ED</div></div>
+      <div class="card"><div class="swatch" style="background:#9A958C"></div>Tekst gedempt<div class="mono">#9A958C</div></div>
+      <div class="card"><div class="swatch" style="background:radial-gradient(circle at 100% 0,#613F0F,#171717 70%)"></div>Gloed<div class="mono">#613F0F</div></div>
+    </div>
+    <h2 style="margin-top:32px">Licht (papier)</h2>
+    <div class="grid">
+      <div class="card"><div class="swatch" style="background:#fff"></div>Pagina<div class="mono">#FFFFFF</div></div>
+      <div class="card"><div class="swatch" style="background:#FBF7EE"></div>Vlak<div class="mono">#FBF7EE</div></div>
+      <div class="card"><div class="swatch" style="background:#171717;border:1px solid #3A3A3A"></div>Tekst / kopbalk<div class="mono">#171717</div></div>
+      <div class="card"><div class="swatch" style="background:#8A6A12"></div>Goud · accenttekst<div class="mono">#8A6A12</div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Typografie · Poppins</p>
+    <div class="grid">
+      <div class="card"><p class="eyebrow">Kop · Light 300</p><div style="font-weight:300;font-size:40px;line-height:1.1">Groot en licht</div></div>
+      <div class="card"><p class="eyebrow">Cijfer · SemiBold 600</p><div class="num">128,5</div><div class="mono">omzet in k€</div></div>
+      <div class="card"><p class="eyebrow">Tekst · Regular 400</p><div>Rustige leestekst in crème, met gedempte labels erboven in hoofdletters en ruime spatiëring.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Logo</p>
+    <div class="grid">
+      <div class="logo-box" style="background:#171717;border:1px solid #3A3A3A"><img src="../skills/ibs-huisstijl/assets/logo/ibs-logo-on-dark.svg" alt="IBS op donker"></div>
+      <div class="logo-box" style="background:#fff"><img src="../skills/ibs-huisstijl/assets/logo/ibs-logo-on-light.svg" alt="IBS op licht"></div>
+      <div class="logo-box" style="background:#232323"><img src="../skills/ibs-huisstijl/assets/logo/ibs-mark.svg" alt="IBS-merkteken"></div>
+      <div class="logo-box" style="background:#F9C852"><img src="../skills/ibs-huisstijl/assets/logo/ibs-logo-black.svg" alt="IBS zwart"></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Toepassing</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+      <div>
+        <div class="slide ibs-glow" style="border:1px solid #3A3A3A;justify-content:flex-end">
+          <img src="../skills/ibs-huisstijl/assets/logo/ibs-logo-on-dark.svg" alt="" style="height:12%;align-self:flex-start;margin-bottom:auto">
+          <p class="eyebrow">Klantdag · oktober</p>
+          <h3>Samen sneller<br>naar resultaat</h3>
+        </div>
+        <p class="mono">Presentatie · titelslide</p>
+      </div>
+      <div>
+        <div class="slide" style="background:#171717;border:1px solid #3A3A3A;align-items:flex-start">
+          <div class="num" style="font-size:clamp(48px,8vw,96px)">+38%</div>
+          <p class="eyebrow" style="margin-top:12px">Doorlooptijd verkort</p>
+          <img class="mark" src="../skills/ibs-huisstijl/assets/logo/ibs-mark.svg" alt="">
+        </div>
+        <p class="mono">Presentatie · groot getal</p>
+      </div>
+      <div>
+        <div class="paper">
+          <div class="band"><img src="../skills/ibs-huisstijl/assets/logo/ibs-logo-on-dark.svg" alt="IBS"></div>
+          <div class="body">
+            <p class="eyebrow" style="color:#6B665E">Offerte · 2026-041</p>
+            <h4>Implementatie klantportaal</h4>
+            <div class="bar"></div>
+            Een document op papier: witte pagina, donkere kopbalk, geel alleen als vlak of balk.
+            <table><tr><th>Onderdeel</th><th style="text-align:right">Bedrag</th></tr>
+              <tr><td>Analyse</td><td class="n">€ 4.800</td></tr>
+              <tr><td>Bouw</td><td class="n">€ 18.250</td></tr>
+              <tr><td style="font-weight:600">Totaal</td><td class="n" style="font-weight:600">€ 23.050</td></tr></table>
+            <div class="call">Accenttekst op papier in goud: <span style="color:#8A6A12;font-weight:600">#8A6A12</span>.</div>
+          </div>
+        </div>
+        <p class="mono">Word / PDF · licht met kopbalk</p>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
