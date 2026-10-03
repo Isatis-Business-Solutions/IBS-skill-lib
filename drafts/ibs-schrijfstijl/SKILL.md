@@ -30,7 +30,10 @@ texts. Interpret the feel words freshly for each text and subject; do not reuse 
 copy wording from the user's brief.
 
 **Language.** IBS is a data consultancy that also offers AI: professional jargon from data, AI and IT is
-always written in English, as professionals use it. Everything else is in the language of the text.
+always written in English, in its English spelling, never merged into Dutch compounds. Everything else is in
+the language of the text.
+
+**Facts.** Never invent facts, names, numbers or events. Leave a placeholder or ask.
 
 ## How to write
 
@@ -38,7 +41,8 @@ always written in English, as professionals use it. Everything else is in the la
    the source text or the conversation already makes this clear, do not ask. Otherwise ask **one** short
    question that covers both, offering the audiences below as options.
 2. **Core message.** Write for yourself, in one sentence, what the reader must take away. Tone may never
-   cover this sentence up. A brief tells you what to convey; translate it into the text, do not repeat it.
+   cover this sentence up. A brief tells you what to convey, not how to say it: no sentence may follow
+   the wording of the brief.
 3. **Choose the mix.** Read **only** the matching file in `audiences/`:
 
    | Reader | File |
@@ -59,7 +63,9 @@ always written in English, as professionals use it. Everything else is in the la
    - Is the core message clear in the first lines, and would the reader put it in the same words?
    - Does the reader know what to do next (if anything)?
    - Is every movement there at its level, and none louder than chosen?
-   - No movement or feel words used as self-praise; no stock phrases; jargon in English.
+   - No movement or feel words used as self-praise; jargon in English spelling.
+   - If a phrase could appear in any company's text, replace it.
+   - No sentence follows the wording of the brief; no invented facts.
 7. **Show the mix** in one short line after the text, so the user can steer: which movements are leading,
    present and undertone. Leave it out when the user asked for only
    the text or the text goes straight into a file.
