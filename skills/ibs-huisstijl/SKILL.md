@@ -116,7 +116,8 @@ the medium itself, in this house style.
   embed).
 - `assets/tokens/tokens.css`: CSS variables, `@font-face` rules, the light variant (`.ibs-light`),
   `.ibs-glow`, `.ibs-pattern` and the reduced-motion rule.
-- `assets/pattern/`: the mark pattern as a tileable SVG and as a dark 1920×1080 PNG background.
+- `assets/pattern/`: the mark pattern as a tileable SVG, and a dark 1920×1080 PNG background with glow,
+  pattern and the full logo bottom-right.
 - `assets/tokens/tokens.json`: the same values for any code or tool.
 - `assets/tokens/tailwind.preset.js`: Tailwind preset.
 

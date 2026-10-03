@@ -11,8 +11,8 @@ Use a pptx skill or library for the mechanics; this file gives the look. **Slide
 - **Masters / layouts:**
   - **Title:** dark background with a soft amber glow from the top-right (radial gradient `#613F0F` →
     transparent), `ibs-logo-on-dark.png` top-left, big Light title, eyebrow with date or occasion. For a
-    playful variant, use `assets/pattern/ibs-pattern-dark-1920x1080.png` as the slide background (glow and
-    pattern in one).
+    playful variant, use `assets/pattern/ibs-pattern-dark-1920x1080.png` as the slide background (glow,
+    pattern and the full logo bottom-right in one; do not add a second logo).
   - **Section:** big heading, small yellow square + thin double line as divider.
   - **Content:**
     - title 32–40 pt Light, top-left;
