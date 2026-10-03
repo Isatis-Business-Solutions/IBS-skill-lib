@@ -99,7 +99,12 @@ Uitgezocht (Codex CLI 0.160):
 - Inloggen zonder browser: `codex login --device-auth` (code invoeren op een ander apparaat).
 - In de Claude-app (chat) is geen CLI; daar valt de skill terug op prompt plus placeholder.
 
-Getest (3 runs, zonder login): de skill herkent dat er geen route is, legt de drie routes uit met kosten,
+Getest met echte login (2026-10-03): inloggen via de browser vanaf de telefoon, met het adres terugplakken
+(de apparaatcode werkte niet: de schakelaar in ChatGPT ging niet om). Daarna maakte de skill, samen met
+`ibs-stockbeeld`, zelf een beeld via Codex en sloeg het op in de werkmap. Deze loginroute staat nu in
+`setup.md`.
+
+Eerder getest (3 runs, zonder login): de skill herkent dat er geen route is, legt de drie routes uit met kosten,
 noemt de benodigde netwerkdomeinen, installeert niets zonder akkoord en geeft een prompt (één run ook een
 placeholder). Nog niet getest: echt een beeld maken via Codex of de API.
 
@@ -115,7 +120,7 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | # | Feature | Vraag | Antwoord |
 |---|---|---|---|
 | 1 | Releases | Zullen we v1.0.0 en v1.1.0 alsnog taggen, zodat collega's een downloadbare release hebben? | |
-| 2 | F3 | Echte test: sta je `chatgpt.com` en `auth.openai.com` toe in de netwerkinstellingen van deze omgeving en log je één keer in met de code die ik je geef? | |
+| 2 | F3 | Echte test: sta je `chatgpt.com` en `auth.openai.com` toe in de netwerkinstellingen van deze omgeving en log je één keer in? | Ja: domeinen toegestaan, ingelogd via browser en terugplakken. Werkt. |
 
 ## Besluitenlog
 
@@ -130,6 +135,7 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | Beeldgeneratie wordt een losstaande skill met de Codex CLI (eigen OpenAI-account), met als laatste terugval een prompt plus placeholder. Komt in de volgende release. |
 | 2026-10-03 | De regel "geen art deco" is uit `CLAUDE.md`; het was een eenmalige instructie. |
 | 2026-10-03 | `image-generator`: algemene skill zonder `ibs-`, één skill met routes (Codex CLI aanbevolen, API, terugval). Setup alleen bij eerste gebruik, met uitleg over kosten. Beelden in de werkmap. |
+| 2026-10-03 | Inloggen op Codex zonder computer: browserlogin met het terugplakken van het callback-adres. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |
