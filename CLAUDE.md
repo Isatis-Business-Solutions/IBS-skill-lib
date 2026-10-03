@@ -27,7 +27,8 @@ SPEC.md           features, open questions, decisions, releases
 
 ## Conventions
 
-- **Skill names:** `ibs-` prefix, lowercase with hyphens; the folder name is the same as `name:`.
+- **Skill names:** lowercase with hyphens; the folder name is the same as `name:`. IBS-specific skills get the
+  `ibs-` prefix; general skills that have nothing to do with IBS (e.g. `image-generator`) do not.
 - **Description:** say *what* and *when*, including trigger words (Dutch and English), max ~1000 characters.
   That is how the assistant decides to load the skill.
 - **SKILL.md** stays short: the essentials plus a table that points to `references/`. Details go in

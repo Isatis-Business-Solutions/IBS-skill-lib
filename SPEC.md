@@ -16,7 +16,7 @@ release.
 |---|---|---|
 | v1.0.0 | `ibs-huisstijl` | op `main`, nog niet getagd |
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
-| v1.2.0 | F3 beelden genereren met de Codex CLI | besloten |
+| v1.2.0 | F3 `image-generator` | testen |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) | voorstel |
 | v1.4.0 | F2 speelsheid in de huisstijl | voorstel |
 
@@ -59,37 +59,34 @@ Besloten:
 - **Kleine animaties** in digitale uitingen.
 - **Geen tweede accentkleur.** Geen groen.
 
-### F3. Beelden genereren met de Codex CLI (werknaam `ibs-codex-images`)
+### F3. Beelden genereren (`image-generator`)
 
-**Status:** besloten, nog niet gebouwd. **Release:** v1.2.0.
+**Status:** testen (concept in `drafts/image-generator/`). **Release:** v1.2.0.
 
-Een losstaande skill: hij verwijst naar geen andere skill. Hij beschrijft alleen hoe Claude met de Codex CLI
-een beeld genereert. Andere skills (zoals de huisstijl) kunnen er wel tegelijk mee geladen worden.
+Een algemene skill, los van IBS: hij verwijst naar geen andere skill en heeft daarom geen `ibs-`-voorvoegsel.
+Hij regelt alleen **hoe** een beeld gemaakt wordt; **wat** erop staat komt uit de opdracht en uit andere skills
+die tegelijk geladen zijn (zoals de huisstijl).
 
-Werkwijze:
-1. Eenmalig: de gebruiker logt in de omgeving in met het eigen OpenAI-account, zodat de Codex CLI werkt.
-2. De skill genereert het beeld met de Codex CLI en geeft het bestand terug.
-3. Werkt de Codex CLI niet (niet geïnstalleerd, niet ingelogd), dan vraagt de skill eerst of de gebruiker
-   wil inloggen, en legt uit hoe.
-4. Kan of wil de gebruiker dat niet, dan zoekt de skill een andere manier om een beeld te maken die in de
-   omgeving beschikbaar is.
-5. Is er geen enkele manier, dan geeft de skill een kant-en-klare prompt terug en zet hij een placeholder
-   waar het beeld moet komen, zodat het later ingevuld kan worden.
+Opbouw (één skill met routes, in plaats van een orchestrator met losse skills: één installatie, en alleen de
+benodigde route wordt geladen):
+- `SKILL.md`: kijkt eerst welke route klaarstaat, schrijft de prompt, genereert, controleert en levert op.
+- `routes/codex-cli.md`: via de Codex CLI en het eigen ChatGPT-account (aanbevolen).
+- `routes/openai-api.md`: via de OpenAI API met een API-sleutel.
+- `setup.md`: alleen geladen zolang er nog geen route klaarstaat. Legt de keuze uit, met de kosten: Codex CLI
+  valt onder het bestaande abonnement (geen extra kosten), de API kost altijd extra (per beeld). Installeert
+  of logt niets in zonder toestemming.
+- `fallback.md`: geen enkele route mogelijk → kant-en-klare prompt plus placeholder.
+- Later kan er een route bij (bijv. Gemini) door één bestand toe te voegen.
 
 Uitgezocht (Codex CLI 0.160):
-- Beeldgeneratie is een stabiele functie van de Codex CLI (`image_generation`), te gebruiken via
-  `codex exec`.
-- Inloggen met een ChatGPT-account kan ook zonder browser in de omgeving: `codex login --device-auth`
-  (je krijgt een code die je op een ander apparaat invoert). Controleren: `codex login status`.
-- De cloudomgeving van deze sessie blokkeert nu de OpenAI-domeinen; daar werkt de skill pas als die
-  domeinen zijn toegestaan. Op een eigen computer speelt dat niet.
-- In de Claude-app (chat) is geen CLI beschikbaar; daar valt de skill altijd terug op prompt plus
-  placeholder.
+- Codex heeft ingebouwde beeldgeneratie (`$imagegen`) op het ChatGPT-account; geen API-sleutel nodig. De
+  originelen staan in `~/.codex/generated_images/`.
+- Inloggen zonder browser: `codex login --device-auth` (code invoeren op een ander apparaat).
+- In de Claude-app (chat) is geen CLI; daar valt de skill terug op prompt plus placeholder.
 
-Zelf besloten (voorstel):
-- Beelden worden opgeslagen in de map waarin gewerkt wordt, tenzij de gebruiker iets anders vraagt.
-- "Een andere manier" betekent: een ander beeldgereedschap dat in de omgeving al beschikbaar is; de skill
-  installeert niets zonder te vragen.
+Getest (3 runs, zonder login): de skill herkent dat er geen route is, legt de drie routes uit met kosten,
+noemt de benodigde netwerkdomeinen, installeert niets zonder akkoord en geeft een prompt (één run ook een
+placeholder). Nog niet getest: echt een beeld maken via Codex of de API.
 
 ## Ontwikkeling (onder de motorkap)
 
@@ -103,8 +100,7 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | # | Feature | Vraag | Antwoord |
 |---|---|---|---|
 | 1 | Releases | Zullen we v1.0.0 en v1.1.0 alsnog taggen, zodat collega's een downloadbare release hebben? | |
-| 2 | F3 | Testen: mag ik de OpenAI-domeinen in deze omgeving laten toestaan en log jij één keer in met `--device-auth`, zodat ik echte beelden kan maken? Of test ik alleen tot aan de inlogvraag? | |
-| 3 | F3 | Naam van de skill: `ibs-beeldgenerator` (Nederlands, zoals de andere) of `ibs-codex-images`? | |
+| 2 | F3 | Echte test: sta je `chatgpt.com` en `auth.openai.com` toe in de netwerkinstellingen van deze omgeving en log je één keer in met de code die ik je geef? | |
 
 ## Besluitenlog
 
@@ -118,5 +114,7 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | `ibs-stockbeeld`: puur de sector, realistisch en eigentijds, golden hour, natuur door elementen (geen groen), minimale hint van retro-futurisme (jaren 70/80); geen formaten; niet voor infographics. |
 | 2026-10-03 | Beeldgeneratie wordt een losstaande skill met de Codex CLI (eigen OpenAI-account), met als laatste terugval een prompt plus placeholder. Komt in de volgende release. |
 | 2026-10-03 | De regel "geen art deco" is uit `CLAUDE.md`; het was een eenmalige instructie. |
+| 2026-10-03 | `image-generator`: algemene skill zonder `ibs-`, één skill met routes (Codex CLI aanbevolen, API, terugval). Setup alleen bij eerste gebruik, met uitleg over kosten. Beelden in de werkmap. |
+| 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |
