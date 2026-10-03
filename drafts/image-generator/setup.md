@@ -20,6 +20,9 @@ Recommend the Codex CLI when the user has a ChatGPT subscription. Ask which rout
    - with a browser on this machine: `codex login`;
    - without a browser (remote, container, cloud): `codex login --device-auth`. Run it in the background,
      pass the URL and code it prints to the user, and wait until they have confirmed on their own device.
+     Device codes are off by default in ChatGPT: the user first turns on **Settings → Security → Device code
+     authorization** (in a Team or Enterprise workspace an admin may have to). If the code is rejected, this
+     is the cause. A code expires after 15 minutes; start a new login if needed.
 3. Confirm with `codex login status`.
 4. Sandboxed or cloud environment: `chatgpt.com` and `auth.openai.com` must be allowed in its network
    settings, or login and generation fail.
