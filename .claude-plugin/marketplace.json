@@ -6,7 +6,7 @@
     {
       "name": "ibs-skills",
       "source": "./",
-      "description": "IBS skills: house style (ibs-huisstijl), writing style (ibs-schrijfstijl) and more."
+      "description": "IBS skills: house style (ibs-huisstijl), writing style (ibs-schrijfstijl), image generation (image-generator) and more."
     }
   ]
 }

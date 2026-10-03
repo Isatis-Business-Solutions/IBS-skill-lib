@@ -16,7 +16,7 @@ release.
 |---|---|---|
 | v1.0.0 | `ibs-huisstijl` | op `main`, nog niet getagd |
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
-| v1.2.0 | F3 `image-generator` | testen |
+| v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) | testen |
 | v1.4.0 | F2 speelsheid in de huisstijl | testen |
 
@@ -27,7 +27,7 @@ bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
 
 ### F1. Stockbeelden in IBS-stijl (`ibs-stockbeeld`)
 
-**Status:** testen (concept in `drafts/ibs-stockbeeld/`; verwijzing staat in `ibs-huisstijl`). **Release:** v1.3.0.
+**Status:** testen (concept in `drafts/ibs-stockbeeld/`; de verwijzing in `ibs-huisstijl` staat in commit `df0eb16` en komt na v1.2.0 terug). **Release:** v1.3.0.
 
 Een skill die beschrijft hoe een beeld eruitziet dat je normaal als stockfoto zou gebruiken. De skill bepaalt
 de beeldtaal; het maken van het beeld zelf gebeurt via een beeldmodel (zie F3).
@@ -54,7 +54,7 @@ placeholder, en de vraag of de scène klopt. Nog niet getest: echte beelden.
 
 ### F2. Speelsheid in de huisstijl
 
-**Status:** testen (in `skills/ibs-huisstijl`, op de branch). **Release:** v1.4.0.
+**Status:** testen. Tijdelijk teruggezet voor v1.2.0; staat in commit `975ca80` en komt na de release terug. **Release:** v1.4.0.
 
 De huidige huisstijl is mooi maar straalt weinig plezier uit. Fun is een kernwaarde.
 
@@ -76,7 +76,7 @@ Gebouwd:
 
 ### F3. Beelden genereren (`image-generator`)
 
-**Status:** testen (concept in `drafts/image-generator/`). **Release:** v1.2.0.
+**Status:** klaar (`skills/image-generator/`). **Release:** v1.2.0.
 
 Een algemene skill, los van IBS: hij verwijst naar geen andere skill en heeft daarom geen `ibs-`-voorvoegsel.
 Hij regelt alleen **hoe** een beeld gemaakt wordt; **wat** erop staat komt uit de opdracht en uit andere skills
