@@ -17,6 +17,7 @@ scripts/package.sh  builds dist/<skill>.zip for the Claude app
 preview/          visual check of the house style (open index.html)
 brand-source/     original brand files the assets were made from
 drafts/<skill>/   skills still being tested; not published (see drafts/README.md)
+docs/             background for maintainers per skill (not shipped with the skill)
 ```
 
 ## Conventions
@@ -28,6 +29,8 @@ drafts/<skill>/   skills still being tested; not published (see drafts/README.md
   references.
 - **General, not exhaustive:** the house style describes the feel and the key rules, so it fits every medium.
   No templates.
+- **ibs-schrijfstijl is rules only:** defined feel words, rules and boundaries; never sample texts or word
+  lists (they steer too much one way). Background in `docs/ibs-schrijfstijl.md`.
 - **Skills may refer to each other** by name, e.g. `ibs-huisstijl` → `ibs-schrijfstijl` for tone. Always add a
   fallback for when the other skill is not installed.
 - **Colours and fonts** live in one place: `skills/ibs-huisstijl/assets/tokens/`. If you change a value,
@@ -44,5 +47,4 @@ drafts/<skill>/   skills still being tested; not published (see drafts/README.md
 
 ## Planned
 
-- `ibs-schrijfstijl`: tone of voice and writing style (NL/EN), called from `ibs-huisstijl`.
 - Official vector logo files, when available, replace the reconstructions (see `BRAND.md`).

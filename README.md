@@ -6,7 +6,7 @@ Skills voor AI-assistenten (Claude en andere agents) die we bij **IBS – Isatis
 | Skill | Wat het doet |
 |---|---|
 | [`ibs-huisstijl`](skills/ibs-huisstijl/SKILL.md) | De IBS-huisstijl voor software, websites, HTML-pagina's en -presentaties, HTML-e-mail, Word, PowerPoint, PDF en Excel. Met logo's, Poppins en kleurtokens (CSS/JSON/Tailwind). |
-| `ibs-schrijfstijl` | *Gepland:* toon en schrijfstijl van IBS. `ibs-huisstijl` verwijst ernaar zodra die er is. |
+| [`ibs-schrijfstijl`](skills/ibs-schrijfstijl/SKILL.md) | De schrijfstijl en tone of voice van IBS. Kiest de toon per lezer en doel (klanten, kandidaten, collega's, netwerk) en kanaal (LinkedIn, e-mail, document, slides, advertenties). |
 
 Voorbeeld van de huisstijl: open [`preview/index.html`](preview/index.html) in je browser.
 
@@ -52,6 +52,6 @@ Skills for AI assistants used at **IBS – Isatis Business Solutions**.
 - **Claude app:** upload `ibs-huisstijl.zip` from the latest release under Settings → Capabilities → Skills.
 
 Then ask for anything "in IBS style": software, web pages, HTML slides, e-mails, Word, PowerPoint, PDF or
-Excel.
+Excel, or for any text in the IBS tone of voice (LinkedIn posts, vacancies, propositions, internal updates).
 
 License: MIT for text and code. The IBS name and logo: see [`BRAND.md`](BRAND.md). Poppins: SIL OFL 1.1.
