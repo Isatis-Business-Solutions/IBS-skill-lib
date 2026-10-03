@@ -19,7 +19,9 @@ Talk to the owner in **Dutch**; write skills in **English**.
 - Record what is already known before asking anything.
 - Put every open question in the **Open vragen** table; when answered, fill in the answer and add a line to
   the **Besluitenlog** with the date.
-- Assign each feature to a planned release in the **Releases** table.
+- Assign each user-facing feature to a planned release in the **Releases** table. A release is about what
+  users of the skills notice (a new skill or a visible improvement). Fixes and changes to how we work in this
+  repo ride along with the next release and go under **Ontwikkeling**; they never get a release of their own.
 - Keep the spec current in the same commit as the work it describes.
 
 ## 2. Ask, at most 5 questions at a time

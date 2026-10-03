@@ -8,85 +8,80 @@ Elke nieuwe skill of grote wijziging begint hier. Wie (of welke AI) in deze repo
 
 ## Releases
 
+Een release gaat over wat **gebruikers van de skills** merken: een nieuwe skill of een zichtbare verbetering.
+Bugfixes en wijzigingen aan de werkwijze in de repo gaan mee in de eerstvolgende release; ze krijgen geen eigen
+release.
+
 | Versie | Inhoud | Status |
 |---|---|---|
 | v1.0.0 | `ibs-huisstijl` | op `main`, nog niet getagd |
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
-| v1.2.0 | F1 beheer-skill + dit spec-document | voorstel |
-| v1.3.0 | F2 `ibs-stockbeeld` + F3 verwijzing vanuit `ibs-huisstijl` | voorstel |
-| v1.4.0 | F4 speelsheid in de huisstijl | voorstel |
+| v1.2.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) | voorstel |
+| v1.3.0 | F2 speelsheid in de huisstijl | voorstel |
+| later | F3 skill voor beeldgeneratie | idee |
 
-Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), reparatie = patch (1.1.x), iets dat bestaand
-gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
+Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
+bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
 
 ## Features
 
-### F1. Beheer-skill voor deze repo (`ibs-library-maintainer`)
+### F1. Stockbeelden in IBS-stijl (`ibs-stockbeeld`, werknaam)
 
-**Status:** in bouw (concept staat in `.claude/skills/ibs-library-maintainer/`).
+**Status:** brainstorm. **Release:** v1.2.0.
 
-Een interne skill die altijd geladen wordt als iemand met een agent in deze repo werkt. Hij zorgt dat elke
-collega op dezelfde manier werkt: eerst de spec, maximaal 5 vragen tegelijk aan de eigenaar, bouwen in
-`drafts/`, testen zonder uploaden, pas na akkoord naar `skills/`, en uitbrengen als release.
+Een skill die beschrijft hoe een beeld eruitziet dat je normaal als stockfoto zou gebruiken. De skill bepaalt
+de beeldtaal; het maken van het beeld zelf gebeurt via een beeldmodel (zie F3).
 
-- Staat in `.claude/skills/`, dus Claude Code laadt hem in deze repo; hij wordt niet gepubliceerd.
+Besloten:
+- **Onderwerp: puur de sector** waar we onze data- of AI-oplossing op loslaten. Mensen uit die sector moeten
+  hun eigen wereld herkennen. Bijvoorbeeld energie: een schakelstation (hoog- naar laagspanning) of een
+  hoogspanningsmast.
+- **Realistisch en eigentijds**, zoals een goede stockfoto.
+- **Golden hour.** Het licht maakt alles geel en oranje; dat sluit aan op de huisstijl.
+- **Natuurlijke uitstraling door elementen, niet door kleur:** meer bomen, een weiland, natuur rondom de
+  installatie. **Geen groene kleurtoon of groen accent**; de kleur komt van het golden-hour-licht.
+- **Speels element:** een minimale hint van **retro-futurisme**, de toekomst zoals men die in de jaren 70 en
+  80 voor zich zag. Het beeld blijft vooral eigentijds; de hint is een sprankje, niet het onderwerp.
+- **Formaten** horen niet in deze skill; die verschillen per gebruik.
+- **Afbakening:** de skill zegt zelf dat hij niet bedoeld is voor infographics, schema's of iconen.
+- **`ibs-huisstijl` verwijst** naar deze skill als er een foto of sfeerbeeld nodig is (met terugvaloptie).
 
-### F2. Stockbeelden in IBS-stijl (`ibs-stockbeeld`, werknaam)
+### F2. Speelsheid in de huisstijl
 
-**Status:** brainstorm.
+**Status:** brainstorm. **Release:** v1.3.0.
 
-Een skill voor het maken van beelden waar je normaal een stockfoto voor zou gebruiken: websites, LinkedIn,
-presentaties, proposities, advertenties.
+De huidige huisstijl is mooi maar straalt weinig plezier uit. Fun is een kernwaarde.
 
-Wat we al weten:
-- Onderwerp: **de sector** waar we onze data- of AI-oplossing op loslaten, niet de technologie zelf.
-  Bijvoorbeeld energie: een schakelstation (hoog- naar laagspanning) of een hoogspanningsmast.
-- Licht: **golden hour**. Dat sluit aan bij de huisstijl (warm geel accent op een donkere basis).
-- Uitstraling: **duurzaam en net iets groener**. Niet door een groene kleurfilter, maar door elementen: meer
-  bomen, een weiland, natuur rondom de installatie.
-- Stijl: realistisch, foto-achtig, zoals een goede stockfoto.
-- **Niet** voor infographics; daarvoor komt eventueel een aparte aanpak met iconen (zie F5).
+Besloten:
+- **Het merkteken als klein, terugkerend speels detail**, overal een beetje inzetbaar.
+- **Het merkteken als patroon op de achtergrond**, herhaald, met een verloop eroverheen. Een accent, nooit
+  druk.
+- **Kleine animaties** in digitale uitingen.
+- **Geen tweede accentkleur.** Geen groen.
 
-Open vragen: zie hieronder.
+### F3. Skill voor beeldgeneratie
 
-### F3. `ibs-huisstijl` verwijst naar `ibs-stockbeeld`
+**Status:** idee. **Release:** later.
 
-**Status:** besloten (klein).
+Een aparte skill die alleen beschrijft hoe Claude een beeldmodel gebruikt: bijvoorbeeld via Codex onder het
+eigen account (ChatGPT) of via de Gemini-API. Los van de beeldtaal (F1), zodat F1 met elk beeldmodel werkt.
 
-Als er een foto of sfeerbeeld nodig is, verwijst de huisstijl naar `ibs-stockbeeld`, met een terugvaloptie als
-die skill er niet is.
+## Ontwikkeling (onder de motorkap)
 
-### F4. Speelsheid in de huisstijl
+Geen eigen release; gaat mee in de eerstvolgende release.
 
-**Status:** brainstorm.
-
-De huidige huisstijl is mooi maar straalt weinig plezier uit. Fun is een kernwaarde, dus we zoeken een manier
-om iets speels toe te voegen zonder de rust en kwaliteit te verliezen. Richtingen om te bespreken:
-
-- **a. Golden hour als motief:** een warme verloop van IBS-geel naar amber als accent, bijv. achter een kop
-  of op een titelslide. Sluit aan op de foto's van F2.
-- **b. Het merkteken als speels element:** het merkteken terug laten komen als klein, terugkerend detail
-  (bullet, hoekje, sticker), soms gedraaid of uitgesneden.
-- **c. Beweging:** kleine animaties in digitale uitingen (hover, een kop die binnenkomt).
-- **d. Een tweede accentkleur:** spaarzaam, bijv. een zacht groen dat ook bij duurzaamheid past.
-
-### F5. Infographics met iconen
-
-**Status:** geparkeerd. Liever met iconen dan met realistische beelden. Pas na F2 oppakken.
-
-### F6. Verbeterpunten `ibs-schrijfstijl`
-
-**Status:** geparkeerd. Zie `docs/ibs-schrijfstijl.md` (briefing herhalen, verzonnen details, clichés).
+- **Beheer-skill `ibs-library-maintainer`** (`.claude/skills/`, intern): werkwijze voor deze repo. Klaar.
+- **Dit spec-document.** Klaar.
 
 ## Open vragen
 
 | # | Feature | Vraag | Antwoord |
 |---|---|---|---|
-| 1 | F2 | Met welke tool maken collega's beelden? Claude maakt zelf geen foto's: schrijft de skill een prompt om te plakken, of roept hij een beeld-API direct aan? | |
-| 2 | F2 | Wat mag in beeld: mensen (herkenbaar, van achteren, niet)? En een subtiel data- of AI-element, of puur de sector? | |
-| 3 | F2 | Welke formaten zijn nodig (LinkedIn, website-header, slides, Meta-advertenties), en moet er ruimte zijn voor tekst over het beeld? | |
-| 4 | F4 | Welke richting voor speelsheid spreekt je aan (a–d), of iets anders? | |
-| 5 | Releases | Akkoord met de volgorde hierboven? En zullen we v1.0.0 en v1.1.0 alsnog taggen als release? | |
+| 1 | F2 | Het patroon met verloop noemde je art deco; in `CLAUDE.md` staat nu "geen art deco in de IBS-huisstijl" (dat was van GYM-8020). Beschrijven we het als geometrisch herhaalpatroon en laten we die regel staan, of gaat de regel eruit? | |
+| 2 | F2 | Het verloop over het patroon: van IBS-geel naar amber (golden hour), of van donker naar transparant? | |
+| 3 | F1 | Voor welke sectoren werkt IBS? Dan beschrijft de skill per sector wat herkenbaar is. | |
+| 4 | Releases | F1 eerst en F3 later: tot F3 er is, levert `ibs-stockbeeld` een prompt die je zelf in een beeldtool plakt. Akkoord, of F1 en F3 samen uitbrengen? | |
+| 5 | Releases | Zullen we v1.0.0 en v1.1.0 alsnog taggen, zodat collega's een downloadbare release hebben? | |
 
 ## Besluitenlog
 
@@ -95,5 +90,8 @@ om iets speels toe te voegen zonder de rust en kwaliteit te verliezen. Richtinge
 | 2026-10-03 | Repo `IBS-skill-lib`, `main` als basis; nieuwe skills beginnen in `drafts/`. |
 | 2026-10-03 | `ibs-schrijfstijl` bestaat alleen uit regels en gedefinieerde gevoelswoorden, nooit uit voorbeeldteksten. |
 | 2026-10-03 | Vakjargon uit data, AI en IT altijd in het Engels (Engelse spelling), de rest Nederlands. |
-| 2026-10-03 | Nieuwe skill voor stockbeelden: sector, golden hour, duurzame uitstraling; niet voor infographics. |
 | 2026-10-03 | Werken vanuit `SPEC.md`, met maximaal 5 vragen tegelijk aan de eigenaar en releases als doel. |
+| 2026-10-03 | Releases gaan over wat gebruikers merken; fixes en repo-werkwijze gaan mee, zonder eigen release. |
+| 2026-10-03 | `ibs-stockbeeld`: puur de sector, realistisch en eigentijds, golden hour, natuur door elementen (geen groen), minimale hint van retro-futurisme (jaren 70/80); geen formaten; niet voor infographics. |
+| 2026-10-03 | Beeldgeneratie (Codex/ChatGPT, Gemini-API) wordt een aparte skill. |
+| 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als subtiel achtergrondpatroon met verloop, kleine animaties; geen tweede accentkleur. |
