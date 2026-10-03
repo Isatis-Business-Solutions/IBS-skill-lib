@@ -4,6 +4,9 @@ A public library of skills used at IBS – Isatis Business Solutions. Installabl
 Code plugin (`.claude-plugin/`), and as zips for the Claude app. Communication with the owner is in
 **Dutch**; the skills themselves are written in **English** (they work best that way in every tool).
 
+**Working in this repo?** Load the `ibs-library-maintainer` skill (`.claude/skills/`) and start from
+`SPEC.md`: features, open questions, decisions and planned releases.
+
 ## Structure
 
 ```text
@@ -18,6 +21,8 @@ preview/          visual check of the house style (open index.html)
 brand-source/     original brand files the assets were made from
 drafts/<skill>/   skills still being tested; not published (see drafts/README.md)
 docs/             background for maintainers per skill (not shipped with the skill)
+SPEC.md           features, open questions, decisions, releases
+.claude/skills/   internal skills for working in this repo (not published)
 ```
 
 ## Conventions
@@ -47,4 +52,4 @@ docs/             background for maintainers per skill (not shipped with the ski
 
 ## Planned
 
-- Official vector logo files, when available, replace the reconstructions (see `BRAND.md`).
+See `SPEC.md`.
