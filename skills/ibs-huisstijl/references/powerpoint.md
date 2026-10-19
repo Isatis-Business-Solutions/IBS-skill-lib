@@ -13,7 +13,7 @@ Use a pptx skill or library for the mechanics; this file gives the look. **Slide
     transparent), `ibs-logo-on-dark.png` top-left, big Light title, eyebrow with date or occasion. For a
     playful variant, use `assets/pattern/ibs-pattern-dark-1920x1080.png` as the slide background (glow,
     pattern and the full logo bottom-right in one; do not add a second logo).
-  - **Section:** big heading, small yellow square + thin double line as divider.
+  - **Section:** big heading, divider below it: thin double line with `ibs-mark-256.png` small in the middle.
   - **Content:**
     - title 32–40 pt Light, top-left;
     - body 18–24 pt, at most ~5 bullets;

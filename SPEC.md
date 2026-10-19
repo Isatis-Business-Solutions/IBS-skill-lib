@@ -18,6 +18,7 @@ release.
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
+| v1.3.1 | F4 divider met het IBS-merkteken in het midden | klaar, op branch |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -107,6 +108,14 @@ Eerder getest (3 runs, zonder login): de skill herkent dat er geen route is, leg
 noemt de benodigde netwerkdomeinen, installeert niets zonder akkoord en geeft een prompt (één run ook een
 placeholder). Nog niet getest: echt een beeld maken via Codex of de API.
 
+### F4. Divider met het merkteken
+
+**Status:** klaar (in `skills/ibs-huisstijl/`). **Release:** v1.3.1.
+
+De signature-divider is een dunne dubbele lijn met het **IBS-merkteken** in het midden, niet langer een geel
+vierkantje. Aangepast in `SKILL.md`, de referenties voor HTML/presentaties en PowerPoint, en `preview/index.html`.
+Aanleiding: de video-signature van IBS (repo `nft_ai_bs_meme`), waar de divider ook de wipe-lijn is.
+
 ## Ontwikkeling (onder de motorkap)
 
 Geen eigen release; gaat mee in de eerstvolgende release.
@@ -139,4 +148,5 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | Integratietest (one-pager met alle vier de skills) goedgekeurd; `ibs-stockbeeld` en de speelsheid samen uitgebracht als v1.3.0. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
+| 2026-10-19 | Divider: dubbele lijn met het IBS-merkteken in het midden, nooit een los vierkantje (eigenaar). Patch v1.3.1. |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |

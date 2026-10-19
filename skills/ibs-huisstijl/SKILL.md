@@ -59,7 +59,8 @@ on light backgrounds.
 - **Amber glow:** a soft radial gradient of `#613F0F` from the top-right corner on the dark background
   (`.ibs-glow` in `tokens.css`).
 - **Eyebrow label** above headings: `SMALL CAPS LABEL` in muted, tracked capitals.
-- **Divider:** a thin double line with a small yellow square in the middle (the logo idea, minimal).
+- **Divider:** a thin double line with the small IBS mark in the middle (in yellow). Never a plain square: the
+  centre is always the mark.
 - **Buttons:** primary = filled yellow with dark text; secondary = outlined in cream (2px), dark fill, with a
   `›` chevron; tertiary = yellow text link.
 - **Icons:** thin line icons (≈2px stroke) in cream, optionally inside a rounded-square outline.

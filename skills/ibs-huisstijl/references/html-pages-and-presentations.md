@@ -19,7 +19,8 @@ Logo: inline the SVG from `assets/logo/ibs-logo-on-dark.svg` (no external file r
 - 16:9 slides, dark. Each slide has one message: eyebrow + heading + at most ~5 short points, or one big
   number, or one visual.
 - **Title slide:** logo (larger), eyebrow with date or occasion, big light title, amber glow.
-- **Section slide:** large heading with the small-yellow-square divider.
+- **Section slide:** large heading with the divider (thin double line, small IBS mark in the middle; inline
+  `ibs-mark.svg`).
 - **Content slide:** heading top-left, logo mark small bottom-right, slide number bottom-left in muted.
 - **Number slide:** one huge figure in yellow (SemiBold), label underneath in muted.
 - **Closing slide:** short thank-you or next step, contact details, full logo.
