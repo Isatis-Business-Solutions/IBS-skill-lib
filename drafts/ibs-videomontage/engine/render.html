@@ -36,9 +36,10 @@
       // Preload every source frame this frame may need, then draw synchronously.
       var need = {}, near = [f];
       plan.segs.forEach(function (s) {
-        if (s.kind !== "shot" || !s.shot.src || f < s.start - 1 || f >= s.start + s.len + 1) return;
+        if (s.kind !== "shot" || f < s.start - 1 || f >= s.start + s.len + 1) return;
         var k = f - s.start, fps = plan.fps;
-        need[s.shot.src + ":" + Math.max(0, Math.min((plan.counts[s.shot.src] || 1) - 1, Math.round((s.shot.in || 0) * fps + k)))] = 1;
+        if (s.shot.src) need[s.shot.src + ":" + Math.max(0, Math.min((plan.counts[s.shot.src] || 1) - 1, Math.round((s.shot.in || 0) * fps + k)))] = 1;
+        // A double wipe also shows the previous shot (footage or graphic) beyond its out point.
         if (s.dw && k < s.trLen && plan.segs[plan.segs.indexOf(s) - 1].shot.src) { var prev = plan.segs[plan.segs.indexOf(s) - 1]; need[prev.shot.src + ":" + Math.max(0, Math.min((plan.counts[prev.shot.src] || 1) - 1, Math.round((prev.shot.in || 0) * fps + prev.len + k)))] = 1; }
       });
       var imgs = {};

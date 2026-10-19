@@ -7,7 +7,7 @@ user brings a storyboard or shot list, follow that and only fill gaps with these
 A clip is a sequence of **beats**. Each beat is tension or release.
 
 - **Hook (tension, first 2–4 s):** the question, the surprise or the problem, without context. B-roll bursts,
-  shots of 0.5–0.8 s, alternating looks, FX flash on the cuts, a riser that peaks on the first release cut,
+  short shots, FX flash on the cuts, a riser that peaks on the first release cut,
   the hook line as captions.
 - **Release beat (per topic):** the answer or the point. Enters with a double wipe when it is a new topic and
   there is A-roll; shots of 3–5 s; captions for the spoken line; one glass card or detection callout per beat
@@ -35,7 +35,11 @@ between the topics anyway.
 ## Check before rendering
 - Does the first second make the viewer stay? Is the message clear without sound (captions)?
 - Do loud things only happen in the tension, and does every loud visual event land on a cut or a hit?
-- Do no two shots in a row share a look? Does every callout end inside its shot?
+- **Can the viewer see what each shot shows?** A shot that carries a beat (an action, a person, an object
+  the story is about) plays clean (`look: "none"`) and long enough to read: 1.5–3 s. Looks are accents:
+  the FX flash on the cut and the look inside a detection box. Watch the stills as a viewer: if you cannot
+  tell what you are looking at, remove the look or lengthen the shot.
+- Does every callout end inside its shot?
 - Is no caption or card on screen during a double wipe or logo spin (the flat yellow frame hides the yellow key
   word)? Start text after the transition.
 - Is `role: "A"` only used for footage that carries the story (usually a speaker)? Without A-roll, all shots

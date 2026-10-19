@@ -173,6 +173,9 @@ Uitbreiding (2026-10-19, eigenaar: "goed om in deze video skills dit soort infor
   (`references/production.md`). Ook bedoeld als gedeeld formaat voor de latere storyboard- en videogeneratie-skills.
 - **Graphic shots** (`engine/ibs-graphics.js`): mail, puzzel → merkteken, badges, kenniskaart, flow, dark.
   Voor uitleg-beats zonder beeld van het product. Optie `onTwos`.
+- **Feedback testmontage (kennisborging):** looks over elk shot maakten het beeld onleesbaar. Regel aangepast in
+  `story.md`, `assets.md` en `signature.md`. Bug opgelost: bij een double wipe naar een graphic shot werd het
+  vorige shot niet geladen (render.html).
 - **Animatic:** `scripts/placeholders.mjs` maakt placeholders voor shots die nog niet bestaan; `fallback` in de
   timeline. Getest op een clip van 47 s (19 shots, 9 placeholders, 6 graphics): stills en MP4 renderen zonder fouten.
 
@@ -195,6 +198,7 @@ Uitbreiding (2026-10-19, eigenaar: "goed om in deze video skills dit soort infor
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-19 | Nieuwe skill `ibs-videomontage` (F5): alleen monteren, hele clip; genereren en storyboard later als aparte skills. |
+| 2026-10-19 | Footage blijft leesbaar: looks zijn accenten (FX-flash, detect-kader), standaard `look: none`, shots met verhaal 1,5–3 s (eigenaar na testmontage: "ik zie vrijwel nooit het daadwerkelijke video element"). |
 | 2026-10-19 | `ibs-videomontage` houdt per project een productielogboek bij (`production.json` + `LOG.md`); graphic shots en animatic erbij. |
 | 2026-10-19 | Divider: dubbele lijn met het IBS-merkteken in het midden, nooit een los vierkantje (eigenaar). Patch v1.3.1. |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |

@@ -11,7 +11,8 @@ in every clip, and the rest may vary.
 
 ## Signature moves
 1. **Image processing as a layer, in code:** edge detection, halftone, dithering and the other looks. They
-   alternate through a clip; no look repeats on two shots in a row.
+   are accents: in the FX flash on cuts and inside detection boxes; a whole-shot look only on short texture
+   shots. The footage itself stays readable (owner, after the first test edit).
 2. **FX flash** on tension cuts: a few frames of a look instead of a white flash, with a hit.
 3. **Double wipe** as the release transition per new topic.
 4. **The IBS divider** (double line + IBS mark) as every line wipe, and the logo spin that turns into it.

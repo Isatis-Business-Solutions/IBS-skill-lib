@@ -7,7 +7,7 @@ were decided with the owner; change a parameter only for a reason you can name.
 
 | Moment | Use |
 |---|---|
-| Hook / tension: B-roll bursts | short B-roll shots (0.5–0.8 s) with alternating `look`s, `fxflash` on the cuts, a `riser` under the burst, captions with the hook line |
+| Hook / tension | short shots, clean footage, `fxflash` on the cuts, a `riser` under the burst, captions with the hook line; 0.5–0.8 s only for texture shots without story content, 1.5–3 s for shots that carry the beat |
 | Release: a new topic starts (A-roll) | `doublewipe` into the shot |
 | A number or key message in the release | `glass` card |
 | Showing *what* matters in a shot | `detect` callout, labels playful and about the story |
@@ -53,7 +53,9 @@ peaks on the release cut.
 
 ## Per shot
 
-**`look`** · a look on the whole shot: `edges`, `halftone`, `dither`, `duotone`, `posterize`, `threshold`,
+**`look`** · a look on the whole shot. **Default `none`: the footage must stay readable.** Use a whole-shot
+look only on short texture shots that carry no story content, never on a shot whose action or subject is the
+point of the beat. Options: `edges`, `halftone`, `dither`, `duotone`, `posterize`, `threshold`,
 `grain`, `scanlines`, `vignette`, `rgbsplit`, `glitch`, `pixelsort`, or `none`. Loud looks (`glitch`,
 `rgbsplit`, `threshold`, `pixelsort`) belong to tension only; in the release use `none` or at most `grain` or
 `vignette`.
