@@ -60,5 +60,23 @@ peaks on the release cut.
 
 **`zoom`** · `[from, to]` scale over the shot, eased (push-in `[1, 1.08]`, pull-out `[1.06, 1]`).
 
+## Graphic shots (field `graphic` on a shot, no footage)
+
+Full-frame motion graphics in the house style, drawn by `engine/ibs-graphics.js`, for beats that explain when
+there is no footage of the product. They are calm (release): ease-out and, for UI elements, the caption
+stagger with overshoot; no looks on them. All take `onTwos: true` to animate on twos (12 drawings per second).
+Leave the lower fifth free for captions.
+
+| `type` | For | Options |
+|---|---|---|
+| `mail` | a message comes in and the reply types itself | `sender`, `subject`, `question`, `reply`, `from: [x, y, w, h]` (the card grows out of that box, e.g. the detection box of the shot before: box → screen) |
+| `puzzle` | four pieces fly in and become the IBS mark | `stagger`, `frames` (ease-out, like the assemble) |
+| `badges` | gamification: badge tiles, level bar, score | `tiles` (icon names), `active`, `level`, `from`, `to`, `score` |
+| `knowmap` | known knowledge as nodes; the gap lights up; a question comes out | `question`, `label` |
+| `flow` | an input becomes several outputs (cards with icons) | `source`, `cards: [[icon, label], …]` |
+| `dark` | just the canvas with the amber glow, for captions or a glass card on their own | – |
+
+Icons: `mail`, `reply`, `doc`, `flow`, `base`, `trophy`, `star`, `puzzle`, `timer`.
+
 ## Brand
 **`assemble`** · the four planes of the IBS mark fly in (stagger 3 f, ease-out), with a hit. 1.6 s.

@@ -29,12 +29,14 @@ in frames (24 fps).
 ## Fields
 - **format** · `aspect` `"9:16"` (default, the layouts are tuned for it), `"16:9"` or `"1:1"`; optional
   `width`/`height` (default 1080 wide for vertical, 1920 for horizontal); `fps` 24.
-- **sources** · id → file, or `{ file, focusX, focusY }`: where the crop sits when the footage is reframed
-  (0 = left/top, 0.5 = centre, 1 = right/bottom).
+- **sources** · id → file, or `{ file, focusX, focusY, fallback }`: where the crop sits when the footage is
+  reframed (0 = left/top, 0.5 = centre, 1 = right/bottom); `fallback` is used while `file` does not exist yet
+  (a placeholder, see `production.md`).
 - **brand** · `intro` / `outro`: `"assemble"` or `null`.
 - **audio** · `sfx` (hits, whooshes, risers; default on), `music` (a file; it is faded out at the end) and
   `musicGain`.
 - **shots** · played in order. `src`, `in` (start in the source, s), `dur` (s), `role` `"A"` or `"B"`.
+  A graphic shot has `graphic: { type, …options }` instead of `src`/`in` (see `assets.md`).
   Optional: `look`, `lookAmt` (0–1), `zoom` `[from, to]`, `audio` (keep the source sound; default true for
   A-roll, false for B-roll), `gain`, `transition` (`{ type, look, frames, params }`, into this shot).
 - **overlays** · `type` `captions` | `detect` | `glass` | `riser`, `at` and `dur` in seconds from the start

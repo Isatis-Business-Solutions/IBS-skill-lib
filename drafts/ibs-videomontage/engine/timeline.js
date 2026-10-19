@@ -24,6 +24,8 @@
     var shots = tl.shots || [];
     shots.forEach(function (s, i) {
       var len = Math.max(1, Math.round(s.dur * fps)), tr = s.transition || { type: "cut" }, seg = { kind: "shot", shot: s, i: i, start: f, len: len, tr: tr, trLen: 0 };
+      // A graphic shot has no footage: it is drawn by IBSGraphics (ibs-graphics.js).
+      if (s.graphic) { var G = window.IBSGraphics[s.graphic.type]; if (!G) throw new Error("Unknown graphic: " + s.graphic.type); s._gfx = G.create(Object.assign({}, s.graphic)); }
       if (i > 0 && tr.type === "doublewipe") {
         var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
         var p = Object.assign({}, DW_V11, { k0: Math.max(4, Math.round(6 * W / 180)) }, tr.params || {});
@@ -41,7 +43,7 @@
       } else if (i > 0 && sfx && s.role === "B" && shots[i - 1].role === "B") {
         plan.events.push({ type: "whoosh", frame: f });
       }
-      var keep = s.audio != null ? s.audio : s.role === "A";
+      var keep = !s.graphic && (s.audio != null ? s.audio : s.role === "A");
       if (keep) plan.audio.push({ src: s.src, in: s.in || 0, frame: f, len: len, gain: s.gain == null ? 1 : s.gain });
       plan.segs.push(seg); f += len;
     });
@@ -76,6 +78,7 @@
 
   // Draw one shot frame (local frame k) into ctx, with zoom and look.
   function drawShot(plan, s, k, ctx, getFrame) {
+    if (s._gfx) { s._gfx.render(ctx, Math.min(k, s._gfx.total - 1)); return; }
     var fps = plan.fps, idx = Math.round((s.in || 0) * fps + k), n = plan.counts[s.src] || 1;
     var img = getFrame(s.src, Math.max(0, Math.min(n - 1, idx)));
     var W = plan.W, H = plan.H, z = 1;

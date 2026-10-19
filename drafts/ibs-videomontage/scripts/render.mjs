@@ -44,7 +44,12 @@ function hasAudio(file) {
 const counts = {}, srcFiles = {};
 for (const [id, def] of Object.entries(tl.sources || {})) {
   // A source is a path, or { file, focusX, focusY } to choose where the crop sits (0 = left/top, 1 = right/bottom).
-  const rel = typeof def === "string" ? def : def.file, fx = def.focusX ?? 0.5, fy = def.focusY ?? 0.5;
+  // `fallback` is used while `file` does not exist yet (e.g. a placeholder for a shot still to be generated).
+  let rel = typeof def === "string" ? def : def.file; const fx = def.focusX ?? 0.5, fy = def.focusY ?? 0.5;
+  if (!fs.existsSync(path.resolve(base, rel))) {
+    if (def.fallback && fs.existsSync(path.resolve(base, def.fallback))) { console.log(`· ${id}: ${rel} ontbreekt, placeholder ${def.fallback}`); rel = def.fallback; }
+    else { console.error(`Source not found: ${rel}`); process.exit(1); }
+  }
   const file = path.resolve(base, rel); srcFiles[id] = file;
   const dir = path.join(work, "frames", id); fs.mkdirSync(dir, { recursive: true });
   console.log(`· frames: ${id} (${rel})`);

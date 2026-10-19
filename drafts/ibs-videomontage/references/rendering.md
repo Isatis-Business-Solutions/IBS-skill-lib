@@ -19,7 +19,9 @@ node <skill>/scripts/render.mjs timeline.json --stills          # contact sheet,
 node <skill>/scripts/render.mjs timeline.json --draft           # half resolution MP4, to check timing
 node <skill>/scripts/render.mjs timeline.json --out clip.mp4    # final, 1080×1920
 ```
-Always look at the stills before the final render. A final render takes roughly 3–5× the clip length.
+Always look at the stills before the final render. Before the footage exists:
+`node <skill>/scripts/placeholders.mjs production.json` makes placeholder clips, so the whole edit renders as
+an animatic. A final render takes roughly 3–5× the clip length.
 
 ## Without a computer
 In the Claude app (chat) there is no Node or ffmpeg. Write the timeline anyway, show the asset catalog

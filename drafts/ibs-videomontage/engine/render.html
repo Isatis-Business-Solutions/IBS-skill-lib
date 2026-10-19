@@ -14,6 +14,7 @@
 <script src="motion.js"></script>
 <script src="transition.js"></script>
 <script src="ibs-kit.js"></script>
+<script src="ibs-graphics.js"></script>
 <script src="timeline.js"></script>
 <script>
 // Driven by scripts/render.mjs: init(timeline, counts, size) then frame(f) per frame → JPEG data URL.
@@ -35,10 +36,10 @@
       // Preload every source frame this frame may need, then draw synchronously.
       var need = {}, near = [f];
       plan.segs.forEach(function (s) {
-        if (s.kind !== "shot" || f < s.start - 1 || f >= s.start + s.len + 1) return;
+        if (s.kind !== "shot" || !s.shot.src || f < s.start - 1 || f >= s.start + s.len + 1) return;
         var k = f - s.start, fps = plan.fps;
         need[s.shot.src + ":" + Math.max(0, Math.min((plan.counts[s.shot.src] || 1) - 1, Math.round((s.shot.in || 0) * fps + k)))] = 1;
-        if (s.dw && k < s.trLen) { var prev = plan.segs[plan.segs.indexOf(s) - 1]; need[prev.shot.src + ":" + Math.max(0, Math.min((plan.counts[prev.shot.src] || 1) - 1, Math.round((prev.shot.in || 0) * fps + prev.len + k)))] = 1; }
+        if (s.dw && k < s.trLen && plan.segs[plan.segs.indexOf(s) - 1].shot.src) { var prev = plan.segs[plan.segs.indexOf(s) - 1]; need[prev.shot.src + ":" + Math.max(0, Math.min((plan.counts[prev.shot.src] || 1) - 1, Math.round((prev.shot.in || 0) * fps + prev.len + k)))] = 1; }
       });
       var imgs = {};
       await Promise.all(Object.keys(need).map(function (key) { var p = key.lastIndexOf(":"); return load(key.slice(0, p), +key.slice(p + 1)).then(function (im) { imgs[key] = im; }); }));
