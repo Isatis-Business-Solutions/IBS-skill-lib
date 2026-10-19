@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Poppins; font-weight: 300; src: url(/fonts/Poppins-Light.ttf); }
+  @font-face { font-family: Poppins; font-weight: 400; src: url(/fonts/Poppins-Regular.ttf); }
+  @font-face { font-family: Poppins; font-weight: 600; src: url(/fonts/Poppins-SemiBold.ttf); }
+  body { margin: 0; background: #171717; }
+</style>
+</head>
+<body>
+<script src="fx.js"></script>
+<script src="motion.js"></script>
+<script src="transition.js"></script>
+<script src="ibs-kit.js"></script>
+<script src="timeline.js"></script>
+<script>
+// Driven by scripts/render.mjs: init(timeline, counts, size) then frame(f) per frame → JPEG data URL.
+(function () {
+  var plan = null, cache = {};
+  function url(src, i) { return "/frames/" + encodeURIComponent(src) + "/" + String(i + 1).padStart(6, "0") + ".jpg"; }
+  function load(src, i) {
+    var key = src + ":" + i;
+    if (!cache[key]) cache[key] = new Promise(function (res, rej) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = rej; im.src = url(src, i); });
+    return cache[key];
+  }
+  window.IBSRender = {
+    init: async function (tl, counts, size) {
+      try { await Promise.all([300, 400, 600].map(function (w) { return document.fonts.load(w + " 20px Poppins"); })); } catch (e) {}
+      plan = window.IBSTimeline.compile(tl, counts, size);
+      return { total: plan.total, fps: plan.fps, events: plan.events, audio: plan.audio, fonts: document.fonts.check("600 20px Poppins") };
+    },
+    frame: async function (f, quality) {
+      // Preload every source frame this frame may need, then draw synchronously.
+      var need = {}, near = [f];
+      plan.segs.forEach(function (s) {
+        if (s.kind !== "shot" || f < s.start - 1 || f >= s.start + s.len + 1) return;
+        var k = f - s.start, fps = plan.fps;
+        need[s.shot.src + ":" + Math.max(0, Math.min((plan.counts[s.shot.src] || 1) - 1, Math.round((s.shot.in || 0) * fps + k)))] = 1;
+        if (s.dw && k < s.trLen) { var prev = plan.segs[plan.segs.indexOf(s) - 1]; need[prev.shot.src + ":" + Math.max(0, Math.min((plan.counts[prev.shot.src] || 1) - 1, Math.round((prev.shot.in || 0) * fps + prev.len + k)))] = 1; }
+      });
+      var imgs = {};
+      await Promise.all(Object.keys(need).map(function (key) { var p = key.lastIndexOf(":"); return load(key.slice(0, p), +key.slice(p + 1)).then(function (im) { imgs[key] = im; }); }));
+      Object.keys(cache).forEach(function (key) { if (!need[key]) delete cache[key]; });
+      var cv = window.IBSTimeline.frame(plan, f, function (src, i) { return imgs[src + ":" + i] || (function () { var c = document.createElement("canvas"); c.width = 2; c.height = 2; return c; })(); });
+      return cv.toDataURL("image/jpeg", quality || 0.92);
+    }
+  };
+})();
+</script>
+</body>
+</html>

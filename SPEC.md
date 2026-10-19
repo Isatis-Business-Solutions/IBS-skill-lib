@@ -19,6 +19,7 @@ release.
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
 | v1.3.1 | F4 divider met het IBS-merkteken in het midden | klaar, op branch |
+| v1.4.0 | F5 `ibs-videomontage` | in bouw (`drafts/`), testen |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -116,6 +117,42 @@ De signature-divider is een dunne dubbele lijn met het **IBS-merkteken** in het 
 vierkantje. Aangepast in `SKILL.md`, de referenties voor HTML/presentaties en PowerPoint, en `preview/index.html`.
 Aanleiding: de video-signature van IBS (repo `nft_ai_bs_meme`), waar de divider ook de wipe-lijn is.
 
+### F5. Video monteren in de IBS-signature (`ibs-videomontage`)
+
+**Status:** testen (`drafts/ibs-videomontage/`). **Release:** v1.4.0 (gepland).
+
+Een skill die van bestaande beelden een **hele clip** monteert in de IBS-video-signature: de juiste assets
+kiezen, het verhaal vormen rond tension en release, de montage als `timeline.json` schrijven en renderen naar
+MP4. Ontstaan in de leer-workspace `nft_ai_bs_meme` (lessen 1–5, signature en bibliotheek v0.3).
+
+Besloten (eigenaar, 2026-10-19):
+- **Alleen monteren.** Video genereren en storyboarden worden aparte skills, later (eerst verder leren). Deze
+  skill houdt er rekening mee: een storyboard of shotlijst wordt gevolgd; zonder doet de skill een lichte
+  verhaalstap (`references/story.md`).
+- **Hele clip** als resultaat, geen losse assets.
+- Assets als kant-en-klare code (`engine/`) met regels wanneer wat (`references/assets.md`), zodat de agent niet
+  alles uit markdown hoeft op te bouwen.
+
+Opbouw:
+- `SKILL.md`: werkwijze (beelden bekijken → verhaal → assets → timeline → stills → render → opleveren).
+- `references/`: `signature.md`, `assets.md`, `story.md`, `timeline.md`, `rendering.md`.
+- `engine/`: de assets in code (fx, motion, double wipe, IBS-kit) + `timeline.js` + `render.html`.
+- `scripts/render.mjs`: ffmpeg + headless Chromium (playwright-core) → MP4 met geluid (bronaudio, SFX, muziek).
+- `assets/sfx/`: hit, whoosh, riser (zelf gesynthetiseerd). Poppins komt uit `ibs-huisstijl`.
+- `catalog/ibs-edit-library.html`: alle assets live, voor de gebruiker.
+
+Getest (2026-10-19), met eigen testbeelden van de eigenaar (die blijven buiten deze repo):
+- Handmatige render: clip van 18 s, 1080×1920, ~60 s rendertijd.
+- Headless skilltest, 3 runs, zelfde opdracht (teamdag, ~15 s, geen gesproken tekst): alle drie laden de skill
+  en de referenties, schrijven een geldige timeline en leveren een MP4 van ~15 s op, in 3,5–5 min. De opbouw is
+  stabiel: hook met korte B-roll-shots, wisselende looks en FX-flashes, riser en hook-caption; release met
+  double wipe, glass card en captions; outro met logo-assemble. Een run gebruikte een detectie-callout met een
+  speels label.
+- Gevonden en verbeterd: één run sloeg de stills-controle over (nu verplicht in `SKILL.md`); captions over de
+  double wipe (de gele kernwoorden vallen weg op het gele vlak; nu een controleregel); `role: "A"` op beeld
+  zonder spreker (nu een controleregel).
+- Nog niet getest: echte A-roll met spreker en captions op gesproken tekst, 16:9, muziek.
+
 ## Ontwikkeling (onder de motorkap)
 
 Geen eigen release; gaat mee in de eerstvolgende release.
@@ -148,5 +185,6 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | Integratietest (one-pager met alle vier de skills) goedgekeurd; `ibs-stockbeeld` en de speelsheid samen uitgebracht als v1.3.0. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
+| 2026-10-19 | Nieuwe skill `ibs-videomontage` (F5): alleen monteren, hele clip; genereren en storyboard later als aparte skills. |
 | 2026-10-19 | Divider: dubbele lijn met het IBS-merkteken in het midden, nooit een los vierkantje (eigenaar). Patch v1.3.1. |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |
