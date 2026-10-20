@@ -30,7 +30,7 @@
     init: async function (tl, counts, size) {
       try { await Promise.all([300, 400, 600].map(function (w) { return document.fonts.load(w + " 20px Poppins"); })); } catch (e) {}
       plan = window.IBSTimeline.compile(tl, counts, size);
-      return { total: plan.total, fps: plan.fps, events: plan.events, audio: plan.audio, fonts: document.fonts.check("600 20px Poppins") };
+      return { total: plan.total, fps: plan.fps, events: plan.events, audio: plan.audio, shotMids: plan.shotMids, captionMids: plan.captionMids, fonts: document.fonts.check("600 20px Poppins") };
     },
     frame: async function (f, quality) {
       // Preload every source frame this frame may need, then draw synchronously.

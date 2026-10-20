@@ -19,25 +19,30 @@ You need: the footage files, the one thing the viewer must remember, the platfor
 a target length, and the spoken text if there are captions. Look first, ask second: decide what you can from
 the footage and the request, and ask at most three questions about the rest.
 
-**When the story itself is not clear yet** (what the product or idea is, who the viewer is, who uses it, what
-the viewer must do afterwards), grill the user first: one question at a time, until you can say the goal
-sentence, the audience, the product in one line and the core message. Use the `grilling` skill if it is
-installed. A clip edited on a vague story cannot be fixed in the edit (owner, after the first test edit).
+**When the story itself is not clear yet** (what the product is, who watches, who uses it, what the viewer
+does afterwards), plan it first with the `ibs-storyboard` skill, which grills the story and makes the shot
+list; without it, grill the user yourself, one question at a time, until you can say the goal sentence, the
+audience, the product in one line and the core message. A vague story cannot be fixed in the edit.
 
 ## Workflow
 
 0. **Keep the production record.** Every project has a folder with `production.json` and `LOG.md`
    (`references/production.md`). Read them first when they exist; update them after every change, so another
    agent can redo one shot or one edit later.
-1. **Look at the footage.** Make a contact sheet per file (`ffmpeg -i f -vf fps=1,scale=320:-1,tile=4x2`) and
+1. **Intake, then look at the footage.** When takes arrive, run `scripts/intake.mjs production.json` and act
+   on every note (crop, grade, or ask for a new take). Then make a contact sheet per file (`ffmpeg -i f -vf fps=1,scale=320:-1,tile=4x2`) and
    note per file: A-roll (carries the story, usually a speaker) or B-roll (shows it), usable moments (in point,
    length), and where the subject sits in the frame (for `focusX` / `focusY`).
 2. **Shape the story** around tension and release: `references/story.md`.
 3. **Choose assets per moment** with the rules in `references/assets.md`. Use only these assets. Beats that
    explain without footage of the product use a graphic shot (mail, puzzle, badges, knowledge map, flow).
-4. **Write `timeline.json`**: `references/timeline.md`.
-5. **Review, then render.** Shots that are not there yet render as placeholders (an animatic). Always render `--stills` first (a contact sheet every 0.5 s) and look at it;
-   fix what is off; only then render the MP4: `references/rendering.md`.
+4. **Write `timeline.json`**: `references/timeline.md`. Give every shot its `phase` (tension or release);
+   footage from a golden-hour plan gets `grade: "golden"`.
+5. **Check, review, then render.** `scripts/check.mjs timeline.json` must report no errors (`render.mjs`
+   runs it first and stops on errors). Render `--review` (one large frame per shot and per caption) and write
+   per frame, as the viewer: what they see and read. A frame you cannot describe in one sentence is a fault;
+   fix it. Then `--stills` for timing, then the MP4: `references/rendering.md`. Shots not there yet render as
+   placeholders (an animatic).
 6. **Deliver** the MP4, the timeline and a short summary of the edit in the user's language: story beats,
    assets used and why, anything you could not do.
 

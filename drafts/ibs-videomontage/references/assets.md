@@ -53,12 +53,16 @@ peaks on the release cut.
 
 ## Per shot
 
-**`look`** · a look on the whole shot. **Default `none`: the footage must stay readable.** Use a whole-shot
-look only on short texture shots that carry no story content, never on a shot whose action or subject is the
-point of the beat. Options: `edges`, `halftone`, `dither`, `duotone`, `posterize`, `threshold`,
+**`look`** · a look on the whole shot. **Default `none`: the footage stays readable.** A whole-shot look
+belongs only on a short tension shot (< 1.5 s) without story content; `check.mjs` enforces this. Options: `edges`, `halftone`, `dither`, `duotone`, `posterize`, `threshold`,
 `grain`, `scanlines`, `vignette`, `rgbsplit`, `glitch`, `pixelsort`, or `none`. Loud looks (`glitch`,
 `rgbsplit`, `threshold`, `pixelsort`) belong to tension only; in the release use `none` or at most `grain` or
 `vignette`.
+
+**`grade`** (timeline-level, per shot to override) · the colourist: pulls every shot towards one light.
+`golden` = golden hour (warm wash, amber glow from the top right, softer shadows). Use it on generated
+footage that came back cooler than the plan (intake reports the warmth), and to make shots from different
+tools match.
 
 **`zoom`** · `[from, to]` scale over the shot, eased (push-in `[1, 1.08]`, pull-out `[1.06, 1]`).
 

@@ -19,7 +19,7 @@ release.
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
 | v1.3.1 | F4 divider met het IBS-merkteken in het midden | klaar, op branch |
-| v1.4.0 | F5 `ibs-videomontage` | in bouw (`drafts/`), testen |
+| v1.4.0 | F5 `ibs-videomontage` + F6 `ibs-storyboard` | in bouw (`drafts/`), testen |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -160,6 +160,31 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 - **Beheer-skill `ibs-library-maintainer`** (`.claude/skills/`, intern): werkwijze voor deze repo. Klaar.
 - **Dit spec-document.** Klaar.
 
+### F6. Storyboard en shotlijst (`ibs-storyboard`)
+
+**Status:** in bouw (`drafts/ibs-storyboard/`). **Release:** v1.4.0 (gepland, samen met F5).
+
+Van idee naar een goedgekeurd videoplan: het verhaal uitvragen (grilling), het skelet kiezen vanuit het doel, per
+beat het beeld plannen (echt, gegenereerd, motion graphic), de prompts voor videogeneratie schrijven, en alles
+tonen als één storyboard-pagina (HTML) met per shot een beeld, die de gebruiker per shot goedkeurt.
+
+Besloten (eigenaar, 2026-10-20, na de retro op de kennisborging-test):
+- **Storyboard en shotlijst samen in één HTML-pagina**, met per shot een beeld: keyframe (image-generator) voor
+  gegenereerde shots, still uit de engine voor animaties, frame uit een take als die er is, anders een schets.
+  Doel: met meer zekerheid goedkeuren voordat er gegenereerd wordt.
+- **Eerst grillen:** zonder ingevulde brief (product, koper, gebruiker, doel, kern) geen shotlijst; `check.mjs` toetst.
+- **Pipeline:** storyboard → goedkeuring → videogeneratie → intake → montage. De videogeneratie-skill komt later en
+  wordt dan direct na goedkeuring aangeroepen; tot dan genereert de gebruiker zelf met de prompts uit het storyboard.
+- **`production.json` is de enige bron van waarheid** (schema 2, `references/production.md`); de montage-skill
+  verwijst ernaar.
+
+Opbouw: `SKILL.md` (8 stappen met eindcriteria), `references/` (brief, skeleton, image-plan, prompts, production),
+`scripts/check.mjs` (poort), `scripts/storyboard.mjs` (HTML). Gebruikt `ibs-videomontage/scripts/frames.mjs` voor
+stills.
+
+Getest (2026-10-20): `check.mjs` en `storyboard.mjs` op het kennisborging-project (17 shots, 1,3 MB, mobiel en
+desktop zonder horizontaal scrollen). Headless skilltest: nog te doen.
+
 ## Open vragen
 
 | # | Feature | Vraag | Antwoord |
@@ -178,6 +203,11 @@ Uitbreiding (2026-10-19, eigenaar: "goed om in deze video skills dit soort infor
   vorige shot niet geladen (render.html).
 - **Graphic shots uitgebreid (2026-10-20):** `minigames`, `city` (stad als voortgang, gebouwen = kennis), `chat`
   (kennisbank beantwoordt een vraag), naar aanleiding van de eigenaar: product moet duidelijk in beeld.
+- **Retro (2026-10-20):** `scripts/check.mjs` (regels van de signature, draait vóór elke render; stopt bij fouten),
+  `phase` per shot in de timeline, `grade: "golden"` (golden-hour-kleurcorrectie op footage), `scripts/intake.mjs`
+  (verhouding, lengte en warmte per take), `render.mjs --review` (groot frame per shot en per caption), atomaire
+  output (geen half geschreven MP4 bij twee renders), `scripts/frames.mjs` (stills voor het storyboard). Regel over
+  looks op één plek (`assets.md`).
 - **Animatic:** `scripts/placeholders.mjs` maakt placeholders voor shots die nog niet bestaan; `fallback` in de
   timeline. Getest op een clip van 47 s (19 shots, 9 placeholders, 6 graphics): stills en MP4 renderen zonder fouten.
 
@@ -200,6 +230,7 @@ Uitbreiding (2026-10-19, eigenaar: "goed om in deze video skills dit soort infor
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-19 | Nieuwe skill `ibs-videomontage` (F5): alleen monteren, hele clip; genereren en storyboard later als aparte skills. |
+| 2026-10-20 | Nieuwe skill `ibs-storyboard` (F6): storyboard + shotlijst in één HTML met beelden, goedkeuring per shot; daarna (later) videogeneratie. Retro-verbeteringen in F5. |
 | 2026-10-20 | Eerst een grilling-sessie als het verhaal nog niet helder is (product, kijker, gebruiker, doel), pas dan monteren. Tension en release moeten voelbaar verschillen; leestijd voor captions en graphics (eigenaar na testmontage v3). |
 | 2026-10-19 | Footage blijft leesbaar: looks zijn accenten (FX-flash, detect-kader), standaard `look: none`, shots met verhaal 1,5–3 s (eigenaar na testmontage: "ik zie vrijwel nooit het daadwerkelijke video element"). |
 | 2026-10-19 | `ibs-videomontage` houdt per project een productielogboek bij (`production.json` + `LOG.md`); graphic shots en animatic erbij. |

@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 // Render an ibs-videomontage timeline to an MP4.
 //
-//   node render.mjs <timeline.json> [--out clip.mp4] [--draft] [--stills] [--chromium <path>]
+//   node render.mjs <timeline.json> [--out clip.mp4] [--draft] [--stills] [--review] [--force] [--chromium <path>]
 //
 // --draft   half resolution, faster (for checking the edit)
-// --stills  no video: writes a contact sheet (one frame every 0.5 s) next to the output, for review
+// --stills  no video: writes a contact sheet (one frame every 0.5 s) next to the output, for timing
+// --review  no video: one large frame per shot (its middle) and per caption, to judge as a viewer
+// --force   render even when check.mjs reports errors
 // Needs: ffmpeg/ffprobe on PATH, and the npm package `playwright` or `playwright-core` (with a Chromium).
 import { createRequire } from "node:module";
 import { spawnSync } from "node:child_process";
@@ -12,6 +14,7 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { check } from "./check.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const skill = path.resolve(here, "..");
@@ -23,6 +26,11 @@ if (!tlPath) { console.error("Usage: node render.mjs <timeline.json> [--out clip
 
 const tl = JSON.parse(fs.readFileSync(tlPath, "utf8"));
 const base = path.dirname(path.resolve(tlPath));
+
+// 0 · Check the signature rules first (scripts/check.mjs).
+const verdict = check(tl, base);
+verdict.errors.forEach((m) => console.log("✗ " + m)); verdict.warnings.forEach((m) => console.log("! " + m));
+if (verdict.errors.length && !flag("--force")) { console.error(`${verdict.errors.length} error(s): fix the timeline, or pass --force.`); process.exit(1); }
 const fps = tl.format?.fps || 24;
 const aspect = tl.format?.aspect || "9:16";
 const [aw, ah] = aspect.split(":").map(Number);
@@ -88,21 +96,30 @@ await page.goto(`http://127.0.0.1:${port}/render.html`);
 const plan = await page.evaluate(([t, c, s]) => window.IBSRender.init(t, c, s), [tl, counts, { width, height }]);
 if (!plan.fonts) console.warn("! Poppins not found (install ibs-huisstijl next to this skill); using a fallback font.");
 const frames = path.join(work, "out"); fs.mkdirSync(frames);
-const stills = flag("--stills");
+const stills = flag("--stills"), review = flag("--review");
 const step = stills ? Math.round(fps / 2) : 1;
 const t0 = Date.now();
-for (let f = 0; f < plan.total; f += step) {
+// Review frames: the middle of every shot and of every caption (frame indices into the plan).
+let list = null;
+if (review) {
+  const set = new Set(plan.shotMids.concat(plan.captionMids).map((x) => Math.min(plan.total - 1, Math.max(0, x))));
+  list = [...set].sort((a, b) => a - b);
+}
+const todo = list || Array.from({ length: Math.ceil(plan.total / step) }, (_, k) => k * step);
+for (let n = 0; n < todo.length; n++) {
+  const f = todo[n];
   const data = await page.evaluate(([i]) => window.IBSRender.frame(i, 0.9), [f]);
-  fs.writeFileSync(path.join(frames, String(f / step + 1).padStart(6, "0") + ".jpg"), Buffer.from(data.split(",")[1], "base64"));
-  if (f % (fps * 2) === 0) process.stdout.write(`\r· render ${f}/${plan.total}`);
+  fs.writeFileSync(path.join(frames, String(n + 1).padStart(6, "0") + ".jpg"), Buffer.from(data.split(",")[1], "base64"));
+  if (n % (fps * 2) === 0) process.stdout.write(`\r· render ${n}/${todo.length}`);
 }
 console.log(`\r· render ${plan.total}/${plan.total} frames in ${((Date.now() - t0) / 1000).toFixed(0)} s`);
 await browser.close(); server.close();
 
-if (stills) {
-  const sheet = out.replace(/\.mp4$/, "") + "-stills.jpg";
-  const n = Math.ceil(plan.total / step), cols = 6, rows = Math.ceil(n / cols);
-  run("ffmpeg", ["-v", "error", "-y", "-i", path.join(frames, "%06d.jpg"), "-vf", `scale=${aw < ah ? 180 : 320}:-1,tile=${cols}x${rows}`, "-frames:v", "1", sheet]);
+if (stills || review) {
+  const sheet = out.replace(/\.mp4$/, "") + (review ? "-review.jpg" : "-stills.jpg");
+  const n = todo.length, cols = review ? 4 : 6, rows = Math.ceil(n / cols);
+  run("ffmpeg", ["-v", "error", "-y", "-i", path.join(frames, "%06d.jpg"), "-vf", `scale=${review ? (aw < ah ? 360 : 640) : (aw < ah ? 180 : 320)}:-1,tile=${cols}x${rows}`, "-frames:v", "1", sheet]);
+  if (review) fs.writeFileSync(sheet.replace(/\.jpg$/, ".txt"), todo.map((f, k) => `${k + 1}\t${(f / fps).toFixed(2)} s`).join("\n") + "\n");
   fs.rmSync(work, { recursive: true, force: true });
   console.log("✓ " + sheet);
   process.exit(0);
@@ -135,7 +152,9 @@ const video = path.join(work, "video.mp4");
 run("ffmpeg", ["-v", "error", "-y", "-framerate", String(fps), "-i", path.join(frames, "%06d.jpg"), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", flag("--draft") ? "26" : "21", "-maxrate", "10M", "-bufsize", "20M", "-preset", "medium", "-movflags", "+faststart", video]);
 if (labels.length) {
   const mix = `${filters.join(";")};${labels.map((l) => `[${l}]`).join("")}amix=inputs=${labels.length}:normalize=0,alimiter=limit=0.95,apad[mix]`;
-  run("ffmpeg", ["-v", "error", "-y", "-i", video, ...inputs, "-filter_complex", mix, "-map", "0:v", "-map", "[mix]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", out]);
-} else fs.copyFileSync(video, out);
+  run("ffmpeg", ["-v", "error", "-y", "-i", video, ...inputs, "-filter_complex", mix, "-map", "0:v", "-map", "[mix]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", path.join(work, "final.mp4")]);
+} else fs.copyFileSync(video, path.join(work, "final.mp4"));
+// Written last and in one move, so a second render or a reader never sees a half-written file.
+fs.renameSync(path.join(work, "final.mp4"), out);
 fs.rmSync(work, { recursive: true, force: true });
 console.log(`✓ ${out} · ${(plan.total / fps).toFixed(1)} s · ${width}×${height} · ${fps} fps`);

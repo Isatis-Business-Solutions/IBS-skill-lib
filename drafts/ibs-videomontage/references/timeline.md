@@ -33,9 +33,13 @@ in frames (24 fps).
   reframed (0 = left/top, 0.5 = centre, 1 = right/bottom); `fallback` is used while `file` does not exist yet
   (a placeholder, see `production.md`).
 - **brand** · `intro` / `outro`: `"assemble"` or `null`.
+- **grade** · colour grade on all footage (not on graphic shots): `"golden"` or `{ "type": "golden", "amt": 0.6 }`;
+  a shot can opt out with `grade: false` or set its own.
 - **audio** · `sfx` (hits, whooshes, risers; default on), `music` (a file; it is faded out at the end) and
   `musicGain`.
 - **shots** · played in order. `src`, `in` (start in the source, s), `dur` (s), `role` `"A"` or `"B"`.
+  `phase` `"tension"` or `"release"` (the beat it belongs to; `check.mjs` applies the rules per phase;
+  graphic shots default to release).
   A graphic shot has `graphic: { type, …options }` instead of `src`/`in` (see `assets.md`).
   Optional: `look`, `lookAmt` (0–1), `zoom` `[from, to]`, `audio` (keep the source sound; default true for
   A-roll, false for B-roll), `gain`, `transition` (`{ type, look, frames, params }`, into this shot).

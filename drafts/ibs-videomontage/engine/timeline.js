@@ -10,7 +10,7 @@
 
   function compile(tl, counts, size) {
     var fps = (tl.format && tl.format.fps) || 24, W = size.width, H = size.height;
-    var plan = { fps: fps, W: W, H: H, segs: [], overlays: [], events: [], audio: [], counts: counts, total: 0 };
+    var plan = { fps: fps, W: W, H: H, segs: [], overlays: [], events: [], audio: [], counts: counts, total: 0, grade: tl.grade || null };
     var f = 0, brand = tl.brand || {}, sfx = !tl.audio || tl.audio.sfx !== false;
 
     function assembleSeg() {
@@ -70,8 +70,25 @@
       } else return;
       plan.overlays.push(ov);
     });
+    // For review sheets: the middle frame of every shot and of every caption.
+    plan.shotMids = plan.segs.filter(function (s) { return s.kind === "shot"; }).map(function (s) { return s.start + Math.min(s.len - 1, Math.max(s.trLen, Math.floor(s.len / 2))); });
+    plan.captionMids = plan.overlays.filter(function (o) { return o.o.type === "captions"; }).map(function (o) { return o.start + Math.floor(o.len * 0.75); });
     plan.base = mk(W, H); plan.tmp = mk(W, H); plan.ovc = mk(W, H);
     return plan;
+  }
+
+  // Colour grade on footage (the colourist's job): pulls every shot towards one light. "golden" = golden hour:
+  // warm soft-light wash, amber glow from the top right, lifted shadows. amt 0–1 (default 0.6).
+  function grade(ctx, W, H, g) {
+    var type = g.type || g, amt = g.amt == null ? 0.6 : g.amt;
+    if (type !== "golden" || amt <= 0) return;
+    ctx.save();
+    ctx.globalCompositeOperation = "soft-light"; ctx.globalAlpha = 0.55 * amt; ctx.fillStyle = "#F2A541"; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "screen"; ctx.globalAlpha = 0.5 * amt;
+    var rg = ctx.createRadialGradient(W, 0, 0, W, 0, Math.max(W, H) * 0.9); rg.addColorStop(0, "rgba(249,200,82,.55)"); rg.addColorStop(1, "rgba(249,200,82,0)");
+    ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "multiply"; ctx.globalAlpha = 0.18 * amt; ctx.fillStyle = "#E8C9A0"; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
   }
 
   function mk(w, h) { var c = document.createElement("canvas"); c.width = w; c.height = h; return c; }
@@ -84,6 +101,8 @@
     var W = plan.W, H = plan.H, z = 1;
     if (s.zoom) { var len = Math.max(1, Math.round(s.dur * fps)), t = Math.min(1, k / len); z = s.zoom[0] + (s.zoom[1] - s.zoom[0]) * window.Motion.bezier(window.Motion.EASES.easeInOut.curve)(t); }
     ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(z, z); ctx.translate(-W / 2, -H / 2); ctx.drawImage(img, 0, 0, W, H); ctx.restore();
+    var gr = s.grade === false ? null : (s.grade || plan.grade);
+    if (gr) grade(ctx, W, H, gr);
     if (s.look && s.look !== "none") {
       window.FX.apply(s.look, ctx.canvas, plan.tmp, { dark: K.DARK, light: K.GOLD, amt: s.lookAmt == null ? 0.6 : s.lookAmt, t: k / fps });
       ctx.drawImage(plan.tmp, 0, 0);

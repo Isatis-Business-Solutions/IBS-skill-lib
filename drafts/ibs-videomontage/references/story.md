@@ -40,10 +40,8 @@ between the topics anyway.
 ## Check before rendering
 - Does the first second make the viewer stay? Is the message clear without sound (captions)?
 - Do loud things only happen in the tension, and does every loud visual event land on a cut or a hit?
-- **Can the viewer see what each shot shows?** A shot that carries a beat (an action, a person, an object
-  the story is about) plays clean (`look: "none"`) and long enough to read: 1.5–3 s. Looks are accents:
-  the FX flash on the cut and the look inside a detection box. Watch the stills as a viewer: if you cannot
-  tell what you are looking at, remove the look or lengthen the shot.
+- **Can the viewer see what each shot shows?** Judge the `--review` sheet as a viewer (see `assets.md`,
+  `look`, for the rule on looks).
 - Does every callout end inside its shot?
 - Is no caption or card on screen during a double wipe or logo spin (the flat yellow frame hides the yellow key
   word)? Start text after the transition.
