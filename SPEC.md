@@ -18,6 +18,7 @@ release.
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
+| v1.4.0 | F4 `teach` (van Matt Pocock) | in bouw (`drafts/teach/`) |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -107,6 +108,27 @@ Eerder getest (3 runs, zonder login): de skill herkent dat er geen route is, leg
 noemt de benodigde netwerkdomeinen, installeert niets zonder akkoord en geeft een prompt (één run ook een
 placeholder). Nog niet getest: echt een beeld maken via Codex of de API.
 
+### F4. Leren met een eigen leerplek (`teach`)
+
+**Status:** in bouw (`drafts/teach/`). **Release:** v1.4.0.
+
+De `teach`-skill van Matt Pocock: van een map een leerplek maken voor één onderwerp, over meerdere sessies. Met
+een missie (waarom je het leert), bronnen, lessen als losse HTML-bestanden, naslag, leerrecords en notities.
+De eigenaar gebruikt hem al (video regisseren met AI, Spaans leren) en wil hem in de bibliotheek.
+
+Bekend:
+- **Bron:** [mattpocock/skills](https://github.com/mattpocock/skills), versie 1.3.1 (`49dd158`), MIT. Ongewijzigd
+  overgenomen, met zijn licentie in de skillmap (`drafts/teach/LICENSE`), zodat de naamsvermelding meegaat in
+  de zip en bij `npx skills`.
+- **Naam `teach`**, zonder `ibs-`: hij heeft niets met IBS te maken.
+- **Alleen op verzoek:** `disable-model-invocation: true`, dus in Claude Code alleen via `/teach`.
+
+Voorstel (wacht op de open vragen):
+- Bij publiceren: de root-`LICENSE` krijgt een uitzondering voor `skills/teach/` (MIT, Matt Pocock), en
+  `docs/teach.md` houdt bij welke upstream-versie we hebben en wat we zelf veranderden.
+- Testen: headless `/teach` op twee onderwerpen, elk 3 keer; kijken of hij eerst naar de missie vraagt en een
+  werkende leerplek opzet.
+
 ## Ontwikkeling (onder de motorkap)
 
 Geen eigen release; gaat mee in de eerstvolgende release.
@@ -120,6 +142,9 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 |---|---|---|---|
 | 1 | Releases | Zullen we v1.0.0 en v1.1.0 alsnog taggen, zodat collega's een downloadbare release hebben? | |
 | 2 | F3 | Echte test: sta je `chatgpt.com` en `auth.openai.com` toe in de netwerkinstellingen van deze omgeving en log je één keer in? | Ja: domeinen toegestaan, ingelogd via browser en terugplakken. Werkt. |
+| 3 | F4 | Letterlijk Matt's versie houden (makkelijk bij te werken), of onze eigen lessen erin verwerken (les als los bestand voor de telefoon, overhoren met gamification, badges)? | |
+| 4 | F4 | De beschrijving is nu één Engelse zin. Uitbreiden met wat/wanneer en Nederlandse en Engelse triggerwoorden (onze conventie), zodat hij ook in de Claude-app goed laadt? | |
+| 5 | F4 | Alleen via `/teach` houden, of ook automatisch laten laden als iemand zegt "leer me ..."? | |
 
 ## Besluitenlog
 
@@ -140,3 +165,4 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |
+| 2026-10-20 | `teach` van Matt Pocock (MIT) komt in de bibliotheek als algemene skill zonder `ibs-`; start in `drafts/`, met zijn licentie in de skillmap. |
