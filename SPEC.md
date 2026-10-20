@@ -183,7 +183,16 @@ Opbouw: `SKILL.md` (8 stappen met eindcriteria), `references/` (brief, skeleton,
 stills.
 
 Getest (2026-10-20): `check.mjs` en `storyboard.mjs` op het kennisborging-project (17 shots, 1,3 MB, mobiel en
-desktop zonder horizontaal scrollen). Headless skilltest: nog te doen.
+desktop zonder horizontaal scrollen).
+- Headless skilltest (2026-10-20), 3 runs, zelfde opdracht (AI-beleidbrekers "Zelflerend", 45 s, geen eigen beeld,
+  niemand om vragen te beantwoorden): alle drie laden de skill, vullen de brief met aannames en zetten die bij de
+  open vragen (8–11), leveren een `production.json` zonder check-fouten en een `storyboard.html`; 2–5 min,
+  $0,30–0,57. Stabiele opbouw: 2 gegenereerde openingsshots (handen, geen gezichten) → één woord splitst in vier
+  → vier release-graphics, één per betekenis → de beleidsvraag → CTA. Skeletkeuze wisselt (piramide, PAS, ABT).
+- Bevindingen en aanpassingen: run 3 maakte geen stills en bekeek de pagina niet → `storyboard.mjs` maakt de stills
+  nu zelf, stap 7 heeft een eindcriterium (screenshot, elke kaart klopt). Lege first/last-frame-regels weg.
+  Open: elke run vroeg 3–5 nieuwe graphics (`type: new`) voor uitleg-clips → generieke uitleg-graphics nodig
+  (begrippenkaart, lagen, vergelijking). Geen image-model in de testomgeving, dus keyframes zijn schetsen.
 
 ## Open vragen
 

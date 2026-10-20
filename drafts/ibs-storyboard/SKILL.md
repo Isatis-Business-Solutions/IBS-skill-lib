@@ -26,12 +26,13 @@ from the storyboard and delivers them as `gen/<shot id>.mp4`.
    prompt, keyframe prompt and frames (`references/prompts.md`); per graphic shot the `graphic` and its
    options; per shot the caption.
 5. **Check:** `node scripts/check.mjs production.json`. Fix every error; decide every warning.
-6. **Make the frames.** For every generated shot without a take, make its keyframe image from
-   `keyframe_prompt` with the `image-generator` skill (save as `frames/<id>.png`). Then, if `ibs-videomontage`
-   is installed, run its `scripts/frames.mjs production.json` for stills of the graphic shots and of
-   delivered takes. Shots without a frame get a sketch in the storyboard.
-7. **Build the storyboard:** `node scripts/storyboard.mjs production.json` → `storyboard.html`. Open it,
-   look at every card as the viewer would, then give it to the user.
+6. **Make the keyframes.** For every generated shot without a take, make its keyframe image from
+   `keyframe_prompt` with the `image-generator` skill (save as `frames/<id>.png`). Shots without a frame get a
+   sketch in the storyboard; say which ones in your reply.
+7. **Build the storyboard:** `node scripts/storyboard.mjs production.json` → `storyboard.html` (it also makes
+   stills of the graphic shots and of delivered takes when `ibs-videomontage` is installed). Screenshot the
+   page and look at every card as the viewer would; done when each card's frame, caption and specs say the
+   same thing. Then give it to the user.
 8. **Get approval.** The user approves or comments per shot (the page can copy their feedback for the
    chat). Process the feedback into `production.json` and `LOG.md`, rebuild, until every shot is approved.
    Then hand over: list per generated shot what to generate (prompt + style block, frames, aspect, seconds).

@@ -2,11 +2,12 @@
 // Build the storyboard page from production.json: one self-contained HTML file (images and fonts inline) in
 // the IBS house style, for the user to read and approve shot by shot.
 //
-//   node storyboard.mjs <production.json> [--out storyboard.html]
+//   node storyboard.mjs <production.json> [--out storyboard.html] [--no-frames]
 //
 // Frames come from frames/<id>.(png|jpg|webp); a shot without one gets a sketch of its framing and move.
 // Approvals are kept in the viewer's browser and copied as text for the chat; the agent writes them into
 // production.json.
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,6 +18,13 @@ if (!prodPath) { console.error("Usage: node storyboard.mjs <production.json> [--
 const opt = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : null; };
 const base = path.dirname(path.resolve(prodPath)), p = JSON.parse(fs.readFileSync(prodPath, "utf8"));
 const out = path.resolve(opt("--out") || path.join(base, "storyboard.html"));
+
+// Stills for graphic shots and delivered takes come from ibs-videomontage when it is installed next to this skill.
+const framesScript = [path.join(here, "..", "..", "ibs-videomontage", "scripts", "frames.mjs")].find((f) => fs.existsSync(f));
+if (framesScript && !args.includes("--no-frames")) {
+  const r = spawnSync(process.execPath, [framesScript, path.resolve(prodPath)], { stdio: ["ignore", "pipe", "pipe"], cwd: process.cwd() });
+  if (r.status !== 0) console.warn("! frames.mjs:", (r.stderr || "").toString().slice(-300));
+}
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const uri = (file) => `data:${{ ".png": "image/png", ".webp": "image/webp" }[path.extname(file)] || "image/jpeg"};base64,${fs.readFileSync(file).toString("base64")}`;
@@ -60,7 +68,7 @@ const card = (s) => {
   const fr = frameOf(s.id), size = SIZE[s.size]?.[0], move = MOVE[s.move];
   const specs = [SRC[s.source], size && `${size} (${s.size.toUpperCase()})`, move, s.graphic && `graphic: ${s.graphic.type}`, s.seconds && `${s.seconds} s in beeld`, s.gen_seconds && `genereer ${s.gen_seconds} s · ${s.aspect || b.format || "9:16"}`].filter(Boolean);
   const prompt = s.prompt ? `${s.prompt}\n\n${(p.styles || {})[s.style] || ""}`.trim() : "";
-  const frames = s.frames ? Object.entries(s.frames).map(([k, v]) => `<li><b>${k === "first" ? "First frame" : k === "last" ? "Last frame" : k}:</b> ${esc(v)}</li>`).join("") : "";
+  const frames = s.frames ? Object.entries(s.frames).filter(([, v]) => v).map(([k, v]) => `<li><b>${k === "first" ? "First frame" : k === "last" ? "Last frame" : k}:</b> ${esc(v)}</li>`).join("") : "";
   return `<article class="shot ${esc(s.phase)}" data-id="${esc(s.id)}">
   <div class="frame">${fr ? `<img src="${uri(fr)}" alt="${esc(s.id)}">` : sketch(s)}${s.caption?.text ? `<div class="cap">${cap(s.caption)}</div>` : ""}</div>
   <div class="body">
