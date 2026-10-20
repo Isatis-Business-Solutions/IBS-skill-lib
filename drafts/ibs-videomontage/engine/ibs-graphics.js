@@ -270,8 +270,10 @@
         var p = iso(gx, gy); ctx.beginPath(); ctx.moveTo(p[0], p[1] - th / 2); ctx.lineTo(p[0] + tw / 2, p[1]); ctx.lineTo(p[0], p[1] + th / 2); ctx.lineTo(p[0] - tw / 2, p[1]); ctx.closePath();
         ctx.strokeStyle = "rgba(254,249,237,.08)"; ctx.lineWidth = 0.6 * u; ctx.stroke();
       }
-      var spots = [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]];
-      o.blocks.forEach(function (b, i) {
+      var spots = [[-1.5, 0], [0, -1.5], [0, 0], [1.5, 0], [0, 1.5]], labels = [];
+      // Draw back to front (depth = gx + gy), labels last so they never hide behind a building.
+      o.blocks.map(function (b, i) { return [b, i]; }).sort(function (x, y) { var a = spots[x[1] % spots.length], c = spots[y[1] % spots.length]; return (a[0] + a[1]) - (c[0] + c[1]); }).forEach(function (bi) {
+        var b = bi[0], i = bi[1];
         var sp = spots[i % spots.length], p = iso(sp[0], sp[1]), t = E("overshoot", seg(f, i * 4, i * 4 + 12));
         var up = i === o.upgrade ? E("overshoot", seg(f, tUp, tUp + 14)) : 0, floors = b[1] + up, hgt = floors * 13 * u * t;
         if (t <= 0) return;
@@ -279,8 +281,11 @@
         ctx.beginPath(); ctx.moveTo(p[0] - hw, p[1]); ctx.lineTo(p[0], p[1] + hh); ctx.lineTo(p[0], top + hh); ctx.lineTo(p[0] - hw, top); ctx.closePath(); ctx.fillStyle = gold ? "#C9A24A" : "#3a3833"; ctx.fill();
         ctx.beginPath(); ctx.moveTo(p[0] + hw, p[1]); ctx.lineTo(p[0], p[1] + hh); ctx.lineTo(p[0], top + hh); ctx.lineTo(p[0] + hw, top); ctx.closePath(); ctx.fillStyle = gold ? "#a8853a" : "#2c2a26"; ctx.fill();
         ctx.beginPath(); ctx.moveTo(p[0], top - hh); ctx.lineTo(p[0] + hw, top); ctx.lineTo(p[0], top + hh); ctx.lineTo(p[0] - hw, top); ctx.closePath(); ctx.fillStyle = gold ? GOLD : "#e9e2d2"; ctx.fill();
-        ctx.fillStyle = gold ? GOLD : MUTED; font(ctx, gold ? 600 : 400, 6.5 * u); ctx.textAlign = "center"; ctx.fillText(b[0] + (gold ? " · level " + (b[1] + 1) : ""), p[0], top - hh - 5 * u); ctx.textAlign = "left";
+        labels.push([b[0] + (gold ? " · level " + (b[1] + 1) : ""), p[0], top - hh - (gold ? 14 : 5) * u, gold]);
       });
+      ctx.textAlign = "center"; ctx.shadowColor = "rgba(0,0,0,.8)"; ctx.shadowBlur = 4 * u;
+      labels.forEach(function (l) { ctx.fillStyle = l[3] ? GOLD : MUTED; font(ctx, l[3] ? 600 : 400, 6.5 * u); ctx.fillText(l[0], l[1], l[2]); });
+      ctx.shadowBlur = 0; ctx.textAlign = "left";
       var ha = E("easeOut", seg(f, 4, 14));
       ctx.save(); ctx.globalAlpha = ha;
       rr(ctx, 18 * u, 40 * u, 66 * u, 22 * u, 11 * u); ctx.fillStyle = "rgba(254,249,237,.06)"; ctx.fill(); ctx.strokeStyle = "rgba(254,249,237,.3)"; ctx.lineWidth = 0.8 * u; ctx.stroke();
