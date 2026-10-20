@@ -4,12 +4,17 @@ This is the light story step for editing. A full storyboard (a separate skill, l
 user brings a storyboard or shot list, follow that and only fill gaps with these rules.
 
 ## Shape
-A clip is a sequence of **beats**. Each beat is tension or release.
+A clip is a sequence of **beats**. Each beat is tension or release, and the viewer must **feel** the
+difference: tension is short, loud and moving; release is longer, calmer and holds still long enough to read.
+If every beat moves at the same pace, everything reads as tension.
+
+**Reading time.** A caption stays on screen at least 1 s plus 0.3 s per word; a graphic that explains holds
+its end state at least 1.5 s after the last element lands. When in doubt, give the release more time.
 
 - **Hook (tension, first 2–4 s):** the question, the surprise or the problem, without context. B-roll bursts,
   short shots, FX flash on the cuts, a riser that peaks on the first release cut,
   the hook line as captions.
-- **Release beat (per topic):** the answer or the point. Enters with a double wipe when it is a new topic and
+- **Release beat (per topic):** the answer or the point, 3–6 s per shot or graphic, no FX flash, no riser. Enters with a double wipe when it is a new topic and
   there is A-roll; shots of 3–5 s; captions for the spoken line; one glass card or detection callout per beat
   at most.
 - **Short tension between topics:** a burst of 2–4 B-roll shots with FX flashes, when the clip is longer than

@@ -189,8 +189,129 @@
     } };
   } };
 
+
+  // ---------- Minigames: three short games that fill exactly the knowledge that is missing ----------
+  // 1 order the steps, 2 spot what goes wrong, 3 fill the gap. Each game: title, play, check, +points.
+  var minigames = { create: function (o) {
+    o = Object.assign({ game: 60, hold: 24,
+      order: { title: "Zet de stappen op volgorde", steps: ["Marge checken", "Akkoord finance", "Offerte versturen"], from: [2, 0, 1] },
+      spot: { title: "Wat gaat hier mis?", nodes: ["Aanvraag", "Prijs", "Akkoord", "Klant"], wrong: 2 },
+      fill: { title: "Vul het gat", before: "Boven de 50k eerst", word: "akkoord finance", after: "." },
+      points: "+40" }, o);
+    var G = o.game;
+    function header(ctx, i, title, u, W, a) {
+      ctx.save(); ctx.globalAlpha = a;
+      eyebrow(ctx, "MINIGAME " + (i + 1) + "/3", 18 * u, 46 * u, u);
+      for (var k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(W - 38 * u + k * 9 * u, 44 * u, 2.5 * u, 0, Math.PI * 2); ctx.fillStyle = k <= i ? GOLD : "#3A3A3A"; ctx.fill(); }
+      ctx.fillStyle = CREAM; font(ctx, 600, 11 * u); wrap(ctx, title, W - 36 * u).forEach(function (l, j) { ctx.fillText(l, 18 * u, 64 * u + j * 14 * u); });
+      ctx.restore();
+    }
+    function check(ctx, f, at, u, W) {
+      var t = seg(f, at, at + 10); if (!t) return;
+      var e = E("overshoot", t), cx = W / 2, cy = 210 * u;
+      ctx.save(); ctx.globalAlpha = Math.min(1, t * 2); ctx.translate(cx, cy); ctx.scale(e, e);
+      rr(ctx, -34 * u, -12 * u, 68 * u, 24 * u, 12 * u); ctx.fillStyle = "rgba(249,200,82,.16)"; ctx.fill(); ctx.strokeStyle = GOLD; ctx.lineWidth = 0.9 * u; ctx.stroke();
+      ctx.strokeStyle = GOLD; ctx.lineWidth = 1.6 * u; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(-22 * u, 0); ctx.lineTo(-17 * u, 5 * u); ctx.lineTo(-9 * u, -5 * u); ctx.stroke();
+      ctx.fillStyle = GOLD; font(ctx, 600, 9 * u); ctx.fillText(o.points, -2 * u, 3.5 * u); ctx.restore();
+    }
+    return { total: 3 * G + o.hold, opts: o, render: function (ctx, f0) {
+      var f = twos(o, f0), W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180; K.bgDark(ctx, W, H);
+      var i = Math.min(2, Math.floor(f / G)), lf = f - i * G, a = E("easeOut", seg(lf, 0, 8)) * (i < 2 ? 1 - seg(lf, G - 6, G) : 1);
+      ctx.save(); ctx.globalAlpha = a;
+      if (i === 0) {
+        var g = o.order; header(ctx, 0, g.title, u, W, 1);
+        var sw = W - 36 * u, sh = 24 * u, t = E("easeInOut", seg(lf, 16, 34));
+        g.steps.forEach(function (st, k) {
+          var y0 = 96 * u + g.from[k] * 30 * u, y1 = 96 * u + k * 30 * u, y = lerp(y0, y1, t), done = t >= 1;
+          rr(ctx, 18 * u, y, sw, sh, 6 * u); ctx.fillStyle = "#1f1e1b"; ctx.fill(); ctx.strokeStyle = done ? "rgba(249,200,82,.7)" : "rgba(254,249,237,.3)"; ctx.lineWidth = 0.8 * u; ctx.stroke();
+          ctx.fillStyle = done ? GOLD : MUTED; font(ctx, 600, 8 * u); ctx.fillText(String(done ? k + 1 : "⋮"), 26 * u, y + 15.5 * u);
+          ctx.fillStyle = CREAM; font(ctx, 400, 8 * u); ctx.fillText(st, 40 * u, y + 15.5 * u);
+        });
+        check(ctx, lf, 36, u, W);
+      } else if (i === 1) {
+        var g2 = o.spot; header(ctx, 1, g2.title, u, W, 1);
+        var n = g2.nodes.length, y = 130 * u, x0 = 26 * u, step = (W - 52 * u) / (n - 1), pick = seg(lf, 22, 30);
+        ctx.strokeStyle = "rgba(254,249,237,.3)"; ctx.lineWidth = 0.8 * u; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + step * (n - 1), y); ctx.stroke();
+        g2.nodes.forEach(function (nm, k) {
+          var x = x0 + k * step, hit = k === g2.wrong && pick > 0, r = (hit ? lerp(6, 9, E("overshoot", pick)) : 6) * u;
+          ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = hit ? GOLD : "#1f1e1b"; ctx.fill(); ctx.strokeStyle = hit ? GOLD : CREAM; ctx.lineWidth = 0.9 * u; ctx.stroke();
+          ctx.fillStyle = hit ? GOLD : CREAM; font(ctx, 400, 6.5 * u); ctx.textAlign = "center"; ctx.fillText(nm, x, y + (k % 2 ? -14 : 20) * u); ctx.textAlign = "left";
+        });
+        if (pick > 0) { ctx.save(); ctx.globalAlpha = pick; ctx.fillStyle = MUTED; font(ctx, 400, 7 * u); ctx.textAlign = "center"; ctx.fillText("akkoord ontbreekt bij spoed", x0 + g2.wrong * step, y + 34 * u); ctx.restore(); }
+        check(ctx, lf, 34, u, W);
+      } else {
+        var g3 = o.fill; header(ctx, 2, g3.title, u, W, 1);
+        var bx = 18 * u, by = 104 * u, bw = W - 36 * u, fly = E("easeOut", seg(lf, 16, 30));
+        rr(ctx, bx, by, bw, 50 * u, 10 * u); ctx.fillStyle = "rgba(254,249,237,.05)"; ctx.fill(); ctx.strokeStyle = "rgba(254,249,237,.3)"; ctx.lineWidth = 0.8 * u; ctx.stroke();
+        ctx.fillStyle = CREAM; font(ctx, 400, 8.5 * u); ctx.fillText(g3.before, bx + 10 * u, by + 20 * u);
+        var gx = bx + 10 * u, gy = by + 34 * u; font(ctx, 600, 8.5 * u); var ww = ctx.measureText(g3.word).width + 12 * u;
+        ctx.setLineDash([2 * u, 2 * u]); ctx.strokeStyle = "rgba(249,200,82,.6)"; rr(ctx, gx, gy - 9 * u, ww, 13 * u, 4 * u); ctx.stroke(); ctx.setLineDash([]);
+        var cx = lerp(W / 2 - ww / 2, gx, fly), cy = lerp(176 * u, gy - 9 * u, fly);
+        rr(ctx, cx, cy, ww, 13 * u, 4 * u); ctx.fillStyle = fly >= 1 ? GOLD : "rgba(249,200,82,.18)"; ctx.fill(); ctx.strokeStyle = GOLD; ctx.stroke();
+        ctx.fillStyle = fly >= 1 ? DARK : GOLD; ctx.fillText(g3.word, cx + 6 * u, cy + 9.3 * u);
+        ctx.fillStyle = CREAM; font(ctx, 400, 8.5 * u); ctx.fillText(g3.after, gx + ww + 2 * u, gy);
+        check(ctx, lf, 32, u, W);
+      }
+      ctx.restore();
+      return { phase: "minigame " + (i + 1) };
+    } };
+  } };
+
+  // ---------- City: knowledge as buildings in your own city; answers upgrade them ----------
+  var city = { create: function (o) {
+    o = Object.assign({ streak: "12 dagen", score: "2.480", upgrade: 2, hold: 36,
+      blocks: [["Offertes", 2], ["Planning", 3], ["Klanten", 2], ["Inkoop", 1], ["Contracten", 2]] }, o);
+    var tUp = o.blocks.length * 4 + 14;
+    return { total: tUp + 24 + o.hold, opts: o, render: function (ctx, f0) {
+      var f = twos(o, f0), W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180; K.bgDark(ctx, W, H);
+      var cx = W / 2, cy = 160 * u, tw = 44 * u, th = 22 * u;
+      function iso(gx, gy) { return [cx + (gx - gy) * tw / 2, cy + (gx + gy) * th / 2]; }
+      for (var gx = -1; gx <= 1; gx++) for (var gy = -1; gy <= 1; gy++) {
+        var p = iso(gx, gy); ctx.beginPath(); ctx.moveTo(p[0], p[1] - th / 2); ctx.lineTo(p[0] + tw / 2, p[1]); ctx.lineTo(p[0], p[1] + th / 2); ctx.lineTo(p[0] - tw / 2, p[1]); ctx.closePath();
+        ctx.strokeStyle = "rgba(254,249,237,.08)"; ctx.lineWidth = 0.6 * u; ctx.stroke();
+      }
+      var spots = [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]];
+      o.blocks.forEach(function (b, i) {
+        var sp = spots[i % spots.length], p = iso(sp[0], sp[1]), t = E("overshoot", seg(f, i * 4, i * 4 + 12));
+        var up = i === o.upgrade ? E("overshoot", seg(f, tUp, tUp + 14)) : 0, floors = b[1] + up, hgt = floors * 13 * u * t;
+        if (t <= 0) return;
+        var hw = tw * 0.36, hh = th * 0.36, top = p[1] - hgt, gold = i === o.upgrade && up > 0;
+        ctx.beginPath(); ctx.moveTo(p[0] - hw, p[1]); ctx.lineTo(p[0], p[1] + hh); ctx.lineTo(p[0], top + hh); ctx.lineTo(p[0] - hw, top); ctx.closePath(); ctx.fillStyle = gold ? "#C9A24A" : "#3a3833"; ctx.fill();
+        ctx.beginPath(); ctx.moveTo(p[0] + hw, p[1]); ctx.lineTo(p[0], p[1] + hh); ctx.lineTo(p[0], top + hh); ctx.lineTo(p[0] + hw, top); ctx.closePath(); ctx.fillStyle = gold ? "#a8853a" : "#2c2a26"; ctx.fill();
+        ctx.beginPath(); ctx.moveTo(p[0], top - hh); ctx.lineTo(p[0] + hw, top); ctx.lineTo(p[0], top + hh); ctx.lineTo(p[0] - hw, top); ctx.closePath(); ctx.fillStyle = gold ? GOLD : "#e9e2d2"; ctx.fill();
+        ctx.fillStyle = gold ? GOLD : MUTED; font(ctx, gold ? 600 : 400, 6.5 * u); ctx.textAlign = "center"; ctx.fillText(b[0] + (gold ? " · level " + (b[1] + 1) : ""), p[0], top - hh - 5 * u); ctx.textAlign = "left";
+      });
+      var ha = E("easeOut", seg(f, 4, 14));
+      ctx.save(); ctx.globalAlpha = ha;
+      rr(ctx, 18 * u, 40 * u, 66 * u, 22 * u, 11 * u); ctx.fillStyle = "rgba(254,249,237,.06)"; ctx.fill(); ctx.strokeStyle = "rgba(254,249,237,.3)"; ctx.lineWidth = 0.8 * u; ctx.stroke();
+      ctx.fillStyle = MUTED; font(ctx, 600, 5 * u); ctx.fillText("STREAK", 26 * u, 49 * u); ctx.fillStyle = GOLD; font(ctx, 600, 8 * u); ctx.fillText(o.streak, 26 * u, 58 * u);
+      ctx.textAlign = "right"; ctx.fillStyle = MUTED; font(ctx, 600, 5.5 * u); ctx.fillText("SCORE", W - 18 * u, 46 * u); ctx.fillStyle = CREAM; font(ctx, 600, 11 * u); ctx.fillText(o.score, W - 18 * u, 58 * u); ctx.textAlign = "left";
+      ctx.restore();
+      return { phase: f < tUp ? "stad groeit" : "upgrade" };
+    } };
+  } };
+
+  // ---------- Chat: the knowledge base answers a colleague's question ----------
+  var chat = { create: function (o) {
+    o = Object.assign({ title: "Kennisbank", q: "Hoe keur ik een afwijkende offerte?", a: "Eerst de marge checken, boven de 50k akkoord van finance. Bij spoed: bel de accountmanager.", source: "bron: kennisbank", hold: 36 }, o);
+    var tQ = 8, tA = tQ + 22, aLen = Math.ceil(o.a.length / 1.8);
+    return { total: tA + aLen + 12 + o.hold, opts: o, render: function (ctx, f0) {
+      var f = twos(o, f0), W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180; K.bgDark(ctx, W, H);
+      var ha = E("easeOut", seg(f, 0, 8));
+      ctx.save(); ctx.globalAlpha = ha; icon(ctx, "base", 18 * u, 38 * u, 14 * u, GOLD); ctx.fillStyle = CREAM; font(ctx, 600, 10 * u); ctx.fillText(o.title, 38 * u, 49 * u); ctx.fillStyle = LINE; ctx.fillRect(18 * u, 60 * u, W - 36 * u, 0.6 * u); ctx.restore();
+      var qa = E("easeOut", seg(f, tQ, tQ + 8));
+      if (qa > 0) { ctx.save(); ctx.globalAlpha = qa; ctx.translate(0, (1 - qa) * 8 * u); font(ctx, 400, 8 * u); var ql = wrap(ctx, o.q, 110 * u), qh = 12 * u + ql.length * 11 * u;
+        rr(ctx, W - 18 * u - 124 * u, 74 * u, 124 * u, qh, 9 * u); ctx.fillStyle = "rgba(254,249,237,.10)"; ctx.fill(); ctx.fillStyle = CREAM; ql.forEach(function (l, i) { ctx.fillText(l, W - 18 * u - 117 * u, 86 * u + i * 11 * u); }); ctx.restore(); }
+      if (f >= tA) { var aa = E("easeOut", seg(f, tA, tA + 8)); ctx.save(); ctx.globalAlpha = aa; font(ctx, 400, 8 * u); var al = wrap(ctx, o.a, 124 * u), ah = 26 * u + al.length * 11 * u;
+        rr(ctx, 18 * u, 112 * u, 138 * u, ah, 9 * u); ctx.fillStyle = "rgba(249,200,82,.10)"; ctx.fill(); ctx.strokeStyle = "rgba(249,200,82,.55)"; ctx.lineWidth = 0.8 * u; ctx.stroke();
+        K.mark(ctx, 27 * u, 122 * u, 7 * u, 0, GOLD); ctx.fillStyle = CREAM; typed(ctx, o.a, (f - tA - 4) * 1.8, 25 * u, 140 * u, 124 * u, 11 * u);
+        var sa = seg(f, tA + aLen + 4, tA + aLen + 12); ctx.globalAlpha = aa * sa; ctx.fillStyle = MUTED; font(ctx, 400, 5.5 * u); ctx.fillText("▸ " + o.source, 25 * u, 112 * u + ah - 7 * u); ctx.restore(); }
+      return { phase: f < tA ? "vraag" : "antwoord uit de kennisbank" };
+    } };
+  } };
+
   // ---------- Dark: just the canvas with the amber glow (for a glass card or captions on their own) ----------
   var dark = { create: function (o) { return { total: 24, opts: o || {}, render: function (ctx) { K.bgDark(ctx, ctx.canvas.width, ctx.canvas.height); return { phase: "canvas" }; } }; } };
 
-  window.IBSGraphics = { mail: mail, puzzle: puzzle, badges: badges, knowmap: knowmap, flow: flow, dark: dark, icon: icon, ICONS: ICONS };
+  window.IBSGraphics = { mail: mail, puzzle: puzzle, badges: badges, knowmap: knowmap, flow: flow, minigames: minigames, city: city, chat: chat, dark: dark, icon: icon, ICONS: ICONS };
 })();

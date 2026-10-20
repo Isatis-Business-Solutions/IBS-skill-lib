@@ -19,6 +19,11 @@ You need: the footage files, the one thing the viewer must remember, the platfor
 a target length, and the spoken text if there are captions. Look first, ask second: decide what you can from
 the footage and the request, and ask at most three questions about the rest.
 
+**When the story itself is not clear yet** (what the product or idea is, who the viewer is, who uses it, what
+the viewer must do afterwards), grill the user first: one question at a time, until you can say the goal
+sentence, the audience, the product in one line and the core message. Use the `grilling` skill if it is
+installed. A clip edited on a vague story cannot be fixed in the edit (owner, after the first test edit).
+
 ## Workflow
 
 0. **Keep the production record.** Every project has a folder with `production.json` and `LOG.md`

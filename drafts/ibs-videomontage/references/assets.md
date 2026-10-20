@@ -76,6 +76,9 @@ Leave the lower fifth free for captions.
 | `badges` | gamification: badge tiles, level bar, score | `tiles` (icon names), `active`, `level`, `from`, `to`, `score` |
 | `knowmap` | known knowledge as nodes; the gap lights up; a question comes out | `question`, `label` |
 | `flow` | an input becomes several outputs (cards with icons) | `source`, `cards: [[icon, label], …]` |
+| `minigames` | three short games that fill missing knowledge: order the steps, spot what goes wrong, fill the gap | `game` (frames per game), `order`, `spot`, `fill`, `points` |
+| `city` | progress as a city you build; knowledge areas are buildings, an answer upgrades one | `blocks: [[label, floors], …]`, `upgrade` (index), `streak`, `score` |
+| `chat` | the knowledge base answers a colleague's question | `title`, `q`, `a`, `source` |
 | `dark` | just the canvas with the amber glow, for captions or a glass card on their own | – |
 
 Icons: `mail`, `reply`, `doc`, `flow`, `base`, `trophy`, `star`, `puzzle`, `timer`.
