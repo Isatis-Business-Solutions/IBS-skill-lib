@@ -1,0 +1,1302 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IBS Edit Library</title>
+<style>
+  :root { --bg: #171717; --surface: #232323; --high: #3A3A3A; --text: #FEF9ED; --muted: #9A958C; --accent: #F9C852; --rule: #3A3A3A;
+    --font: Poppins, "Segoe UI", "Helvetica Neue", Arial, sans-serif; --sans: var(--font); }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--text); font: 16px/1.55 var(--font);
+    background: radial-gradient(60% 40% at 100% 0%, rgba(97,63,15,.55), transparent 70%), var(--bg); background-attachment: fixed; }
+  main { max-width: 760px; margin: 0 auto; padding: 2rem 16px 4rem; }
+  .eyebrow { font: 600 .72rem var(--font); letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-weight: 300; font-size: 2.3rem; line-height: 1.1; margin: .4rem 0 .6rem; }
+  h2 { font-weight: 400; font-size: 1.35rem; margin: 0 0 .3rem; }
+  p { margin: 0 0 .8rem; }
+  .lede { color: var(--muted); }
+  .mark { width: 34px; vertical-align: middle; margin-right: 8px; }
+  .card { background: var(--surface); border-radius: 24px; padding: 18px; margin: 18px 0; }
+  .card .status { font: 600 .66rem var(--font); letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--high); color: var(--muted); display: inline-block; margin-bottom: 8px; }
+  .card .status.new { background: var(--accent); color: #171717; }
+  .grid { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+  canvas.v { width: 100%; max-width: 220px; aspect-ratio: 9 / 16; border-radius: 14px; background: #000; display: block; margin: 0 auto; touch-action: manipulation; }
+  .controls { display: flex; flex-wrap: wrap; gap: 6px; margin: .6rem 0; }
+  .btn { font: 600 .82rem var(--font); padding: .5rem .8rem; border-radius: 16px; border: 2px solid var(--text); background: transparent; color: var(--text); cursor: pointer; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #171717; }
+  .btn[aria-pressed="true"] { background: var(--text); color: #171717; }
+  label.btn input { display: none; }
+  .note, .ft-status { font-size: .8rem; color: var(--muted); }
+  .phase { font: .74rem ui-monospace, Menlo, monospace; color: var(--muted); text-align: center; margin-top: 6px; min-height: 1.2em; }
+  .row { display: grid; grid-template-columns: 6.5em 1fr auto; gap: 8px; align-items: center; font-size: .82rem; margin: .35rem 0; }
+  .row input[type=text], .row select { font: .82rem var(--font); padding: .4rem .5rem; border-radius: 12px; border: 0; background: var(--high); color: var(--text); width: 100%; }
+  .row input[type=range] { accent-color: var(--accent); width: 100%; }
+  .val { font: .74rem ui-monospace, Menlo, monospace; color: var(--accent); min-width: 3.2em; text-align: right; }
+  details { margin-top: .6rem; }
+  summary { cursor: pointer; font-size: .82rem; color: var(--accent); }
+  pre.spec { white-space: pre-wrap; font: .74rem/1.55 ui-monospace, Menlo, monospace; background: #171717; border-radius: 12px; padding: 12px; margin: .5rem 0; }
+  .sources { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .sources { grid-template-columns: 1fr; } }
+  .sources h3 { font: 600 .72rem var(--font); letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 .3rem; }
+  .ft-btns { margin: .3rem 0; }
+  .ft-btns .btn { font-size: .74rem; padding: .35rem .6rem; }
+  .divider { display: flex; align-items: center; gap: 10px; margin: 28px 0; }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 5px; border-top: 1px solid var(--muted); border-bottom: 1px solid var(--muted); opacity: .6; }
+  .divider svg { width: 16px; height: 16px; flex: none; }
+  ul.out { color: var(--muted); font-size: .86rem; padding-left: 1.1rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+<div class="eyebrow">IBS · Signature · v0.3</div>
+<h1><svg class="mark" viewBox="30 5 287 287"><g fill="#F9C852"><path d="M37 42 L123 31 L103 100 L121 211 L55 190 Z"/><path d="M57 197 L121 217 L234 202 L214 266 L67 285 Z"/><path d="M130 31 L277 12 L290 99 L224 79 L110 96 Z"/><path d="M225 85 L291 106 L310 254 L222 264 L242 200 Z"/></g></svg>Edit Library</h1>
+<p class="lede">Alle effecten, cuts, overgangen en logo-momenten die bij de IBS-signature passen. Elk asset
+draait live op je eigen beeld en heeft een spec om te kopiëren. Alles is in code gemaakt, dus elke keer exact
+hetzelfde.</p>
+
+<div class="card">
+  <div class="eyebrow">Bronbeeld</div>
+  <div class="sources">
+    <div><h3>Scène A</h3><div id="ftA"></div></div>
+    <div><h3>Scène B</h3><div id="ftB"></div></div>
+  </div>
+  <p class="note">Gegenereerd werkt altijd. Clips laden van internet op je telefoon. Met "Eigen video" gebruik je elk filmpje op je toestel.</p>
+</div>
+
+<div class="divider"><svg viewBox="30 5 287 287"><g fill="#F9C852"><path d="M37 42 L123 31 L103 100 L121 211 L55 190 Z"/><path d="M57 197 L121 217 L234 202 L214 266 L67 285 Z"/><path d="M130 31 L277 12 L290 99 L224 79 L110 96 Z"/><path d="M225 85 L291 106 L310 254 L222 264 L242 200 Z"/></g></svg></div>
+<div id="assets"></div>
+
+<div class="divider"><svg viewBox="30 5 287 287"><g fill="#F9C852"><path d="M37 42 L123 31 L103 100 L121 211 L55 190 Z"/><path d="M57 197 L121 217 L234 202 L214 266 L67 285 Z"/><path d="M130 31 L277 12 L290 99 L224 79 L110 96 Z"/><path d="M225 85 L291 106 L310 254 L222 264 L242 200 Z"/></g></svg></div>
+<div class="card">
+  <div class="eyebrow">Wanneer gebruik je wat</div>
+  <ul class="out" style="color:var(--text)">
+    <li><b>Tension (B-roll-bursts):</b> FX-flash op de cuts; beeldbewerkingen wisselen elkaar af door de clip heen.</li>
+    <li><b>Release, nieuw onderwerp (A-roll):</b> een langere overgang: double wipe v1.1.</li>
+    <li><b>Elke line wipe</b> is de IBS-divider: dubbele lijn met het merkteken in het midden.</li>
+    <li><b>Object detection-labels</b> zijn speels en spelen in op het onderwerp van het verhaal; ze worden per clip bepaald tijdens het editen.</li>
+    <li><b>Logo:</b> assemble of spin als intro; spin → divider → split wipe als overgang uit een merkmoment.</li>
+    <li><b>Glass card</b> in de release, voor getallen en kernboodschappen.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="eyebrow">Bewust niet voor IBS</div>
+  <ul class="out">
+    <li>Handgetekende pijlen, onderstrepingen en kaders (write-on). Te speels en "schoolbord" voor IBS. Wel geschikt voor Entreprenerds.</li>
+    <li>Witte flash op cuts. Vervangen door de FX-flash.</li>
+    <li>Overshoot in het logo-assemble. Het logo gebruikt ease-out; overshoot zit in tekst en in de rotatie van de logo-spin.</li>
+  </ul>
+</div>
+<p class="note">Specs en besluiten staan ook in <code>signature/ibs/</code>.</p>
+</main>
+<script>
+// Rhythm player component: plays a mock 9:16 clip from a list of shots, with a synthesized
+// soundtrack (music bed, riser, hit) and a timeline that shows picture and audio lanes.
+//
+//   var p = RitmePlayer.mount(element);
+//   p.play([{ t: "A", d: 4, cap: "Dit is *belangrijk*", em: "punch" }, { t: "B", d: 1, scene: 2 }],
+//          { bed: true, riser: [0, 4], hits: [2.5], silenceAt: 8, cutSfx: true });
+//
+// Shot fields: t ("A" presenter / "B" b-roll), d (seconds), scene (b-roll index), cap (caption,
+// *word* = emphasis), em ("punch" | "push"). Audio cues are in seconds from the start.
+(function () {
+  var uid = 0;
+
+  // ---------- Scenes (inline SVG, 90 x 160) ----------
+  function presenter(id) {
+    return '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><defs>' +
+      '<radialGradient id="h' + id + '" cx="50%" cy="48%" r="62%"><stop offset="0" stop-color="#a9d4ff"/>' +
+      '<stop offset=".32" stop-color="#2f74c0"/><stop offset="1" stop-color="#081a35"/></radialGradient></defs>' +
+      '<rect width="90" height="160" fill="url(#h' + id + ')"/>' +
+      '<path d="M10 160 C13 120 30 110 45 110 C60 110 77 120 80 160Z" fill="#1c2836"/>' +
+      '<rect x="40" y="96" width="10" height="16" fill="#d8a882"/>' +
+      '<ellipse cx="45" cy="84" rx="15" ry="18" fill="#e6b994"/>' +
+      '<path d="M29 86 C26 60 64 58 61 86 C60 74 50 68 45 68 C39 68 31 73 29 86Z" fill="#3b2a1d"/>' +
+      '<circle cx="39.5" cy="84" r="1.6" fill="#2a1d14"/><circle cx="50.5" cy="84" r="1.6" fill="#2a1d14"/>' +
+      '<path d="M40 93 Q45 96 50 93" stroke="#8a4b3a" stroke-width="1.4" fill="none"/></svg>';
+  }
+
+  var BROLL = [
+    function skyline(id) {
+      var s = '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="s' + id +
+        '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1b4a"/><stop offset=".7" stop-color="#e2774a"/>' +
+        '<stop offset="1" stop-color="#f6b56b"/></linearGradient></defs><rect width="90" height="160" fill="url(#s' + id + ')"/>';
+      var x = 0, hs = [70, 95, 60, 110, 80, 66];
+      hs.forEach(function (h, i) {
+        s += '<rect x="' + x + '" y="' + (160 - h) + '" width="16" height="' + h + '" fill="#160f22"/>';
+        for (var y = 160 - h + 6; y < 152; y += 9) if ((y + i) % 3) s += '<rect x="' + (x + 4) + '" y="' + y + '" width="3" height="3" fill="#ffd27a"/>';
+        x += 15;
+      });
+      return s + '</svg>';
+    },
+    function drone() {
+      var s = '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><rect width="90" height="160" fill="#4d6b3c"/>' +
+        '<rect x="-10" y="70" width="110" height="14" fill="#8a8f96"/><rect x="18" y="20" width="54" height="44" fill="#2b2f36" transform="translate(4 4)" opacity=".5"/>' +
+        '<rect x="18" y="20" width="54" height="44" fill="#c9c3b8"/>';
+      for (var i = 24; i < 62; i += 6) s += '<line x1="18" y1="' + i + '" x2="72" y2="' + i + '" stroke="#a59f94" stroke-width=".8"/>';
+      s += '<rect x="22" y="100" width="46" height="38" fill="#b65c3c"/><rect x="26" y="104" width="38" height="30" fill="#d47a55"/>';
+      return s + '</svg>';
+    },
+    function newswall() {
+      var s = '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><rect width="90" height="160" fill="#0d0f14"/>';
+      var cols = ["#c0392b", "#2d6fb8", "#e0a02e", "#3f8f5a", "#8e44ad", "#d35400"];
+      for (var r = 0; r < 6; r++) for (var c = 0; c < 3; c++) {
+        var k = (r * 3 + c) % cols.length;
+        s += '<rect class="' + ((r + c) % 4 === 0 ? "rp-flicker" : "") + '" x="' + (6 + c * 27) + '" y="' + (12 + r * 24) +
+          '" width="24" height="20" rx="1" fill="' + cols[k] + '"/><rect x="' + (8 + c * 27) + '" y="' + (27 + r * 24) +
+          '" width="14" height="2" fill="#fff" opacity=".8"/>';
+      }
+      return s + '</svg>';
+    },
+    function factory() {
+      function gear(cx, cy, r, cls) {
+        return '<g class="rp-spin ' + cls + '"><circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="#c9a46a" stroke-width="' +
+          (r / 2.2) + '" stroke-dasharray="' + (r / 2) + ' ' + (r / 3) + '"/><circle cx="' + cx + '" cy="' + cy + '" r="' + (r / 2.4) + '" fill="#c9a46a"/></g>';
+      }
+      return '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><rect width="90" height="160" fill="#2a2d33"/>' +
+        '<rect y="118" width="90" height="42" fill="#1b1d21"/>' + gear(30, 62, 18, "") + gear(60, 92, 13, "rev") + gear(64, 40, 9, "rev") + '</svg>';
+    },
+    function sign() {
+      return '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><rect width="90" height="160" fill="#101a2b"/>' +
+        '<rect x="42" y="70" width="5" height="90" fill="#5d6673"/><rect x="10" y="48" width="70" height="28" rx="2" fill="#f2f2f2"/>' +
+        '<text x="45" y="67" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="11" fill="#14213d">DEN HAAG</text></svg>';
+    },
+    function macro() {
+      var s = '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><rect width="90" height="160" fill="#14110f"/>' +
+        '<circle cx="45" cy="80" r="38" fill="#e9e1d3"/><circle cx="45" cy="80" r="38" fill="none" stroke="#9c7a45" stroke-width="5"/>';
+      for (var i = 0; i < 12; i++) {
+        var a = i * Math.PI / 6;
+        s += '<line x1="' + (45 + Math.sin(a) * 30) + '" y1="' + (80 - Math.cos(a) * 30) + '" x2="' + (45 + Math.sin(a) * 34) + '" y2="' + (80 - Math.cos(a) * 34) + '" stroke="#333" stroke-width="1.5"/>';
+      }
+      return s + '<g class="rp-spin"><line x1="45" y1="80" x2="45" y2="50" stroke="#b4532a" stroke-width="1.5"/></g><circle cx="45" cy="80" r="2.5" fill="#333"/></svg>';
+    },
+    function cutout() {
+      var bars = [40, 62, 30, 84], s = '<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><rect width="90" height="160" fill="#efe6d4"/>';
+      bars.forEach(function (h, i) {
+        var x = 12 + i * 18;
+        s += '<rect x="' + (x + 2) + '" y="' + (132 - h + 2) + '" width="13" height="' + h + '" fill="#000" opacity=".18"/>' +
+          '<rect x="' + x + '" y="' + (132 - h) + '" width="13" height="' + h + '" fill="' + (i === 3 ? "#d6452c" : "#2b4c7e") + '" transform="rotate(' + (i % 2 ? 1.5 : -1.5) + ' ' + x + ' 132)"/>';
+      });
+      return s + '<rect x="8" y="132" width="74" height="2" fill="#333"/></svg>';
+    }
+  ];
+
+  // ---------- Audio (Web Audio, synthesized; no files needed) ----------
+  var ctx = null, master = null;
+  function audio() {
+    if (!ctx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+      master = ctx.createGain();
+      master.gain.value = 0.8;
+      master.connect(ctx.destination);
+    }
+    if (ctx.state === "suspended") ctx.resume();
+    return ctx;
+  }
+  function noiseBuffer(c) {
+    var b = c.createBuffer(1, c.sampleRate * 2, c.sampleRate), d = b.getChannelData(0);
+    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    return b;
+  }
+  var Sound = {
+    // Low two-oscillator drone with a slow pulse: stands in for a music bed.
+    bed: function (at) {
+      var c = audio(); if (!c) return null;
+      var g = c.createGain(), f = c.createBiquadFilter(), nodes = [];
+      f.type = "lowpass"; f.frequency.value = 520;
+      g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(0.09, at + 0.4);
+      [55, 82.4, 110.3].forEach(function (hz) {
+        var o = c.createOscillator(); o.type = "sawtooth"; o.frequency.value = hz; o.connect(f); o.start(at); nodes.push(o);
+      });
+      var lfo = c.createOscillator(), lg = c.createGain();
+      lfo.frequency.value = 2; lg.gain.value = 0.035; lfo.connect(lg); lg.connect(g.gain); lfo.start(at); nodes.push(lfo);
+      f.connect(g); g.connect(master);
+      return { gain: g, nodes: nodes };
+    },
+    riser: function (at, dur) {
+      var c = audio(); if (!c) return null;
+      var src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(), o = c.createOscillator(), og = c.createGain();
+      src.buffer = noiseBuffer(c); src.loop = true;
+      f.type = "bandpass"; f.Q.value = 3;
+      f.frequency.setValueAtTime(300, at); f.frequency.exponentialRampToValueAtTime(7000, at + dur);
+      g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(0.35, at + dur);
+      o.type = "sine"; o.frequency.setValueAtTime(180, at); o.frequency.exponentialRampToValueAtTime(900, at + dur);
+      og.gain.setValueAtTime(0.0001, at); og.gain.exponentialRampToValueAtTime(0.08, at + dur);
+      src.connect(f); f.connect(g); g.connect(master); o.connect(og); og.connect(master);
+      src.start(at); o.start(at); src.stop(at + dur); o.stop(at + dur);
+      return { gain: g, nodes: [src, o], extra: og };
+    },
+    hit: function (at) {
+      var c = audio(); if (!c) return;
+      var o = c.createOscillator(), g = c.createGain();
+      o.type = "sine"; o.frequency.setValueAtTime(160, at); o.frequency.exponentialRampToValueAtTime(38, at + 0.45);
+      g.gain.setValueAtTime(0.9, at); g.gain.exponentialRampToValueAtTime(0.001, at + 0.5);
+      o.connect(g); g.connect(master); o.start(at); o.stop(at + 0.55);
+    },
+    whoosh: function (at) {
+      var c = audio(); if (!c) return;
+      var src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      src.buffer = noiseBuffer(c); f.type = "bandpass"; f.Q.value = 1.5;
+      f.frequency.setValueAtTime(800, at); f.frequency.exponentialRampToValueAtTime(3500, at + 0.18);
+      g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(0.12, at + 0.06); g.gain.exponentialRampToValueAtTime(0.0001, at + 0.2);
+      src.connect(f); f.connect(g); g.connect(master); src.start(at); src.stop(at + 0.22);
+    },
+    // Current audio clock, for scheduling cues from other components.
+    now: function () { var c = audio(); return c ? c.currentTime : 0; },
+    // Cut every running sound at once: the smash cut to silence.
+    kill: function (list, at) {
+      list.forEach(function (s) {
+        if (!s) return;
+        try {
+          s.gain.gain.cancelScheduledValues(at); s.gain.gain.setValueAtTime(0.0001, at);
+          if (s.extra) { s.extra.gain.cancelScheduledValues(at); s.extra.gain.setValueAtTime(0.0001, at); }
+          s.nodes.forEach(function (n) { try { n.stop(at + 0.01); } catch (e) {} });
+        } catch (e) {}
+      });
+    }
+  };
+
+  // ---------- Player ----------
+  function mount(root, opts) {
+    opts = opts || {};
+    var id = ++uid;
+    root.classList.add("rp");
+    root.innerHTML =
+      '<div class="rp-screen"><div class="rp-shot"></div><div class="rp-cap"></div>' +
+      '<div class="rp-badge">klaar</div><div class="rp-silence">STILTE</div></div>' +
+      '<div class="rp-tl"><div class="rp-lane video"></div>' + (opts.noAudioLane ? "" : '<div class="rp-lane audio"></div>') +
+      '<div class="rp-head"></div></div>' +
+      '<div class="rp-legend"><span><i style="background:#2d6fb8"></i>A-roll</span><span><i style="background:#e0874f"></i>B-roll</span>' +
+      (opts.noAudioLane ? "" : '<span><i style="background:var(--layer-sound)"></i>geluid</span>') + '</div>' +
+      '<div class="rp-meta"></div>';
+    var shotEl = root.querySelector(".rp-shot"), capEl = root.querySelector(".rp-cap"),
+      badge = root.querySelector(".rp-badge"), silenceEl = root.querySelector(".rp-silence"),
+      video = root.querySelector(".rp-lane.video"), aud = root.querySelector(".rp-lane.audio"),
+      head = root.querySelector(".rp-head"), meta = root.querySelector(".rp-meta");
+    var timers = [], sounds = [], raf = 0;
+
+    shotEl.innerHTML = presenter(id + "x");
+
+    function later(fn, s) { timers.push(setTimeout(fn, s * 1000)); }
+
+    function stop() {
+      timers.forEach(clearTimeout); timers = [];
+      cancelAnimationFrame(raf);
+      if (ctx) Sound.kill(sounds, ctx.currentTime);
+      sounds = [];
+    }
+
+    function drawTimeline(seq, cues, total) {
+      video.innerHTML = "";
+      seq.forEach(function (s) {
+        var d = document.createElement("div");
+        d.className = "rp-seg " + s.t; d.style.width = (s.d / total * 100) + "%";
+        video.appendChild(d);
+      });
+      if (!aud) return;
+      aud.innerHTML = "";
+      function add(cls, from, to) {
+        var e = document.createElement("div"); e.className = cls;
+        e.style.left = (from / total * 100) + "%";
+        if (to != null) e.style.width = ((to - from) / total * 100) + "%";
+        aud.appendChild(e);
+      }
+      if (cues.bed) add("rp-bed", 0, cues.silenceAt != null ? cues.silenceAt : total);
+      if (cues.riser) add("rp-riser", cues.riser[0], cues.riser[1]);
+      (cues.hits || []).forEach(function (h) { add("rp-hit", h); });
+    }
+
+    function showShot(s, i) {
+      shotEl.className = "rp-shot";
+      shotEl.style.transition = "none"; shotEl.style.transform = "";
+      shotEl.style.setProperty("--d", s.d + "s");
+      if (s.t === "A") shotEl.innerHTML = presenter(id + "-" + i);
+      else {
+        var scene = BROLL[(s.scene != null ? s.scene : i) % BROLL.length];
+        shotEl.innerHTML = scene(id + "-" + i);
+        void shotEl.offsetWidth;
+        shotEl.classList.add(scene.name === "drone" ? "pan" : "kb");
+      }
+      badge.textContent = s.t === "A" ? "A-ROLL" : "B-ROLL"; badge.className = "rp-badge " + s.t;
+      if (s.em === "push") {
+        void shotEl.offsetWidth;
+        shotEl.style.transition = "transform " + s.d + "s linear";
+        shotEl.style.transform = "scale(1.4)";
+      }
+      if (s.em === "punch") later(function () { shotEl.style.transform = "scale(1.4)"; }, s.d * 0.45);
+      capEl.innerHTML = "";
+      if (s.cap) {
+        var words = s.cap.split(" ");
+        words.forEach(function (w, k) {
+          var sp = document.createElement("span");
+          var em = /^\*.*\*$/.test(w);
+          sp.textContent = (em ? w.slice(1, -1) : w) + " ";
+          if (em) sp.className = "em";
+          capEl.appendChild(sp);
+          later(function () { sp.classList.add("on"); }, (k / words.length) * s.d * 0.8);
+        });
+      }
+    }
+
+    function play(seq, cues) {
+      stop();
+      cues = cues || {};
+      var total = seq.reduce(function (a, s) { return a + s.d; }, 0);
+      drawTimeline(seq, cues, total);
+      meta.textContent = (seq.length - 1) + " cuts in " + total.toFixed(1).replace(".", ",") + " s · gemiddelde shotlengte (ASL) " + (total / seq.length).toFixed(1).replace(".", ",") + " s";
+      silenceEl.classList.remove("on");
+      var c = audio(), t0 = c ? c.currentTime + 0.05 : 0;
+      if (c) {
+        if (cues.bed) sounds.push(Sound.bed(t0));
+        if (cues.riser) sounds.push(Sound.riser(t0 + cues.riser[0], cues.riser[1] - cues.riser[0]));
+        (cues.hits || []).forEach(function (h) { Sound.hit(t0 + h); });
+        if (cues.silenceAt != null) later(function () { Sound.kill(sounds, ctx.currentTime); silenceEl.classList.add("on"); }, cues.silenceAt);
+      }
+      var at = 0;
+      seq.forEach(function (s, i) {
+        later(function () { showShot(s, i); }, at);
+        if (c && cues.cutSfx && i > 0 && s.t === "B" && (cues.silenceAt == null || at < cues.silenceAt)) Sound.whoosh(t0 + at);
+        at += s.d;
+      });
+      later(function () { badge.textContent = "einde"; cancelAnimationFrame(raf); head.style.left = "100%"; }, total);
+      var start = performance.now();
+      (function tick() {
+        var p = Math.min(1, (performance.now() - start) / 1000 / total);
+        head.style.left = (p * 100) + "%";
+        if (p < 1) raf = requestAnimationFrame(tick);
+      })();
+    }
+
+    return { play: play, stop: stop };
+  }
+
+  window.RitmePlayer = { mount: mount, sound: Sound, scenes: BROLL.length };
+})();
+</script>
+<script>
+// Image-processing looks on a canvas: the kind of effect you can define once in code and get back
+// exactly the same every time. FX.apply(name, srcCanvas, dstCanvas, colors?)
+// name: "none" | "edges" (Sobel) | "dither" (ordered Bayer 4x4) | "halftone" | "pixelsort" | "duotone" |
+// "posterize" | "threshold" | "grain" | "scanlines" | "vignette" | "invert" | "rgbsplit" | "glitch".
+// colors: { dark: "#171717", light: "#F9C852", amt: 0–1 strength, t: seconds (for moving looks) }.
+(function () {
+  function hex(h) { h = h.replace("#", ""); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; }
+  function lum(d, i) { return 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]; }
+
+  function edges(src, out, dark, light) {
+    var w = src.width, h = src.height, d = src.data, o = out.data, g = new Float32Array(w * h), x, y;
+    for (y = 0; y < h; y++) for (x = 0; x < w; x++) g[y * w + x] = lum(d, (y * w + x) * 4);
+    for (y = 0; y < h; y++) for (x = 0; x < w; x++) {
+      var i = (y * w + x) * 4, m = 0;
+      if (x > 0 && y > 0 && x < w - 1 && y < h - 1) {
+        var p = function (dx, dy) { return g[(y + dy) * w + x + dx]; };
+        var gx = -p(-1, -1) - 2 * p(-1, 0) - p(-1, 1) + p(1, -1) + 2 * p(1, 0) + p(1, 1);
+        var gy = -p(-1, -1) - 2 * p(0, -1) - p(1, -1) + p(-1, 1) + 2 * p(0, 1) + p(1, 1);
+        m = Math.min(1, Math.sqrt(gx * gx + gy * gy) / 360);
+      }
+      for (var k = 0; k < 3; k++) o[i + k] = dark[k] + (light[k] - dark[k]) * m;
+      o[i + 3] = 255;
+    }
+  }
+
+  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  function dither(src, out, dark, light) {
+    var w = src.width, h = src.height, d = src.data, o = out.data, cell = 2;
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+      var i = (y * w + x) * 4, t = (BAYER[((y / cell | 0) % 4) * 4 + ((x / cell | 0) % 4)] + 0.5) / 16;
+      var c = lum(d, i) / 255 > t ? light : dark;
+      o[i] = c[0]; o[i + 1] = c[1]; o[i + 2] = c[2]; o[i + 3] = 255;
+    }
+  }
+
+  function pixelsort(src, out) {
+    var w = src.width, h = src.height, d = src.data, o = out.data;
+    o.set(d);
+    for (var x = 0; x < w; x++) {
+      var y = 0;
+      while (y < h) {
+        while (y < h && lum(d, (y * w + x) * 4) < 70) y++;
+        var start = y, px = [];
+        while (y < h && lum(d, (y * w + x) * 4) >= 70) { var i = (y * w + x) * 4; px.push([d[i], d[i + 1], d[i + 2], lum(d, i)]); y++; }
+        px.sort(function (a, b) { return a[3] - b[3]; });
+        px.forEach(function (p, k) { var j = ((start + k) * w + x) * 4; o[j] = p[0]; o[j + 1] = p[1]; o[j + 2] = p[2]; o[j + 3] = 255; });
+      }
+    }
+  }
+
+  // Per-pixel looks. amt (0–1) is the strength; t is time in seconds, for looks that move.
+  function pixel(name, src, out, dark, light, amt, t) {
+    var w = src.width, h = src.height, d = src.data, o = out.data, x, y, i, k, n = w * h * 4;
+    if (name === "rgbsplit") {
+      var sh = Math.round(2 + amt * 10);
+      for (y = 0; y < h; y++) for (x = 0; x < w; x++) {
+        i = (y * w + x) * 4;
+        var xr = Math.min(w - 1, x + sh), xb = Math.max(0, x - sh);
+        o[i] = d[(y * w + xr) * 4]; o[i + 1] = d[i + 1]; o[i + 2] = d[(y * w + xb) * 4 + 2]; o[i + 3] = 255;
+      }
+      return;
+    }
+    if (name === "glitch") {
+      o.set(d);
+      var seed = Math.floor(t * 12), rnd = function (q) { var v = Math.sin(seed * 91.7 + q * 12.9898) * 43758.5453; return v - Math.floor(v); };
+      var bands = Math.round(3 + amt * 8);
+      for (k = 0; k < bands; k++) {
+        var y0 = Math.floor(rnd(k) * h), bh = Math.floor(2 + rnd(k + 50) * h * 0.08), off = Math.round((rnd(k + 99) - 0.5) * w * 0.35 * amt);
+        for (y = y0; y < Math.min(h, y0 + bh); y++) for (x = 0; x < w; x++) {
+          var sx = Math.min(w - 1, Math.max(0, x - off)), a = (y * w + x) * 4, b = (y * w + sx) * 4;
+          o[a] = d[b]; o[a + 1] = d[b + 1]; o[a + 2] = d[b + 2];
+          if (k % 3 === 0) o[a + 1] = Math.min(255, d[b + 1] * 0.4);
+        }
+      }
+      return;
+    }
+    for (i = 0; i < n; i += 4) {
+      var L = lum(d, i), r = d[i], g = d[i + 1], bl = d[i + 2];
+      if (name === "duotone") {
+        var q2 = L / 255; r = dark[0] + (light[0] - dark[0]) * q2; g = dark[1] + (light[1] - dark[1]) * q2; bl = dark[2] + (light[2] - dark[2]) * q2;
+        r = d[i] * (1 - amt) + r * amt; g = d[i + 1] * (1 - amt) + g * amt; bl = d[i + 2] * (1 - amt) + bl * amt;
+      } else if (name === "posterize") {
+        var lv = Math.max(2, Math.round(8 - amt * 6)), st = 255 / (lv - 1);
+        r = Math.round(r / st) * st; g = Math.round(g / st) * st; bl = Math.round(bl / st) * st;
+      } else if (name === "threshold") {
+        var c = L > 255 * (0.3 + amt * 0.4) ? light : dark; r = c[0]; g = c[1]; bl = c[2];
+      } else if (name === "grain") {
+        var nz = (Math.random() - 0.5) * 120 * amt; r += nz; g += nz; bl += nz;
+      } else if (name === "scanlines") {
+        var row = (i / 4 / w) | 0, f = row % 3 === 0 ? 1 - 0.6 * amt : 1; r *= f; g *= f; bl *= f;
+      } else if (name === "vignette") {
+        var px = (i / 4) % w, py = (i / 4 / w) | 0, dx = px / w - 0.5, dy = py / h - 0.5, v = 1 - Math.min(1, (dx * dx * 2.2 + dy * dy * 1.6) * 1.6 * amt);
+        r *= v; g *= v; bl *= v;
+      } else if (name === "invert") { r = 255 - r; g = 255 - g; bl = 255 - bl; }
+      o[i] = r; o[i + 1] = g; o[i + 2] = bl; o[i + 3] = 255;
+    }
+  }
+  var PIXEL = ["duotone", "posterize", "threshold", "grain", "scanlines", "vignette", "invert", "rgbsplit", "glitch"];
+
+  function apply(name, srcCanvas, dstCanvas, colors) {
+    colors = colors || {};
+    var dark = hex(colors.dark || "#171717"), light = hex(colors.light || "#F9C852");
+    var w = srcCanvas.width, h = srcCanvas.height;
+    dstCanvas.width = w; dstCanvas.height = h;
+    var sctx = srcCanvas.getContext("2d"), dctx = dstCanvas.getContext("2d");
+    if (name === "none") { dctx.drawImage(srcCanvas, 0, 0); return; }
+    var src = sctx.getImageData(0, 0, w, h);
+    if (name === "halftone") {
+      var step = Math.max(5, Math.round(w / 45));
+      dctx.fillStyle = colors.dark || "#171717"; dctx.fillRect(0, 0, w, h);
+      dctx.fillStyle = colors.light || "#F9C852";
+      for (var y = 0; y < h; y += step) for (var x = 0; x < w; x += step) {
+        var i = ((y + (step >> 1)) * w + Math.min(w - 1, x + (step >> 1))) * 4;
+        var r = Math.sqrt(lum(src.data, Math.min(i, src.data.length - 4)) / 255) * step * 0.62;
+        if (r > 0.4) { dctx.beginPath(); dctx.arc(x + step / 2, y + step / 2, r, 0, Math.PI * 2); dctx.fill(); }
+      }
+      return;
+    }
+    var out = dctx.createImageData(w, h);
+    if (PIXEL.indexOf(name) >= 0) pixel(name, src, out, dark, light, colors.amt == null ? 0.6 : colors.amt, colors.t || 0);
+    else if (name === "edges") edges(src, out, dark, light);
+    else if (name === "dither") dither(src, out, dark, light);
+    else if (name === "pixelsort") pixelsort(src, out);
+    dctx.putImageData(out, 0, 0);
+  }
+
+  // A procedural scene to run the looks on: a person in front of a window at golden hour.
+  function scene(canvas, t) {
+    var c = canvas.getContext("2d"), w = canvas.width, h = canvas.height;
+    t = t || 0;
+    var sky = c.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, "#2a1a3d"); sky.addColorStop(0.55, "#c9683a"); sky.addColorStop(1, "#f5c46a");
+    c.fillStyle = sky; c.fillRect(0, 0, w, h);
+    c.fillStyle = "#ffe3a1"; c.beginPath(); c.arc(w * 0.72, h * (0.42 + Math.sin(t) * 0.01), w * 0.12, 0, Math.PI * 2); c.fill();
+    c.fillStyle = "#1b1424";
+    [[0, .62, .16], [.15, .5, .12], [.27, .66, .14], [.6, .55, .13], [.74, .63, .1], [.85, .48, .16]].forEach(function (b) { c.fillRect(b[0] * w, b[1] * h, b[2] * w, h); });
+    c.fillStyle = "#3a2a20"; c.fillRect(0, 0, w * 0.05, h); c.fillRect(w * 0.95, 0, w * 0.05, h); c.fillRect(0, h * 0.3, w, h * 0.02);
+    var px = w * (0.36 + Math.sin(t * 0.8) * 0.01);
+    var body = c.createRadialGradient(px, h * 0.72, w * 0.05, px, h * 0.8, w * 0.4);
+    body.addColorStop(0, "#5a4a42"); body.addColorStop(1, "#151012");
+    c.fillStyle = body; c.beginPath(); c.ellipse(px, h * 1.02, w * 0.3, h * 0.3, 0, 0, Math.PI * 2); c.fill();
+    var face = c.createRadialGradient(px + w * 0.05, h * 0.5, w * 0.02, px, h * 0.52, w * 0.13);
+    face.addColorStop(0, "#f2c9a0"); face.addColorStop(1, "#6b4a36");
+    c.fillStyle = face; c.beginPath(); c.ellipse(px, h * 0.52, w * 0.1, h * 0.085, 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = "#2a1c14"; c.beginPath(); c.ellipse(px - w * 0.01, h * 0.455, w * 0.105, h * 0.045, -0.1, Math.PI, 0); c.fill();
+  }
+
+  window.FX = { apply: apply, scene: scene };
+})();
+</script>
+<script>
+// Motion helpers: cubic-bezier easing (same math as CSS and After Effects-style curves) and a small
+// graph editor that draws a value graph with draggable handles.
+//
+//   var e = Motion.bezier([0, 0, 0.2, 1]); e(0.5) // → eased value
+//   Motion.EASES.easeOut.curve                    // [x1, y1, x2, y2]
+//   var g = Motion.graph(canvas, [0.4, 0, 0.2, 1], onChange); g.set(curve); g.dot(progress);
+(function () {
+  function bezier(c) {
+    var x1 = c[0], y1 = c[1], x2 = c[2], y2 = c[3];
+    function ax(t) { return 3 * x1 * t * (1 - t) * (1 - t) + 3 * x2 * t * t * (1 - t) + t * t * t; }
+    function ay(t) { return 3 * y1 * t * (1 - t) * (1 - t) + 3 * y2 * t * t * (1 - t) + t * t * t; }
+    return function (x) {
+      if (x <= 0) return 0; if (x >= 1) return 1;
+      var lo = 0, hi = 1, t = x;
+      for (var i = 0; i < 30; i++) { var v = ax(t); if (Math.abs(v - x) < 1e-5) break; if (v < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+      return ay(t);
+    };
+  }
+
+  var EASES = {
+    linear:    { label: "Linear",       curve: [0, 0, 1, 1],          say: "Constante snelheid. Voelt mechanisch." },
+    easeOut:   { label: "Ease-out",     curve: [0, 0, 0.2, 1],        say: "Snel erin, rustig landen. Voor dingen die binnenkomen." },
+    easeIn:    { label: "Ease-in",      curve: [0.4, 0, 1, 1],        say: "Rustig vertrekken, snel weg. Voor dingen die verdwijnen." },
+    easeInOut: { label: "Ease-in-out",  curve: [0.4, 0, 0.2, 1],      say: "Rustig weg, snel midden, rustig aan. Voor iets dat van A naar B gaat." },
+    expoIn:    { label: "Expo-in",      curve: [0.7, 0, 0.84, 0],     say: "Lang niets, dan steeds harder. Bouwt spanning op." },
+    overshoot: { label: "Overshoot",    curve: [0.34, 1.56, 0.64, 1], say: "Schiet voorbij het doel en veert terug. Speels; de IBS-huisstijl vermijdt dit." }
+  };
+
+  function graph(cv, curve, onChange) {
+    var c = cv.getContext("2d"), W = cv.width, H = cv.height, pad = 0.18, cur = curve.slice(), prog = -1, drag = -1;
+    var ymin = -0.4, ymax = 1.7; // room for overshoot handles
+    function px(x) { return W * pad + x * W * (1 - 2 * pad); }
+    function py(y) { return H - (H * 0.08 + (y - ymin) / (ymax - ymin) * H * 0.84); }
+    function ix(X) { return (X - W * pad) / (W * (1 - 2 * pad)); }
+    function iy(Y) { return ymin + (H - Y - H * 0.08) / (H * 0.84) * (ymax - ymin); }
+    var css = getComputedStyle(document.documentElement);
+    function col(v, f) { return (css.getPropertyValue(v) || f).trim() || f; }
+    function draw() {
+      var text = col("--text", "#222"), rule = col("--rule", "#ddd"), acc = col("--accent", "#b4532a"), muted = col("--muted", "#888");
+      c.clearRect(0, 0, W, H);
+      c.strokeStyle = rule; c.lineWidth = 1;
+      c.strokeRect(px(0), py(1), px(1) - px(0), py(0) - py(1));
+      c.fillStyle = muted; c.font = (W / 26) + "px system-ui, sans-serif";
+      c.fillText("tijd →", px(1) - W * 0.12, py(0) + H * 0.06); c.save(); c.translate(px(0) - W * 0.04, py(0.2)); c.rotate(-Math.PI / 2); c.fillText("waarde →", 0, 0); c.restore();
+      c.strokeStyle = muted; c.setLineDash([3, 3]);
+      c.beginPath(); c.moveTo(px(0), py(0)); c.lineTo(px(cur[0]), py(cur[1])); c.moveTo(px(1), py(1)); c.lineTo(px(cur[2]), py(cur[3])); c.stroke();
+      c.setLineDash([]);
+      var e = bezier(cur);
+      c.strokeStyle = text; c.lineWidth = 2.5; c.beginPath();
+      for (var i = 0; i <= 60; i++) { var x = i / 60; if (i) c.lineTo(px(x), py(e(x))); else c.moveTo(px(x), py(e(x))); }
+      c.stroke();
+      [[cur[0], cur[1]], [cur[2], cur[3]]].forEach(function (h) { c.fillStyle = acc; c.beginPath(); c.arc(px(h[0]), py(h[1]), W / 28, 0, 7); c.fill(); });
+      [[0, 0], [1, 1]].forEach(function (k) { c.fillStyle = text; c.fillRect(px(k[0]) - 4, py(k[1]) - 4, 8, 8); });
+      if (prog >= 0) { c.fillStyle = acc; c.beginPath(); c.arc(px(prog), py(e(prog)), W / 40, 0, 7); c.fill(); }
+    }
+    function pos(ev) { var r = cv.getBoundingClientRect(); return [(ev.clientX - r.left) * W / r.width, (ev.clientY - r.top) * H / r.height]; }
+    cv.style.touchAction = "none";
+    cv.addEventListener("pointerdown", function (ev) {
+      var p = pos(ev), best = -1, bd = 1e9;
+      [0, 2].forEach(function (k) { var d = Math.hypot(px(cur[k]) - p[0], py(cur[k + 1]) - p[1]); if (d < bd) { bd = d; best = k; } });
+      if (bd < W / 8) { drag = best; cv.setPointerCapture(ev.pointerId); }
+    });
+    cv.addEventListener("pointermove", function (ev) {
+      if (drag < 0) return;
+      var p = pos(ev);
+      cur[drag] = Math.max(0, Math.min(1, ix(p[0]))); cur[drag + 1] = Math.max(-0.4, Math.min(1.6, iy(p[1])));
+      cur = cur.map(function (v) { return Math.round(v * 100) / 100; });
+      draw(); if (onChange) onChange(cur.slice());
+    });
+    cv.addEventListener("pointerup", function () { drag = -1; });
+    draw();
+    return {
+      set: function (c2) { cur = c2.slice(); draw(); },
+      dot: function (p) { prog = p; draw(); },
+      get: function () { return cur.slice(); }
+    };
+  }
+
+  function css(curve) { return "cubic-bezier(" + curve.join(", ") + ")"; }
+
+  window.Motion = { bezier: bezier, EASES: EASES, graph: graph, css: css };
+})();
+</script>
+<script>
+// The "double wipe" transition (Fabian's design, les 4): scene A → edge detection behind a hard
+// line wipe → halftone behind a feathered wipe whose kernel grows until the frame is one flat colour
+// → scene B resolves out of a shrinking halftone. Rendered frame by frame on a canvas, so it can be
+// scrubbed. Needs assets/fx.js and assets/motion.js.
+//
+//   var tr = DoubleWipe.create(canvas, params); tr.render(frame); tr.total(); tr.layers(frame, thumbs)
+//   tr.live(getA, getB): use live sources (functions returning a canvas, e.g. Footage.update) per frame.
+(function () {
+  var DARK = "#171717", GOLD = "#F9C852";
+  var DEFAULTS = {
+    fps: 24, hold: 6,
+    w1Start: 0, w1Len: 12, ease1: "easeOut",
+    w2Start: 6, w2Len: 18, ease2: "easeInOut", feather: 0.25,
+    kGrow: 0.45, easeK: "expoIn", k0: 6,
+    solid: 3, bLen: 12, after: 8,
+    flat: "dominant", markOnFlat: false, // flat: "dominant" | "gold" | "dark"
+    line: "gold" // wipe-1 edge: "gold" (2 px line) | "divider" (IBS divider: double thin line + IBS mark)
+  };
+
+  function sceneB(cv) {
+    var c = cv.getContext("2d"), w = cv.width, h = cv.height;
+    var g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, "#1d2733"); g.addColorStop(1, "#3b2a18");
+    c.fillStyle = g; c.fillRect(0, 0, w, h);
+    c.strokeStyle = "rgba(254,249,237,.25)"; c.lineWidth = 1;
+    for (var x = 0; x < w; x += w / 8) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); }
+    for (var y = 0; y < h; y += w / 8) { c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); }
+    [0.35, 0.55, 0.42, 0.78, 0.62].forEach(function (v, i) {
+      c.fillStyle = i === 3 ? GOLD : "#FEF9ED"; c.fillRect(w * (0.12 + i * 0.16), h * (0.85 - v * 0.6), w * 0.1, h * v * 0.6);
+    });
+    c.fillStyle = GOLD; c.font = "600 " + (w / 7) + "px Poppins, Segoe UI, Arial, sans-serif"; c.textAlign = "center";
+    c.fillText("+38%", w / 2, h * 0.2);
+  }
+
+  // The colour the whole kernel lands on when it covers the full frame.
+  function dominant(d, w, h) {
+    var sum = 0, n = 0;
+    for (var y = 0; y < h; y += 4) for (var x = 0; x < w; x += 4) { sum += lumAt(d, w, x, y); n++; }
+    return sum / n > 0.5 ? GOLD : DARK;
+  }
+  function lumAt(d, w, x, y) { var i = (y * w + x) * 4; return (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]) / 255; }
+  function smooth(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+  // Halftone with kernel size k. As k grows the dots switch from "size by brightness" to "on/off by
+  // dominant brightness", so at full-frame size the whole plane becomes yellow or black.
+  var MARK = ["M37 42 L123 31 L103 100 L121 211 L55 190 Z", "M57 197 L121 217 L234 202 L214 266 L67 285 Z", "M130 31 L277 12 L290 99 L224 79 L110 96 Z", "M225 85 L291 106 L310 254 L222 264 L242 200 Z"];
+  function drawMark(ctx, w, h, color) {
+    var size = w * 0.28; ctx.save(); ctx.translate(w / 2 - size / 2, h / 2 - size / 2); ctx.scale(size / 287, size / 287); ctx.translate(-30, -5);
+    ctx.fillStyle = color; MARK.forEach(function (d) { ctx.fill(new Path2D(d)); }); ctx.restore();
+  }
+  function markAt(ctx, cx, cy, size, color) {
+    ctx.save(); ctx.translate(cx, cy); ctx.scale(size / 287, size / 287); ctx.translate(-173.5, -148.5);
+    ctx.fillStyle = color; MARK.forEach(function (d) { ctx.fill(new Path2D(d)); }); ctx.restore();
+  }
+  function halftone(srcData, w, h, k, ctx, flat) {
+    if (k >= Math.max(w, h)) { ctx.fillStyle = flat === "gold" ? GOLD : flat === "dark" ? DARK : dominant(srcData, w, h); ctx.fillRect(0, 0, w, h); return; }
+    ctx.fillStyle = DARK; ctx.fillRect(0, 0, w, h); ctx.fillStyle = GOLD;
+    var nx = Math.ceil(w / k), ny = Math.ceil(h / k), x0 = (w - nx * k) / 2, y0 = (h - ny * k) / 2;
+    var s = smooth(Math.min(w, h) / 6, Math.max(w, h) * 0.9, k), step = Math.max(1, Math.floor(k / 8));
+    for (var j = 0; j < ny; j++) for (var i = 0; i < nx; i++) {
+      var sum = 0, n = 0, cx = x0 + i * k, cy = y0 + j * k;
+      for (var yy = Math.max(0, cy | 0); yy < Math.min(h, cy + k); yy += step) for (var xx = Math.max(0, cx | 0); xx < Math.min(w, cx + k); xx += step) { sum += lumAt(srcData, w, xx, yy); n++; }
+      if (!n) continue;
+      var avg = sum / n, g = Math.sqrt(avg) * (1 - s) + (avg > 0.5 ? 1 : 0) * s;
+      var r = k * (0.6 + 0.15 * s) * g;
+      if (r > 0.3) { ctx.beginPath(); ctx.arc(cx + k / 2, cy + k / 2, r, 0, 7); ctx.fill(); }
+    }
+  }
+
+  function create(out, params) {
+    var P = Object.assign({}, DEFAULTS, params || {});
+    var W = out.width, H = out.height, E = window.Motion.EASES, bz = window.Motion.bezier;
+    function mk() { var c = document.createElement("canvas"); c.width = W; c.height = H; return c; }
+    var A = mk(), Ae = mk(), B = mk(), tmp = mk(), m1 = mk(), m2 = mk();
+    window.FX.scene(A, 0.3); window.FX.apply("edges", A, Ae, { dark: DARK, light: GOLD }); sceneB(B);
+    var Ad = A.getContext("2d").getImageData(0, 0, W, H).data, Bd = B.getContext("2d").getImageData(0, 0, W, H).data;
+    var live = null;
+    function refresh() {
+      if (!live) return;
+      A.getContext("2d").drawImage(live.A(), 0, 0, W, H); B.getContext("2d").drawImage(live.B(), 0, 0, W, H);
+      window.FX.apply("edges", A, Ae, { dark: DARK, light: GOLD });
+      Ad = A.getContext("2d").getImageData(0, 0, W, H).data; Bd = B.getContext("2d").getImageData(0, 0, W, H).data;
+    }
+    var kmax = H * 1.05;
+    function ease(name, x) { return bz(E[name].curve)(Math.max(0, Math.min(1, x))); }
+    function w2End() { return P.w2Start + P.w2Len; }
+    function total() { return P.hold + Math.max(P.w1Start + P.w1Len, w2End()) + P.solid + P.bLen + P.after; }
+
+    function state(f) {
+      f -= P.hold;
+      var p1 = ease(P.ease1, (f - P.w1Start) / P.w1Len), p2raw = Math.max(0, Math.min(1, (f - P.w2Start) / P.w2Len));
+      var p2 = ease(P.ease2, p2raw), F = P.feather * H;
+      var kp = Math.max(0, Math.min(1, (p2raw - P.kGrow) / (1 - P.kGrow)));
+      var k = P.k0 * Math.pow(kmax / P.k0, ease(P.easeK, kp));
+      var bStart = w2End() + P.solid, q = Math.max(0, Math.min(1, (f - bStart) / P.bLen));
+      return { f: f, p1: p1, line1: H * (1 - p1), p2raw: p2raw, y2: (H + F) * (1 - p2), F: F, k: f >= w2End() ? kmax : k,
+        solid: f >= w2End() && f < bStart, inB: f >= bStart, q: q,
+        kB: kmax * Math.pow(P.k0 / kmax, ease("easeOut", q)) };
+    }
+
+    function render(frame, ctx) {
+      ctx = ctx || out.getContext("2d");
+      refresh();
+      var s = state(frame), t = tmp.getContext("2d");
+      if (s.solid) {
+        halftone(Ad, W, H, kmax, ctx, P.flat);
+        if (P.markOnFlat) { var fc = ctx.getImageData(W / 2, 2, 1, 1).data; drawMark(ctx, W, H, fc[0] > 128 ? DARK : GOLD); }
+        return s;
+      }
+      if (s.inB) {
+        halftone(Bd, W, H, s.kB, ctx);
+        var a = smooth(0.7, 1, s.q);
+        if (a > 0) { ctx.globalAlpha = a; ctx.drawImage(B, 0, 0); ctx.globalAlpha = 1; }
+        return s;
+      }
+      ctx.drawImage(A, 0, 0);
+      if (s.p1 > 0) {
+        ctx.save(); ctx.beginPath(); ctx.rect(0, s.line1, W, H - s.line1); ctx.clip(); ctx.drawImage(Ae, 0, 0); ctx.restore();
+        if (s.p1 < 1) {
+          if (P.line === "divider") {
+            var u = Math.max(1, W / 180), gap = 8.5 * u, ms = 11 * u;
+            ctx.fillStyle = "#9A958C"; ctx.fillRect(0, s.line1 - 3 * u, W / 2 - gap, u); ctx.fillRect(W / 2 + gap, s.line1 - 3 * u, W / 2 - gap, u);
+            ctx.fillRect(0, s.line1 + 2 * u, W / 2 - gap, u); ctx.fillRect(W / 2 + gap, s.line1 + 2 * u, W / 2 - gap, u);
+            markAt(ctx, W / 2, s.line1, ms, GOLD);
+          } else { ctx.fillStyle = GOLD; ctx.fillRect(0, s.line1 - 1, W, 2); }
+        }
+      }
+      if (s.p2raw > 0) {
+        halftone(Ad, W, H, s.k, t, P.flat);
+        t.globalCompositeOperation = "destination-in";
+        var g = t.createLinearGradient(0, s.y2 - s.F, 0, s.y2);
+        g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,1)");
+        t.fillStyle = g; t.fillRect(0, 0, W, H);
+        t.fillStyle = "#000"; t.fillRect(0, s.y2, W, H);
+        t.globalCompositeOperation = "source-over";
+        ctx.drawImage(tmp, 0, 0);
+      }
+      return s;
+    }
+
+    // Separate layers and masks for the "exploded view".
+    function layers(frame, thumbs) {
+      var s = state(frame);
+      function put(cv, fn) { var c = cv.getContext("2d"); c.clearRect(0, 0, cv.width, cv.height); c.save(); c.scale(cv.width / W, cv.height / H); fn(c); c.restore(); }
+      put(thumbs.a, function (c) { c.drawImage(s.inB ? B : A, 0, 0); });
+      put(thumbs.m1, function (c) { c.fillStyle = "#000"; c.fillRect(0, 0, W, H); c.fillStyle = "#fff"; c.fillRect(0, s.line1, W, H - s.line1); });
+      put(thumbs.e, function (c) { c.save(); c.beginPath(); c.rect(0, s.line1, W, H - s.line1); c.clip(); c.drawImage(Ae, 0, 0); c.restore(); });
+      put(thumbs.m2, function (c) {
+        c.fillStyle = "#000"; c.fillRect(0, 0, W, H);
+        var g = c.createLinearGradient(0, s.y2 - s.F, 0, s.y2); g.addColorStop(0, "#000"); g.addColorStop(1, "#fff");
+        c.fillStyle = g; c.fillRect(0, s.y2 - s.F, W, s.F); c.fillStyle = "#fff"; c.fillRect(0, s.y2, W, H);
+      });
+      put(thumbs.h, function (c) { halftone(s.inB ? Bd : Ad, W, H, s.inB ? s.kB : s.k, c); });
+      return s;
+    }
+
+    return { live: function (a, b) { live = a ? { A: a, B: b } : null; }, render: render, layers: layers, total: total, params: P, set: function (k, v) { P[k] = v; }, state: state, scenes: { A: A, B: B, Ae: Ae } };
+  }
+
+  window.DoubleWipe = { create: create, DEFAULTS: DEFAULTS, halftone: halftone };
+})();
+</script>
+<script>
+// Footage picker: real video as a source for the FX looks. Loads free-licensed clips from the web
+// (only hosts that allow canvas processing, i.e. send CORS headers), your own video file, or falls back
+// to the generated scene. Draws the current frame, cropped to 9:16, into a canvas.
+//
+//   var f = Footage.mount(element, { start: "sunset" });
+//   f.update(t);      // call every frame; returns the source canvas
+//   f.canvas          // 180 x 320 source canvas
+(function () {
+  var WM = "https://upload.wikimedia.org/wikipedia/commons/";
+  function wmt(path, name, sizes) { return sizes.map(function (s) { return WM + "transcoded/" + path + "/" + name + "/" + name + "." + s; }); }
+  var SUNSET = "Sunset_on_Avenue_Marie-Jos%C3%A9,_Woluwe-Saint-Lambert_(DSC_1895_-_DSC_1926).webm";
+  var CLIPS = {
+    sunset: { label: "Zonsondergang · timelapse", credit: "Wikimedia Commons, CC BY 4.0", at: 0,
+      urls: wmt("7/76", SUNSET, ["480p.vp9.webm", "360p.vp9.webm", "480p.webm"]).concat([WM + "7/76/" + SUNSET]) },
+    bunny: { label: "Big Buck Bunny · animatie", credit: "Blender Foundation, CC BY 3.0, via Wikimedia Commons", at: 62,
+      urls: wmt("c/c0", "Big_Buck_Bunny_4K.webm", ["480p.vp9.webm", "360p.vp9.webm", "480p.webm", "360p.webm"]) },
+    sintel: { label: "Sintel · animatie", credit: "Blender Foundation, CC BY 3.0, via Wikimedia Commons", at: 95,
+      urls: wmt("f/f1", "Sintel_movie_4K.webm", ["480p.vp9.webm", "360p.vp9.webm", "480p.webm", "360p.webm"]) },
+    flower: { label: "Bloem · close-up", credit: "MDN, CC0", at: 0,
+      urls: ["https://mdn.github.io/shared-assets/videos/flower.mp4", "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", "https://mdn.github.io/shared-assets/videos/flower.webm"] }
+  };
+
+  function mount(root, opts) {
+    opts = opts || {};
+    root.classList.add("ft");
+    var keys = Object.keys(CLIPS);
+    root.innerHTML = '<div class="controls ft-btns">' + keys.map(function (k) { return '<button class="btn" data-clip="' + k + '">' + CLIPS[k].label + "</button>"; }).join("") +
+      '<label class="btn">📁 Eigen video<input type="file" accept="video/*" hidden></label>' +
+      '<button class="btn" data-clip="gen">🎨 Gegenereerd</button></div><p class="ft-status note"></p>';
+    var status = root.querySelector(".ft-status"), file = root.querySelector("input[type=file]");
+    var cv = document.createElement("canvas"); cv.width = opts.width || 180; cv.height = opts.height || 320;
+    var ctx = cv.getContext("2d", { willReadFrequently: true });
+    var video = document.createElement("video");
+    video.muted = true; video.loop = true; video.playsInline = true; video.setAttribute("playsinline", ""); video.preload = "auto";
+    var mode = "gen", token = 0;
+
+    function mark(k) { root.querySelectorAll("[data-clip]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.clip === k); }); }
+    function say(t) { status.textContent = t; }
+
+    function useGen(msg) { mode = "gen"; mark("gen"); say(msg || "Gegenereerde scène (werkt altijd, ook offline)."); }
+
+    function tryUrls(urls, at, credit, my) {
+      if (my !== token) return;
+      if (!urls.length) { useGen("Deze clip laadt niet: geen internet, of de bron staat bewerken niet toe. Kies een andere clip of een eigen video."); return; }
+      var url = urls[0], done = false;
+      var fail = function () { if (done || my !== token) return; done = true; clearTimeout(to); tryUrls(urls.slice(1), at, credit, my); };
+      var to = setTimeout(fail, 15000);
+      video.onerror = fail;
+      video.onloadeddata = function () {
+        if (done || my !== token) return;
+        try { ctx.drawImage(video, 0, 0, 2, 2); ctx.getImageData(0, 0, 1, 1); }
+        catch (e) { fail(); return; }
+        done = true; clearTimeout(to);
+        if (at && video.duration > at) video.currentTime = at;
+        video.play().catch(function () {});
+        mode = "video"; say("▶ " + credit);
+      };
+      video.crossOrigin = "anonymous"; video.src = url; video.load();
+    }
+
+    root.querySelectorAll("[data-clip]").forEach(function (b) {
+      b.onclick = function () {
+        var k = b.dataset.clip; token++;
+        if (k === "gen") { video.pause(); useGen(); return; }
+        mark(k); say("Laden: " + CLIPS[k].label + "…"); mode = "loading";
+        tryUrls(CLIPS[k].urls.slice(), CLIPS[k].at, CLIPS[k].label + " · " + CLIPS[k].credit, token);
+      };
+    });
+    file.onchange = function () {
+      if (!file.files[0]) return;
+      token++; mark(null);
+      video.removeAttribute("crossorigin"); video.onerror = function () { useGen("Deze video kan je browser niet afspelen."); };
+      video.onloadeddata = function () { video.play().catch(function () {}); mode = "video"; say("▶ Eigen video: " + file.files[0].name); };
+      video.src = URL.createObjectURL(file.files[0]); video.load();
+    };
+
+    function cover() {
+      var vw = video.videoWidth, vh = video.videoHeight, W = cv.width, H = cv.height;
+      if (!vw) return;
+      var s = Math.max(W / vw, H / vh), dw = vw * s, dh = vh * s;
+      ctx.drawImage(video, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    }
+
+    function update(t) {
+      if (mode === "video" && video.readyState >= 2) cover();
+      else if (window.FX) window.FX.scene(cv, t || 0);
+      return cv;
+    }
+
+    useGen();
+    if (opts.start && CLIPS[opts.start] && opts.autoload) root.querySelector('[data-clip="' + opts.start + '"]').click();
+    return { canvas: cv, update: update, video: video, mode: function () { return mode; } };
+  }
+
+  window.Footage = { mount: mount, CLIPS: CLIPS };
+})();
+</script>
+<script>
+// IBS edit kit: the montage assets that fit the IBS signature, rendered frame by frame on a canvas
+// (24 fps), so every asset can be previewed, scrubbed and rebuilt exactly. Needs fx.js and motion.js.
+//
+// Each asset: IBSKit.<name>.create(opts) → { total: frames, render(ctx, f, src) }
+//   src = { A: canvas, B: canvas } (scene A / scene B, same size as ctx.canvas)
+(function () {
+  var GOLD = "#F9C852", DARK = "#171717", CREAM = "#FEF9ED", MUTED = "#9A958C", AMBER = "#C9A24A";
+  var FONT = "Poppins, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif", MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
+  var MARK = ["M37 42 L123 31 L103 100 L121 211 L55 190 Z", "M57 197 L121 217 L234 202 L214 266 L67 285 Z",
+    "M130 31 L277 12 L290 99 L224 79 L110 96 Z", "M225 85 L291 106 L310 254 L222 264 L242 200 Z"];
+  var MARK2D = null;
+  function E(name, x) { var M = window.Motion; return M.bezier(M.EASES[name].curve)(Math.max(0, Math.min(1, x))); }
+  function seg(f, a, b) { return Math.max(0, Math.min(1, (f - a) / (b - a))); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  // The mark centred on (cx, cy), `size` px wide, rotated by `rot` degrees.
+  function mark(ctx, cx, cy, size, rot, color, planes) {
+    if (!MARK2D) MARK2D = MARK.map(function (d) { return new Path2D(d); });
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate((rot || 0) * Math.PI / 180); ctx.scale(size / 287, size / 287); ctx.translate(-173.5, -148.5);
+    ctx.fillStyle = color || GOLD;
+    MARK2D.forEach(function (p, i) {
+      if (planes) { var o = planes[i]; ctx.save(); ctx.globalAlpha = o.a; ctx.translate(173.5 + o.x, 148.5 + o.y); ctx.rotate(o.r * Math.PI / 180); ctx.translate(-173.5, -148.5); ctx.fill(p); ctx.restore(); }
+      else ctx.fill(p);
+    });
+    ctx.restore();
+  }
+  function bgDark(ctx, W, H) {
+    ctx.fillStyle = DARK; ctx.fillRect(0, 0, W, H);
+    var g = ctx.createRadialGradient(W, 0, 0, W, 0, W * 1.1); g.addColorStop(0, "rgba(97,63,15,.75)"); g.addColorStop(1, "rgba(97,63,15,0)");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
+  // The IBS divider: thin double line with the small IBS mark in the middle (never a plain square).
+  var DIV_MARK = 11; // mark width in canvas units (1 unit = width / 180)
+  function divider(ctx, cx, cy, half, u, alpha, withMark) {
+    var gap = DIV_MARK * 0.75 * u; ctx.save(); ctx.globalAlpha = alpha == null ? 1 : alpha; ctx.fillStyle = MUTED;
+    [-3, 2].forEach(function (dy) { ctx.fillRect(cx - gap - half, cy + dy * u, half, u); ctx.fillRect(cx + gap, cy + dy * u, half, u); });
+    if (withMark !== false) mark(ctx, cx, cy, DIV_MARK * u, 0, GOLD);
+    ctx.restore();
+  }
+
+  // ---------- 1 · Logo assemble (outro) ----------
+  var logoAssemble = { create: function (o) {
+    o = Object.assign({ stagger: 3, frames: 12, ease: "easeOut", hold: 18 }, o);
+    var OFF = [[-140, -60, -40], [-60, 160, 30], [120, -150, 35], [160, 80, -30]];
+    var total = 3 * o.stagger + o.frames + o.hold;
+    return { total: total, opts: o, render: function (ctx, f) {
+      var W = ctx.canvas.width, H = ctx.canvas.height; bgDark(ctx, W, H);
+      var planes = OFF.map(function (v, i) { var t = E(o.ease, seg(f, i * o.stagger, i * o.stagger + o.frames)); return { x: v[0] * (1 - t), y: v[1] * (1 - t), r: v[2] * (1 - t), a: Math.min(1, t * 1.5) }; });
+      mark(ctx, W / 2, H / 2, W * 0.42, 0, GOLD, planes);
+      return { hit: f === 3 * o.stagger + Math.round(o.frames * 0.75) };
+    } };
+  } };
+
+  // ---------- 2 · Logo spin → divider → split wipe ----------
+  // In: whole logo rotates in from large to normal size (rotation with overshoot, scale ease-out).
+  // Hold. Out: rotates and shrinks (ease-in) into the yellow square of the IBS divider; the lines draw out;
+  // then the two lines open up and reveal scene B between them.
+  var logoSpin = { create: function (o) {
+    o = Object.assign({ inF: 26, hold: 14, outF: 12, lineF: 8, openF: 12, startScale: 3, startRot: -110, after: 10 }, o);
+    var t1 = o.inF, t2 = t1 + o.hold, t3 = t2 + o.outF, t4 = t3 + o.lineF, t5 = t4 + o.openF, total = t5 + o.after;
+    return { total: total, opts: o, phases: [0, t1, t2, t3, t4, t5], render: function (ctx, f, src) {
+      var W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180, base = W * 0.36, dm = DIV_MARK * u, cy = H / 2;
+      if (f >= t4 && src && src.B) {
+        // split wipe: the two divider lines move apart, scene B appears between them
+        var p = E("easeInOut", seg(f, t4, t5)), gap = lerp(2.5 * u, H / 2 + 4 * u, p);
+        ctx.drawImage(src.B, 0, 0, W, H);
+        bgDark(ctx, W, H); // dark outside the opening
+        ctx.save(); ctx.beginPath(); ctx.rect(0, cy - gap, W, gap * 2); ctx.clip(); ctx.drawImage(src.B, 0, 0, W, H); ctx.restore();
+        ctx.fillStyle = MUTED; ctx.fillRect(0, cy - gap - u, W, u); ctx.fillRect(0, cy + gap, W, u);
+        ctx.save(); ctx.globalAlpha = 1 - p; mark(ctx, W / 2, cy, dm, 0, GOLD); ctx.restore();
+        return { phase: "split wipe naar scène B" };
+      }
+      bgDark(ctx, W, H);
+      if (f < t1) {
+        var a = seg(f, 0, t1);
+        mark(ctx, W / 2, cy, base * lerp(o.startScale, 1, E("easeOut", a)), o.startRot * (1 - E("overshoot", a)), GOLD);
+        return { phase: "in: draaien met overshoot, schalen met ease-out" };
+      }
+      if (f < t2) { mark(ctx, W / 2, cy, base, 0, GOLD); return { phase: "hold", hit: f === t1 }; }
+      if (f < t3) {
+        var b = E("easeIn", seg(f, t2, t3)), size = lerp(base, dm, b);
+        mark(ctx, W / 2, cy, size, 360 * b, GOLD);
+        return { phase: "uit: kleiner draaien met ease-in, tot het merkteken van de divider" };
+      }
+      divider(ctx, W / 2, cy, (W / 2 - dm) * E("easeOut", seg(f, t3, t4)), u);
+      return { phase: "divider tekent naar buiten" };
+    } };
+  } };
+
+  // ---------- 3 · Object detection callout, with tracking ----------
+  // det = { label, conf, at (start frame), track(f) → {x, y, w, h} in canvas px }
+  function bracketBox(ctx, x, y, w, h, u, alpha) {
+    var g = ctx.createLinearGradient(x, y, x + w, y + h); g.addColorStop(0, GOLD); g.addColorStop(1, AMBER);
+    ctx.save(); ctx.globalAlpha = alpha;
+    var fill = ctx.createLinearGradient(x, y, x, y + h); fill.addColorStop(0, "rgba(249,200,82,.16)"); fill.addColorStop(1, "rgba(249,200,82,0)");
+    ctx.fillStyle = fill; ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = "rgba(249,200,82,.45)"; ctx.lineWidth = u * 0.8; ctx.strokeRect(x, y, w, h);
+    var c = Math.min(w, h) * 0.22; ctx.strokeStyle = g; ctx.lineWidth = 2.2 * u; ctx.lineCap = "round";
+    [[x, y, 1, 1], [x + w, y, -1, 1], [x, y + h, 1, -1], [x + w, y + h, -1, -1]].forEach(function (k) {
+      ctx.beginPath(); ctx.moveTo(k[0] + k[2] * c, k[1]); ctx.lineTo(k[0], k[1]); ctx.lineTo(k[0], k[1] + k[3] * c); ctx.stroke();
+    });
+    ctx.restore();
+  }
+  function consoleLabel(ctx, x, y, text, chars, u, alpha) {
+    var shown = text.slice(0, chars), fs = 7.5 * u;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.font = "600 " + fs + "px " + MONO;
+    var w = ctx.measureText(text).width + 10 * u, h = fs + 7 * u, ly = Math.max(2 * u, y - h - 3 * u);
+    x = Math.max(2 * u, Math.min(x, ctx.canvas.width - w - 2 * u));
+    ctx.fillStyle = "rgba(23,23,23,.82)"; roundRect(ctx, x, ly, w, h, 3 * u); ctx.fill();
+    ctx.fillStyle = GOLD; ctx.fillRect(x, ly, 2 * u, h);
+    ctx.fillStyle = CREAM; ctx.fillText(shown + (chars < text.length && Math.floor(chars) % 2 === 0 ? "▌" : ""), x + 6 * u, ly + h - 4.5 * u);
+    ctx.restore();
+  }
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
+  }
+  var detect = { create: function (o) {
+    o = Object.assign({ dets: [], life: 36, inF: 7, look: "edges", flashIn: [3, 6], flashOut: 3, outF: 6 }, o);
+    var total = o.dets.reduce(function (m, d) { return Math.max(m, d.at + o.life); }, 0) + 8;
+    var roi = document.createElement("canvas"), roiFx = document.createElement("canvas");
+    return { total: total, opts: o, render: function (ctx, f, src) {
+      var W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180;
+      ctx.drawImage(src.A, 0, 0, W, H);
+      var info = [];
+      o.dets.forEach(function (d) {
+        var l = f - d.at; if (l < 0 || l >= o.life) return;
+        var b = d.track(f), cx = b.x + b.w / 2, cy = b.y + b.h / 2;
+        var sIn = E("overshoot", seg(l, 0, o.inF)), sOut = E("easeIn", seg(l, o.life - o.outF, o.life)), s = Math.max(0.0001, lerp(0.15, 1, sIn) * (1 - sOut));
+        var w = b.w * s, h = b.h * s, x = cx - w / 2, y = cy - h / 2;
+        var fxOn = (l >= o.flashIn[0] && l < o.flashIn[1]) || (l >= o.life - o.outF - o.flashOut && l < o.life - o.outF);
+        if (fxOn && w > 4 && h > 4) {
+          roi.width = Math.ceil(w); roi.height = Math.ceil(h);
+          roi.getContext("2d").drawImage(src.A, x, y, w, h, 0, 0, roi.width, roi.height);
+          window.FX.apply(o.look, roi, roiFx, { dark: DARK, light: GOLD, t: f / 24 });
+          ctx.drawImage(roiFx, x, y, w, h);
+        }
+        bracketBox(ctx, x, y, w, h, u, Math.min(1, s * 1.4));
+        var txt = "▸ " + d.label + "  " + d.conf.toFixed(2);
+        consoleLabel(ctx, x, y, txt, Math.max(0, (l - 2) * 2.2), u, 1 - sOut);
+        info.push(d.label + (fxOn ? " (FX)" : ""));
+      });
+      return { phase: info.length ? "detecties: " + info.join(", ") : "geen detectie" };
+    } };
+  } };
+
+  // Template-matching tracker: follow a patch from a tapped point through the source canvas.
+  function tracker(srcCanvas, x, y, patch) {
+    patch = patch || Math.round(srcCanvas.width / 9);
+    var W = srcCanvas.width, H = srcCanvas.height, ctx = srcCanvas.getContext("2d", { willReadFrequently: true }), tpl = null, pos = { x: x, y: y }, R = Math.round(patch * 0.6);
+    function gray() { var d = ctx.getImageData(0, 0, W, H).data, g = new Float32Array(W * H); for (var i = 0; i < W * H; i++) g[i] = d[i * 4] * 0.3 + d[i * 4 + 1] * 0.59 + d[i * 4 + 2] * 0.11; return g; }
+    function grab(g, cx, cy) { var t = new Float32Array(patch * patch), h = patch >> 1; for (var j = 0; j < patch; j++) for (var i = 0; i < patch; i++) t[j * patch + i] = g[Math.min(H - 1, Math.max(0, cy - h + j)) * W + Math.min(W - 1, Math.max(0, cx - h + i))]; return t; }
+    return { step: function () {
+      var g = gray(), h = patch >> 1;
+      if (!tpl) { tpl = grab(g, Math.round(pos.x), Math.round(pos.y)); return pos; }
+      var best = 1e18, bx = pos.x, by = pos.y;
+      for (var dy = -R; dy <= R; dy += 2) for (var dx = -R; dx <= R; dx += 2) {
+        var cx = Math.round(pos.x + dx), cy = Math.round(pos.y + dy), sad = 0;
+        if (cx - h < 0 || cy - h < 0 || cx + h >= W || cy + h >= H) continue;
+        for (var j = 0; j < patch; j += 2) { var row = (cy - h + j) * W + cx - h; for (var i = 0; i < patch; i += 2) sad += Math.abs(g[row + i] - tpl[j * patch + i]); }
+        if (sad < best) { best = sad; bx = cx; by = cy; }
+      }
+      pos = { x: bx, y: by };
+      var fresh = grab(g, bx, by); for (var k = 0; k < tpl.length; k++) tpl[k] = tpl[k] * 0.9 + fresh[k] * 0.1;
+      return pos;
+    }, pos: function () { return pos; } };
+  }
+
+  // ---------- 4 · Glass card (glassmorphism) ----------
+  var glass = { create: function (o) {
+    o = Object.assign({ eyebrow: "RESULTAAT", title: "+38%", sub: "minder zoektijd", inF: 8, hold: 30, outF: 6, blur: 10 }, o);
+    var total = 6 + o.inF + o.hold + o.outF + 6;
+    return { total: total, opts: o, render: function (ctx, f, src) {
+      var W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180;
+      ctx.drawImage(src.A, 0, 0, W, H);
+      var a = E("easeOut", seg(f, 6, 6 + o.inF)), z = E("easeIn", seg(f, 6 + o.inF + o.hold, 6 + o.inF + o.hold + o.outF)), v = a * (1 - z);
+      if (v <= 0) return { phase: "achtergrond" };
+      var cw = W * 0.78, ch = H * 0.24, cx = (W - cw) / 2, cy = H * 0.56, sc = lerp(0.96, 1, a), r = 14 * u;
+      ctx.save(); ctx.globalAlpha = v; ctx.translate(W / 2, cy + ch / 2); ctx.scale(sc, sc); ctx.translate(-W / 2, -(cy + ch / 2));
+      roundRect(ctx, cx, cy, cw, ch, r); ctx.save(); ctx.clip();
+      ctx.filter = "blur(" + (o.blur * u * a).toFixed(1) + "px) saturate(1.2)"; ctx.drawImage(src.A, 0, 0, W, H); ctx.filter = "none";
+      ctx.fillStyle = "rgba(254,249,237,.10)"; ctx.fillRect(cx, cy, cw, ch);
+      var hl = ctx.createLinearGradient(cx, cy, cx, cy + ch); hl.addColorStop(0, "rgba(254,249,237,.22)"); hl.addColorStop(0.4, "rgba(254,249,237,0)"); ctx.fillStyle = hl; ctx.fillRect(cx, cy, cw, ch);
+      var acc = ctx.createLinearGradient(cx, cy, cx, cy + ch); acc.addColorStop(0, GOLD); acc.addColorStop(1, "rgba(249,200,82,0)"); ctx.fillStyle = acc; ctx.fillRect(cx, cy, 2.5 * u, ch);
+      ctx.restore();
+      roundRect(ctx, cx, cy, cw, ch, r); ctx.strokeStyle = "rgba(254,249,237,.35)"; ctx.lineWidth = u; ctx.stroke();
+      ctx.fillStyle = MUTED; ctx.font = "600 " + (6.5 * u) + "px " + FONT; ctx.fillText(o.eyebrow.split("").join(String.fromCharCode(8202)), cx + 12 * u, cy + 16 * u);
+      ctx.fillStyle = GOLD; ctx.font = "600 " + (26 * u) + "px " + FONT; ctx.fillText(o.title, cx + 12 * u, cy + 45 * u);
+      ctx.fillStyle = CREAM; ctx.font = "400 " + (9 * u) + "px " + FONT; ctx.fillText(o.sub, cx + 12 * u, cy + 60 * u);
+      ctx.restore();
+      return { phase: a < 1 ? "in: ease-out, blur en schaal" : z > 0 ? "uit: ease-in" : "hold" };
+    } };
+  } };
+
+  // ---------- 5 · Kinetic captions (stagger 3 f, overshoot) ----------
+  var captions = { create: function (o) {
+    o = Object.assign({ text: "Eerst het werk.", key: "werk", stagger: 3, frames: 10, ease: "overshoot", hold: 24 }, o);
+    var words = o.text.split(/\s+/), total = (words.length - 1) * o.stagger + o.frames + o.hold;
+    return { total: total, opts: o, render: function (ctx, f, src) {
+      var W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180, fs = 18 * u;
+      ctx.drawImage(src.A, 0, 0, W, H);
+      ctx.font = "600 " + fs + "px " + FONT;
+      var full = ctx.measureText(o.text).width;
+      if (full > W * 0.86) { fs = fs * W * 0.86 / full; ctx.font = "600 " + fs + "px " + FONT; }
+      var sp = fs * 0.3, ws = words.map(function (w) { return ctx.measureText(w).width; }), x = (W - ws.reduce(function (a, b) { return a + b; }, 0) - sp * (words.length - 1)) / 2, y = H * 0.82;
+      words.forEach(function (w, i) {
+        var t = seg(f, i * o.stagger, i * o.stagger + o.frames), e = E(o.ease, t);
+        ctx.save(); ctx.globalAlpha = Math.min(1, t * 2); ctx.fillStyle = w.replace(/[.,!?]/g, "") === o.key ? GOLD : CREAM;
+        ctx.shadowColor = "rgba(0,0,0,.55)"; ctx.shadowBlur = 6 * u; ctx.fillText(w, x, y + (1 - e) * 14 * u); ctx.restore();
+        x += ws[i] + sp;
+      });
+      return { phase: "stagger " + o.stagger + " f · " + o.ease };
+    } };
+  } };
+
+  // ---------- 6 · FX flash on the cut ----------
+  var flashCut = { create: function (o) {
+    o = Object.assign({ look: "edges", n: 6, before: 18, after: 24 }, o);
+    var buf = document.createElement("canvas");
+    return { total: o.before + o.n + o.after, opts: o, render: function (ctx, f, src) {
+      var W = ctx.canvas.width, H = ctx.canvas.height;
+      if (f < o.before) { ctx.drawImage(src.A, 0, 0, W, H); return { phase: "scène A" }; }
+      if (f < o.before + o.n) {
+        buf.width = W; buf.height = H; window.FX.apply(o.look, src.B, buf, { dark: DARK, light: GOLD, t: f / 24 }); ctx.drawImage(buf, 0, 0);
+        return { phase: "FX-flash (" + o.look + ")", hit: f === o.before };
+      }
+      ctx.drawImage(src.B, 0, 0, W, H); return { phase: "scène B" };
+    } };
+  } };
+
+  // ---------- 7 · Signature look: edges + halftone through a gradient mask ----------
+  var layeredLook = { create: function (o) {
+    o = Object.assign({ split: 0.55, feather: 0.3, frames: 48 }, o);
+    var e = document.createElement("canvas"), h = document.createElement("canvas");
+    return { total: o.frames, opts: o, render: function (ctx, f, src) {
+      var W = ctx.canvas.width, H = ctx.canvas.height;
+      window.FX.apply("edges", src.A, e, { dark: DARK, light: GOLD }); window.FX.apply("halftone", src.A, h, { dark: DARK, light: GOLD });
+      ctx.drawImage(e, 0, 0, W, H);
+      var hc = h.getContext("2d"); hc.globalCompositeOperation = "destination-in";
+      var y = H * (o.split + Math.sin(f / o.frames * Math.PI * 2) * 0.08), F = H * o.feather, g = hc.createLinearGradient(0, y - F / 2, 0, y + F / 2);
+      g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,1)"); hc.fillStyle = g; hc.fillRect(0, 0, W, H); hc.globalCompositeOperation = "source-over";
+      ctx.drawImage(h, 0, 0, W, H);
+      return { phase: "edges boven, halftone onder, gefeatherd masker" };
+    } };
+  } };
+
+  window.IBSKit = { GOLD: GOLD, DARK: DARK, CREAM: CREAM, mark: mark, bgDark: bgDark, divider: divider, tracker: tracker,
+    logoAssemble: logoAssemble, logoSpin: logoSpin, detect: detect, glass: glass, captions: captions, flashCut: flashCut, layeredLook: layeredLook };
+})();
+</script>
+<script>
+(function () {
+  var K = window.IBSKit, M = window.Motion, S = window.RitmePlayer.sound, W = 270, H = 480;
+  var ftA = window.Footage.mount(document.getElementById("ftA"), { width: W, height: H });
+  var ftB = window.Footage.mount(document.getElementById("ftB"), { width: W, height: H });
+  var bGen = document.createElement("canvas"); bGen.width = W; bGen.height = H;
+  function sceneB(t) {
+    var c = bGen.getContext("2d"), g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#1d2733"); g.addColorStop(1, "#3b2a18");
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    [0.35, 0.55, 0.42, 0.78, 0.62].forEach(function (v, i) { var h = H * v * 0.55 * (0.9 + 0.1 * Math.sin(t * 2 + i)); c.fillStyle = i === 3 ? "#F9C852" : "#FEF9ED"; c.fillRect(W * (0.12 + i * 0.16), H * 0.85 - h, W * 0.1, h); });
+    c.fillStyle = "#F9C852"; c.font = "600 " + (W / 7) + "px Poppins, Segoe UI, Arial, sans-serif"; c.textAlign = "center"; c.fillText("+38%", W / 2, H * 0.2);
+    return bGen;
+  }
+  function src(f) {
+    var t = f / 24;
+    return { A: ftA.update(t), B: ftB.mode() === "video" ? ftB.update(t + 3) : sceneB(t) };
+  }
+  function ease(k) { return k + " " + M.css(M.EASES[k].curve); }
+  function fr(n) { return n + " f (" + (n / 24).toFixed(2).replace(".", ",") + " s)"; }
+
+  // Generic card: canvas + play/slow + phase line + optional controls + spec.
+  function card(def) {
+    var el = document.createElement("div"); el.className = "card";
+    el.innerHTML = '<span class="status' + (def.isNew ? " new" : "") + '">' + (def.isNew ? "nieuw" : "besloten") + "</span><h2>" + def.title + "</h2>" +
+      '<div class="grid"><div><canvas class="v" width="' + W + '" height="' + H + '"></canvas><div class="phase"></div></div><div>' +
+      "<p>" + def.say + "</p>" + (def.controls || "") +
+      '<div class="controls"><button class="btn primary" data-act="play">▶ Speel</button><button class="btn" data-act="slow" aria-pressed="false">Slow-mo ×4</button></div>' +
+      '<details><summary>Spec</summary><pre class="spec"></pre><button class="btn" data-act="copy">📋 Kopieer</button></details></div></div>';
+    document.getElementById("assets").appendChild(el);
+    var cv = el.querySelector("canvas"), ctx = cv.getContext("2d"), phase = el.querySelector(".phase"), slow = false, raf = 0, asset = null;
+    function q(s) { return el.querySelector(s); }
+    function rebuild() { asset = def.make(q); q(".spec").textContent = def.spec(asset.opts, asset); }
+    function frame(f) { var s = asset.render(ctx, f, src(f)) || {}; phase.textContent = "f " + f + "/" + (asset.total - 1) + " · " + (s.phase || ""); if (s.hit && S) S.hit(S.now()); }
+    function play() {
+      cancelAnimationFrame(raf); rebuild(); if (def.before) def.before(asset);
+      var t0 = performance.now(), fd = 1000 / 24 * (slow ? 4 : 1), last = -1;
+      (function tick(now) {
+        var f = Math.min(asset.total - 1, Math.floor((now - t0) / fd));
+        if (f !== last) { for (var k = last + 1; k <= f; k++) if (def.step) def.step(k); frame(f); last = f; }
+        if (f < asset.total - 1) raf = requestAnimationFrame(tick);
+      })(t0);
+    }
+    q('[data-act="play"]').onclick = play;
+    q('[data-act="slow"]').onclick = function () { slow = !slow; this.setAttribute("aria-pressed", slow); };
+    q('[data-act="copy"]').onclick = function () {
+      var t = q(".spec").textContent, b = this;
+      function ok() { b.textContent = "✓ Gekopieerd"; setTimeout(function () { b.textContent = "📋 Kopieer"; }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, fb); else fb();
+      function fb() { var a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand("copy"); ok(); } catch (e) {} a.remove(); }
+    };
+    el.querySelectorAll("input,select").forEach(function (i) { i.addEventListener("change", rebuild); });
+    el.querySelectorAll('input[type=range]').forEach(function (i) {
+      var out = document.createElement("span"); out.className = "val"; i.parentNode.appendChild(out);
+      var unit = { startScale: "×", startRot: "°", inF: " f", n: " f", size: "%" }[i.dataset.k] || "";
+      function show() { out.textContent = (i.dataset.k === "startScale" ? (i.value / 10).toFixed(1).replace(".", ",") : i.value) + unit; }
+      i.addEventListener("input", show); show();
+    });
+    rebuild(); frame(def.poster || 0);
+    if (def.init) def.init(cv, q, function () { rebuild(); frame(def.poster || 0); });
+    return { el: el };
+  }
+
+  // 1 · Logo assemble
+  card({ title: "Logo-intro · assemble", say: "De vier vlakken van het merkteken komen binnen en vormen samen het logo. Stagger 3 f, ease-out (huisstijl), met een zachte hit als het logo klopt.",
+    poster: 40, make: function () { return K.logoAssemble.create({ stagger: 3, frames: 12, ease: "easeOut", hold: 18 }); },
+    spec: function (o, a) { return "LOGO-INTRO · ASSEMBLE\n24 fps · " + fr(a.total) + " · achtergrond #171717 met amber glow\nVier vlakken van het merkteken, elk vanuit een eigen richting en rotatie naar hun plek\nStagger " + o.stagger + " f · duur " + o.frames + " f per vlak · " + ease(o.ease) + "\nHit (synchresis) op ~75% van het laatste vlak · hold " + fr(o.hold); } });
+
+  // 2 · Logo spin → divider → split wipe
+  card({ title: "Logo-spin → divider → split wipe", isNew: true,
+    say: "Het hele logo draait binnen van groot naar normaal: de rotatie met overshoot, de schaal met ease-out. Bij het weggaan draait het kleiner (ease-in) tot het het merkteken in het midden van de IBS-divider is. De lijnen tekenen naar buiten en gaan uit elkaar: daartussen verschijnt scène B.",
+    controls: '<div class="row">Startgrootte <input type="range" data-k="startScale" min="15" max="50" value="30"></div><div class="row">Startrotatie <input type="range" data-k="startRot" min="-360" max="0" value="-110"></div><div class="row">Duur in <input type="range" data-k="inF" min="10" max="40" value="26"></div>',
+    poster: 20, make: function (q) { return K.logoSpin.create({ startScale: +q('[data-k="startScale"]').value / 10, startRot: +q('[data-k="startRot"]').value, inF: +q('[data-k="inF"]').value }); },
+    spec: function (o, a) {
+      var p = a.phases;
+      return "LOGO-SPIN → DIVIDER → SPLIT WIPE\n24 fps · " + fr(a.total) + " · logo IBS-geel #F9C852 op #171717 met amber glow\n\n" +
+        "In · frame " + p[0] + " → " + p[1] + "\nRotatie " + o.startRot + "° → 0° · " + ease("overshoot") + "\nSchaal " + o.startScale + "× → 1× (36% beeldbreedte) · " + ease("easeOut") + "\nAnchor point: midden van het merkteken · hit op frame " + p[1] + "\n\n" +
+        "Hold · frame " + p[1] + " → " + p[2] + "\n\nUit · frame " + p[2] + " → " + p[3] + "\nRotatie 0° → 90°, schaal → grootte van het divider-vierkantje · " + ease("easeIn") + "; laatste 25% crossfade naar het vierkantje\n\n" +
+        "Divider · frame " + p[3] + " → " + p[4] + "\nDubbele lijn #9A958C (1 px, 5 px uit elkaar) tekent vanaf het merkteken naar buiten · " + ease("easeOut") + "\n\n" +
+        "Split wipe · frame " + p[4] + " → " + p[5] + "\nDe twee lijnen gaan uit elkaar naar boven- en onderrand, scène B verschijnt ertussen; het merkteken fadet uit · " + ease("easeInOut");
+    } });
+
+  // 3 · Double wipe v1.1
+  card({ title: "Scènewissel · double wipe v1.1",
+    say: "Edge detection achter een wipe-lijn, dan halftone achter een gefeatherde wipe, de kernel groeit tot één vlak in IBS-geel met het merkteken, en scène B lost op. De wipe-lijn is altijd de IBS-divider: dubbele lijn met het merkteken.",
+    poster: 8,
+    make: function (q) {
+      var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      var tr = window.DoubleWipe.create(cv, { w1Start: 0, w1Len: 10, ease1: "easeOut", w2Start: 6, w2Len: 18, ease2: "easeOut", feather: 0.35, kGrow: 0, easeK: "expoIn", solid: 6, bLen: 14, flat: "gold", markOnFlat: true, line: "divider", k0: 9 });
+      var cur = null;
+      tr.live(function () { return cur.A; }, function () { return cur.B; });
+      return { total: tr.total(), opts: tr.params, render: function (ctx, f, s) { cur = s; var st = tr.render(f); ctx.drawImage(cv, 0, 0); return { phase: st.solid ? "vlak · merkteken" : st.inB ? "scène B lost op" : st.p2raw > 0 ? "wipe 2 · halftone" : st.p1 > 0 ? "wipe 1 · edges" : "scène A", hit: f === tr.params.hold + tr.params.w2Start + tr.params.w2Len }; } };
+    },
+    spec: function (o) {
+      return "SCÈNEWISSEL · DOUBLE WIPE v1.1\n24 fps · " + fr(Math.max(o.w1Start + o.w1Len, o.w2Start + o.w2Len) + o.solid + o.bLen) + " · #171717 / #F9C852\n\nLayer stack: 3. halftone via mask 2 · 2. edge detection via mask 1 · 1. scène A\n\n" +
+        "Mask 1 · " + "IBS-divider als wipe-lijn (dubbele lijn #9A958C + IBS-merkteken in het midden)" + "\nVan onder naar boven, frame 0 → " + o.w1Len + " · " + ease(o.ease1) + "\n\n" +
+        "Mask 2 · feather " + Math.round(o.feather * 100) + "% · frame " + o.w2Start + " → " + (o.w2Start + o.w2Len) + " · " + ease(o.ease2) + "\n\n" +
+        "Halftone-kernel · klein → volle beeldhoogte, frame " + o.w2Start + " → " + (o.w2Start + o.w2Len) + " · " + ease(o.easeK) + "\n\n" +
+        "Vlak · altijd IBS-geel, " + fr(o.solid) + ", IBS-merkteken in #171717 in het midden, hit op de eerste frame\n\nScène B · kernel terug in " + fr(o.bLen) + " · Ease-out; laatste 30% crossfade";
+    } });
+
+  // 4 · FX flash
+  card({ title: "FX-flash op de cut",
+    say: "Op een cut in de tension: een paar frames beeldbewerking in plaats van een witte flash, met een hit eronder.",
+    controls: '<div class="row">Look <select data-k="look"><option value="edges">Edge detection</option><option value="halftone">Halftone</option><option value="dither">Dithering</option><option value="duotone">Duotone</option></select></div><div class="row">Frames <input type="range" data-k="n" min="1" max="6" value="6"></div>',
+    poster: 10, make: function (q) { return K.flashCut.create({ look: q('[data-k="look"]').value, n: +q('[data-k="n"]').value }); },
+    spec: function (o) { return "FX-FLASH OP DE CUT\n24 fps · cut van A naar B\nOp de cut: " + fr(o.n) + " scène B met " + o.look + " (#171717 / #F9C852), daarna scène B\nHit (synchresis) op de eerste flash-frame\nGebruik: alleen in de tension, op cuts van B-roll-bursts"; } });
+
+  // 5 · Object detection
+  var taps = [];
+  var trackers = [];
+  card({ title: "Object detection-callout", isNew: true,
+    say: "Een detectiekader zoals bij computer vision, maar dan in IBS-stijl: hoeken in een geel verloop, een console-label met classificatie, en binnen het kader even een beeldbewerking. Het anchor point zit in het midden van het object; het kader springt met overshoot van klein naar objectgrootte. Op eigen video: tik op objecten (max. 3), dan volgt de tracking ze.",
+    controls: '<div class="row">Look in kader <select data-k="look"><option value="edges">Edge detection</option><option value="halftone">Halftone</option><option value="dither">Dithering</option><option value="threshold">Threshold</option></select></div>' +
+      '<div class="row">Labels (bij tikken) <input type="text" data-k="labels" value="person, laptop, coffee"></div><div class="row">Kadergrootte <input type="range" data-k="size" min="20" max="60" value="36"></div>' +
+      '<div class="controls"><button class="btn" data-act="clear">Wis tikken</button></div><p class="note" data-k="taps">Gegenereerd beeld: drie vaste detecties. Eigen video: tik op het beeld.</p>',
+    poster: 12,
+    make: function (q) {
+      var labels = q('[data-k="labels"]').value.split(",").map(function (s) { return s.trim(); }).filter(Boolean), size = +q('[data-k="size"]').value / 100 * W;
+      var dets;
+      if (taps.length) {
+        dets = taps.map(function (p, i) { return { label: labels[i] || "object", conf: 0.97 - i * 0.04, at: i * 12, track: function () { var t = trackers[i] ? trackers[i].pos() : p; return { x: t.x - size / 2, y: t.y - size / 2, w: size, h: size }; } }; });
+      } else {
+        dets = [
+          { label: "person", conf: 0.97, at: 0, track: function (f) { var x = W * (0.36 + Math.sin(f / 24 * 0.8) * 0.01); return { x: x - W * 0.13, y: H * 0.43, w: W * 0.26, h: H * 0.19 }; } },
+          { label: "sun", conf: 0.91, at: 12, track: function () { return { x: W * 0.59, y: H * 0.36, w: W * 0.26, h: W * 0.26 }; } },
+          { label: "building", conf: 0.88, at: 24, track: function () { return { x: W * 0.6, y: H * 0.55, w: W * 0.13, h: H * 0.3 }; } }
+        ];
+      }
+      return K.detect.create({ dets: dets, look: q('[data-k="look"]').value });
+    },
+    before: function () { trackers = taps.map(function (p) { return K.tracker(ftA.canvas, p.x, p.y); }); },
+    step: function () { trackers.forEach(function (t) { t.step(); }); },
+    init: function (cv, q, refresh) {
+      cv.addEventListener("click", function (ev) {
+        if (ftA.mode() !== "video") { q('[data-k="taps"]').textContent = "Tikken werkt op video: kies bij Scène A een clip of eigen video."; return; }
+        if (taps.length >= 3) taps.shift();
+        var r = cv.getBoundingClientRect(); taps.push({ x: (ev.clientX - r.left) / r.width * W, y: (ev.clientY - r.top) / r.height * H });
+        q('[data-k="taps"]').textContent = taps.length + " object(en) gekozen. Druk op Speel."; refresh();
+      });
+      q('[data-act="clear"]').onclick = function () { taps = []; trackers = []; q('[data-k="taps"]').textContent = "Tikken gewist."; refresh(); };
+    },
+    spec: function (o) {
+      return "OBJECT DETECTION-CALLOUT\n24 fps · per detectie " + fr(o.life) + " · meerdere detecties na elkaar, elke 12 f een nieuwe\n\n" +
+        "Kader · hoek-brackets 2,2 px in verloop #F9C852 → #C9A24A, dunne rand 45% geel, vulling geel 16% → 0 van boven naar onder\n" +
+        "Anchor point: midden van het object · schaal 15% → 100% in " + o.inF + " f · " + ease("overshoot") + "\n" +
+        "Uit: schaal → 0 in " + o.outF + " f · " + ease("easeIn") + "\n\n" +
+        "Console-label boven het kader · mono, cream op #171717 82%, geel accentstreepje links\nTekst \"▸ label  0.97\" typt in (≈2 tekens per frame) met cursor\n\n" +
+        "FX in het kader · " + o.look + " op frame " + o.flashIn[0] + "–" + o.flashIn[1] + " na binnenkomst en " + o.flashOut + " f vóór het weggaan\n\n" +
+        "Tracking · kader volgt het object (camera/motion tracking; hier template matching)";
+    } });
+
+  // 6 · Glass card
+  card({ title: "Glass card", isNew: true,
+    say: "Als iets in een kader moet: een glazen kaart over het beeld (glassmorphism). Achtergrond geblurd, licht cream-tint, dunne lichte rand, een geel accent links. Rustig: voor de release.",
+    controls: '<div class="row">Label <input type="text" data-k="eyebrow" value="RESULTAAT"></div><div class="row">Getal <input type="text" data-k="title" value="+38%"></div><div class="row">Tekst <input type="text" data-k="sub" value="minder zoektijd"></div>',
+    poster: 30, make: function (q) { return K.glass.create({ eyebrow: q('[data-k="eyebrow"]').value.toUpperCase(), title: q('[data-k="title"]').value, sub: q('[data-k="sub"]').value }); },
+    spec: function (o, a) {
+      return "GLASS CARD\n24 fps · " + fr(a.total) + "\nKaart 78% beeldbreedte, radius 24 px (geschaald), onderste helft van het beeld\nAchtergrond: blur " + o.blur + " px + saturatie 120%, cream-tint 10%, highlight-verloop bovenaan, rand 1 px cream 35%, geel accent 2,5 px links (verloop omlaag)\n" +
+        "Tekst: label Poppins SemiBold, tracked capitals, #9A958C · getal Poppins SemiBold #F9C852 · regel Poppins Regular cream\n" +
+        "In " + o.inF + " f: schaal 96% → 100%, blur 0 → " + o.blur + " px, opacity 0 → 1 · " + ease("easeOut") + "\nHold " + fr(o.hold) + " · uit " + o.outF + " f · " + ease("easeIn") + "\nGebruik: release; geen schaduw";
+    } });
+
+  // 7 · Captions
+  card({ title: "Kinetic captions", say: "Woord voor woord, 3 f stagger met overshoot; het kernwoord in IBS-geel.",
+    controls: '<div class="row">Tekst <input type="text" data-k="text" value="Eerst het werk, dan de AI."></div><div class="row">Kernwoord <input type="text" data-k="key" value="werk"></div>',
+    poster: 30, make: function (q) { return K.captions.create({ text: q('[data-k="text"]').value, key: q('[data-k="key"]').value }); },
+    spec: function (o) { return "KINETIC CAPTIONS\n24 fps · Poppins SemiBold · cream #FEF9ED, kernwoord \"" + o.key + "\" #F9C852 · onderste 20% van het beeld\nPer woord: opacity 0 → 1 en 14 px omhoog in " + o.frames + " f · stagger " + o.stagger + " f · " + ease(o.ease) + "\nZachte schaduw voor leesbaarheid op video"; } });
+
+  // 8 · Layered look
+  card({ title: "Signature-look · edges + halftone", say: "De vaste beeldbewerking: edge detection boven, halftone onder, gescheiden door een gefeatherd masker dat licht ademt.",
+    poster: 12, make: function () { return K.layeredLook.create({}); },
+    spec: function (o) { return "SIGNATURE-LOOK · EDGES + HALFTONE\nLaag 1: edge detection (Sobel), #F9C852 op #171717\nLaag 2: halftone, #F9C852 op #171717, via luma matte met feather " + Math.round(o.feather * 100) + "% beeldhoogte\nMaskerlijn op " + Math.round(o.split * 100) + "% hoogte, ademt ±8% in " + fr(o.frames) + "\nGebruik: B-roll in de tension, of als achtergrond onder een glass card"; } });
+})();
+</script>
+</body>
+</html>

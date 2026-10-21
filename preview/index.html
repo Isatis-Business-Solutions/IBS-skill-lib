@@ -18,7 +18,7 @@
   section { margin-top: 64px; }
   .divider { display: flex; align-items: center; gap: 12px; margin: 48px 0; }
   .divider::before, .divider::after { content: ""; flex: 1; height: 5px; border-top: 1px solid var(--ibs-line); border-bottom: 1px solid var(--ibs-line); }
-  .divider span { width: 10px; height: 10px; background: var(--ibs-yellow); transform: rotate(-5deg); }
+  .divider svg { width: 18px; height: 18px; flex: none; }
   .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   .card { background: var(--ibs-surface); border-radius: var(--ibs-radius-card); padding: 24px; }
   .swatch { height: 72px; border-radius: 16px; margin-bottom: 12px; }
@@ -62,7 +62,7 @@
 <div class="wrap">
   <div class="row"><a class="btn primary">Primaire actie</a><a class="btn secondary">Secundair ›</a><a class="link">Meer info ›</a></div>
 
-  <div class="divider"><span></span></div>
+  <div class="divider"><svg viewBox="30 5 287 287" aria-hidden="true"><g fill="#F9C852"><path d="M37 42 L123 31 L103 100 L121 211 L55 190 Z"/><path d="M57 197 L121 217 L234 202 L214 266 L67 285 Z"/><path d="M130 31 L277 12 L290 99 L224 79 L110 96 Z"/><path d="M225 85 L291 106 L310 254 L222 264 L242 200 Z"/></g></svg></div>
 
   <section>
     <p class="eyebrow">Kleuren</p>

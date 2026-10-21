@@ -29,6 +29,9 @@
 - **Charts:** series order from `SKILL.md`; gridlines very subtle; first series yellow.
 - **Status:** positive `#7FB77E`, negative `#D9725B`, info `#8FB3D9`. Never yellow for warnings (it is the
   brand accent).
+- **AI states:** wherever an AI assistant or agent works, listens or answers, show the `thinking-orbs` orb
+  (npm `thinking-orbs`, MIT; `<ThinkingOrb state="…" />`, or its framework-free `thinking-orbs/engine`) with
+  the ink tinted IBS-yellow. Never a robot, a face or a glowing brain.
 
 ## Feel
 - Hero sections may use `.ibs-glow` (amber glow top-right), optionally with `.ibs-pattern`.
