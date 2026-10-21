@@ -242,7 +242,7 @@ Uitbreiding (2026-10-19, eigenaar: "goed om in deze video skills dit soort infor
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-19 | Nieuwe skill `ibs-videomontage` (F5): alleen monteren, hele clip; genereren en storyboard later als aparte skills. |
-| 2026-10-21 | AI (gen-AI tool, assistent, agent) wordt in beeld altijd de thinking-orbs-orb in IBS-geel (MIT, gebundeld in `ibs-videomontage/engine/vendor/`): graphic `orb`, overlay `orb` in een glazen schijf, `thinking` in de chat; ook in `ibs-huisstijl` (software-web) voor AI-states. p5.brush niet als stijl (eigenaar). |
+| 2026-10-21 | AI (gen-AI tool, assistent, agent) wordt in beeld altijd de thinking-orbs-orb in IBS-geel (MIT, gebundeld in `ibs-videomontage/engine/vendor/`): graphic `orb`, overlay `orb` in een glazen schijf, `thinking` in de chat; ook in `ibs-huisstijl` (software-web) voor AI-states. |
 | 2026-10-20 | Nieuwe skill `ibs-storyboard` (F6): storyboard + shotlijst in één HTML met beelden, goedkeuring per shot; daarna (later) videogeneratie. Retro-verbeteringen in F5. |
 | 2026-10-20 | Eerst een grilling-sessie als het verhaal nog niet helder is (product, kijker, gebruiker, doel), pas dan monteren. Tension en release moeten voelbaar verschillen; leestijd voor captions en graphics (eigenaar na testmontage v3). |
 | 2026-10-19 | Footage blijft leesbaar: looks zijn accenten (FX-flash, detect-kader), standaard `look: none`, shots met verhaal 1,5–3 s (eigenaar na testmontage: "ik zie vrijwel nooit het daadwerkelijke video element"). |
