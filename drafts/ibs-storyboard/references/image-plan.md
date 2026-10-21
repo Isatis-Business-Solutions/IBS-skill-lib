@@ -16,8 +16,11 @@ shot size and a camera move.
   working as a graphic; mark generated scenarios as such in the notes.
 - Generated people are the riskiest part of generated footage. Show them through hands, backs, silhouettes
   and objects; at most one calm face, without speech.
-- **Graphic shots** available in `ibs-videomontage` (see its `references/assets.md`): mail, minigames, city,
-  knowledge map, flow, chat, puzzle → mark, dark. A beat that needs a new graphic gets
+- **An AI in the story** (gen-AI tool, assistant, agent) is shown as the thinking-orbs **orb** in
+  IBS-yellow: as a character (`graphic.type: "orb"`), as an overlay on a shot, or thinking in the chat. Never
+  a robot, a face or a glowing brain.
+- **Graphic shots** available in `ibs-videomontage` (see its `references/assets.md`): orb, mail, minigames,
+  city, knowledge map, flow, chat, puzzle → mark, dark. A beat that needs a new graphic gets
   `graphic.type: "new"` and a description in `notes`; it is built before the edit.
 
 ## The IBS look

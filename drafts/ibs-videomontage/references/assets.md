@@ -48,6 +48,10 @@ contrast, loses fast or blurry motion). The callout must end before the shot doe
 **`glass`** · glass card (glassmorphism): blurred background, cream tint, light border, yellow accent; an
 eyebrow label, a big `title` (number or short claim) and a `sub` line. Release only. Minimum 1.6 s.
 
+**`orb`** · the AI orb over the frame, in a glass disc: `state`, `x`, `y` (centre, fractions of the frame),
+`size` (fraction of the width, ~0.2–0.3). For the moment an AI acts inside a shot (it reads, searches,
+answers).
+
 **`riser`** · rising sound that ends at `at + dur` (max 1.8 s of sound); put it under a tension burst so it
 peaks on the release cut.
 
@@ -82,8 +86,25 @@ Leave the lower fifth free for captions.
 | `flow` | an input becomes several outputs (cards with icons) | `source`, `cards: [[icon, label], …]` |
 | `minigames` | three short games that fill missing knowledge: order the steps, spot what goes wrong, fill the gap | `game` (frames per game), `order`, `spot`, `fill`, `points` |
 | `city` | progress as a city you build; knowledge areas are buildings, an answer upgrades one | `blocks: [[label, floors], …]`, `upgrade` (index), `streak`, `score` |
-| `chat` | the knowledge base answers a colleague's question | `title`, `q`, `a`, `source` |
+| `chat` | the knowledge base answers a colleague's question | `title`, `q`, `a`, `source`, `thinking` (orb "denkt na…" before the answer; default on) |
+| `orb` | **the face of an AI** (see below): name and role, the orb, what it is doing; states follow each other | `name`, `role`, `states: [[state, label], …]`, `per` (frames per state) |
 | `dark` | just the canvas with the amber glow, for captions or a glass card on their own | – |
+
+### The AI orb (thinking-orbs)
+
+Whenever an AI appears in the story (a gen-AI tool, an assistant, an agent, an agentic solution), show it as
+an **orb** from thinking-orbs (github.com/Jakubantalik/thinking-orbs, MIT, bundled in `engine/vendor/`):
+a sphere of dots in IBS-yellow whose movement says what the AI is doing. Never a robot, a face or a glowing
+brain. Three uses: the `orb` graphic (the AI as a character, full frame), the `orb` overlay (on footage or a
+graphic, in a glass disc), and `thinking` in the `chat` graphic.
+
+| State | Shows | | State | Shows |
+|---|---|---|---|---|
+| `listening` | a wave rolls through the rings | | `working` | particles on tilted orbits |
+| `searching` | a scan sweeps a dotted globe | | `solving` | bands scramble, then click solved |
+| `connecting` | a constellation wires itself | | `weaving` | three strands plait the sphere |
+| `composing` | an undulating band (writing) | | `breathing` | a ring slowly morphing (idle) |
+| `shaping` | outline circle → triangle → square | | | |
 
 Icons: `mail`, `reply`, `doc`, `flow`, `base`, `trophy`, `star`, `puzzle`, `timer`.
 

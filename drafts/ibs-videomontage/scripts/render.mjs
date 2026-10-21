@@ -74,7 +74,7 @@ const server = http.createServer((req, res) => {
   let file = null;
   if (u.startsWith("/frames/")) file = path.join(work, u);
   else if (u.startsWith("/fonts/") && fontDir) file = path.join(fontDir, path.basename(u));
-  else file = path.join(skill, "engine", path.basename(u) || "render.html");
+  else { const rel = path.normalize(u).replace(/^([/\\])+/, "") || "render.html"; file = rel.startsWith("..") ? null : path.join(skill, "engine", rel); }
   if (!file || !fs.existsSync(file)) { res.writeHead(404); return res.end(); }
   res.writeHead(200, { "content-type": types[path.extname(file)] || "application/octet-stream" });
   fs.createReadStream(file).pipe(res);

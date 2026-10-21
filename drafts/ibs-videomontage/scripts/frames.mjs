@@ -40,7 +40,7 @@ if (graphics.length) {
   const fontDir = [path.join(here, "..", "..", "ibs-huisstijl", "assets", "fonts"), path.join(here, "..", "..", "..", "skills", "ibs-huisstijl", "assets", "fonts")].find((d) => fs.existsSync(d));
   const face = (w, f) => fontDir ? `@font-face{font-family:Poppins;font-weight:${w};src:url(data:font/ttf;base64,${fs.readFileSync(path.join(fontDir, f)).toString("base64")})}` : "";
   await page.setContent(`<style>${face(400, "Poppins-Regular.ttf")}${face(600, "Poppins-SemiBold.ttf")}</style><canvas id=c width=${W} height=${H}></canvas>`);
-  for (const f of ["motion.js", "fx.js", "ibs-kit.js", "ibs-graphics.js"]) await page.addScriptTag({ path: path.join(engine, f) });
+  for (const f of ["motion.js", "fx.js", "ibs-kit.js", "vendor/thinking-orbs.js", "ibs-graphics.js"]) await page.addScriptTag({ path: path.join(engine, f) });
   await page.evaluate(async () => { try { await Promise.all([400, 600].map((w) => document.fonts.load(w + " 20px Poppins"))); } catch (e) {} });
   for (const s of graphics) {
     const data = await page.evaluate((g) => {

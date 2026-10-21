@@ -296,10 +296,41 @@
     } };
   } };
 
+
+  // ---------- Orb: the face of an AI (gen-AI tool, assistant, agent), from thinking-orbs ----------
+  // States (what the AI is doing): working, searching, solving, listening, connecting, weaving, composing,
+  // breathing, shaping. Always IBS-yellow on dark. Needs vendor/thinking-orbs.js.
+  var ORB_TINT = { r: 249, g: 200, b: 82 };
+  function drawOrb(ctx, state, cx, cy, size, t, alpha, rScale) {
+    var T = window.ThinkingOrbs; if (!T || alpha <= 0) return;
+    var r = T.resolvePreset(state, size < 120 ? 20 : 64), fr = T.MODE_FRAMES[r.mode](size, t * r.speed, r.opts);
+    var k = rScale || (size < 120 ? 1.6 : Math.max(2.2, size / 240));
+    fr.dots.forEach(function (d) { d.r *= k; }); fr.lines.forEach(function (l) { l.w *= k * 0.7; });
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx - size / 2, cy - size / 2); T.paintFrame(ctx, fr, true, ORB_TINT); ctx.restore();
+  }
+  // Full-frame persona: name and role above, the orb, and what it is doing below; states follow each other.
+  var orb = { create: function (o) {
+    o = Object.assign({ name: "Kim", role: "je AI-collega", states: [["listening", "luistert naar jou"], ["searching", "zoekt wat nog ontbreekt"], ["connecting", "legt de verbanden"]], per: 62, hold: 0 }, o);
+    var total = o.states.length * o.per + o.hold;
+    return { total: total, opts: o, render: function (ctx, f0) {
+      var f = twos(o, f0), W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180, t = f / 24; K.bgDark(ctx, W, H);
+      o.states.forEach(function (st, i) {
+        var at = i * o.per, last = i === o.states.length - 1;
+        var a = Math.min(seg(f, at, at + 10), last ? 1 : 1 - seg(f, at + o.per - 8, at + o.per + 2));
+        if (a <= 0) return;
+        drawOrb(ctx, st[0], W / 2, H * 0.4, W * 0.7, t, a);
+        ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = MUTED; font(ctx, 400, 8 * u); ctx.textAlign = "center"; ctx.fillText(o.name + " " + st[1], W / 2, H * 0.64); ctx.restore();
+      });
+      ctx.save(); ctx.globalAlpha = E("easeOut", seg(f, 0, 10)); ctx.textAlign = "center"; eyebrow(ctx, o.name + " · " + o.role, W / 2, H * 0.14, u); ctx.restore();
+      return { phase: "orb" };
+    } };
+  } };
+
   // ---------- Chat: the knowledge base answers a colleague's question ----------
   var chat = { create: function (o) {
-    o = Object.assign({ title: "Kennisbank", q: "Hoe keur ik een afwijkende offerte?", a: "Eerst de marge checken, boven de 50k akkoord van finance. Bij spoed: bel de accountmanager.", source: "bron: kennisbank", hold: 36 }, o);
-    var tQ = 8, tA = tQ + 22, aLen = Math.ceil(o.a.length / 1.8);
+    o = Object.assign({ title: "Kennisbank", q: "Hoe keur ik een afwijkende offerte?", a: "Eerst de marge checken, boven de 50k akkoord van finance. Bij spoed: bel de accountmanager.", source: "bron: kennisbank", thinking: true, hold: 36 }, o);
+    // thinking: a small orb "denkt na…" in the answer bubble before the answer comes in.
+    var tQ = 8, tThink = tQ + 14, tA = tQ + 22 + (o.thinking ? 18 : 0), aLen = Math.ceil(o.a.length / 1.8);
     return { total: tA + aLen + 12 + o.hold, opts: o, render: function (ctx, f0) {
       var f = twos(o, f0), W = ctx.canvas.width, H = ctx.canvas.height, u = W / 180; K.bgDark(ctx, W, H);
       var ha = E("easeOut", seg(f, 0, 8));
@@ -307,6 +338,12 @@
       var qa = E("easeOut", seg(f, tQ, tQ + 8));
       if (qa > 0) { ctx.save(); ctx.globalAlpha = qa; ctx.translate(0, (1 - qa) * 8 * u); font(ctx, 400, 8 * u); var ql = wrap(ctx, o.q, 110 * u), qh = 12 * u + ql.length * 11 * u;
         rr(ctx, W - 18 * u - 124 * u, 74 * u, 124 * u, qh, 9 * u); ctx.fillStyle = "rgba(254,249,237,.10)"; ctx.fill(); ctx.fillStyle = CREAM; ql.forEach(function (l, i) { ctx.fillText(l, W - 18 * u - 117 * u, 86 * u + i * 11 * u); }); ctx.restore(); }
+      if (o.thinking && f >= tThink && f < tA + 4) {
+        var ta = Math.min(seg(f, tThink, tThink + 4), 1 - seg(f, tA - 2, tA + 4));
+        ctx.save(); ctx.globalAlpha = ta; rr(ctx, 18 * u, 112 * u, 70 * u, 26 * u, 9 * u); ctx.fillStyle = "rgba(249,200,82,.10)"; ctx.fill(); ctx.strokeStyle = "rgba(249,200,82,.55)"; ctx.lineWidth = 0.8 * u; ctx.stroke();
+        ctx.fillStyle = MUTED; font(ctx, 400, 6 * u); ctx.fillText("denkt na…", 42 * u, 127 * u); ctx.restore();
+        drawOrb(ctx, "composing", 31 * u, 125 * u, 18 * u, f / 24, ta, 1.6);
+      }
       if (f >= tA) { var aa = E("easeOut", seg(f, tA, tA + 8)); ctx.save(); ctx.globalAlpha = aa; font(ctx, 400, 8 * u); var al = wrap(ctx, o.a, 124 * u), ah = 26 * u + al.length * 11 * u;
         rr(ctx, 18 * u, 112 * u, 138 * u, ah, 9 * u); ctx.fillStyle = "rgba(249,200,82,.10)"; ctx.fill(); ctx.strokeStyle = "rgba(249,200,82,.55)"; ctx.lineWidth = 0.8 * u; ctx.stroke();
         K.mark(ctx, 27 * u, 122 * u, 7 * u, 0, GOLD); ctx.fillStyle = CREAM; typed(ctx, o.a, (f - tA - 4) * 1.8, 25 * u, 140 * u, 124 * u, 11 * u);
@@ -318,5 +355,5 @@
   // ---------- Dark: just the canvas with the amber glow (for a glass card or captions on their own) ----------
   var dark = { create: function (o) { return { total: 24, opts: o || {}, render: function (ctx) { K.bgDark(ctx, ctx.canvas.width, ctx.canvas.height); return { phase: "canvas" }; } }; } };
 
-  window.IBSGraphics = { mail: mail, puzzle: puzzle, badges: badges, knowmap: knowmap, flow: flow, minigames: minigames, city: city, chat: chat, dark: dark, icon: icon, ICONS: ICONS };
+  window.IBSGraphics = { orb: orb, drawOrb: drawOrb, mail: mail, puzzle: puzzle, badges: badges, knowmap: knowmap, flow: flow, minigames: minigames, city: city, chat: chat, dark: dark, icon: icon, ICONS: ICONS };
 })();

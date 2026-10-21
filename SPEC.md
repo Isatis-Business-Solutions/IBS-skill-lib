@@ -217,6 +217,9 @@ Uitbreiding (2026-10-19, eigenaar: "goed om in deze video skills dit soort infor
   (verhouding, lengte en warmte per take), `render.mjs --review` (groot frame per shot en per caption), atomaire
   output (geen half geschreven MP4 bij twee renders), `scripts/frames.mjs` (stills voor het storyboard). Regel over
   looks op één plek (`assets.md`).
+- **AI-orb (2026-10-21):** thinking-orbs 0.3.2 gebundeld als los script (`engine/vendor/thinking-orbs.js`, licentie
+  erbij). Graphic `orb` (AI als personage met states), overlay `orb` (glazen schijf, leesbaar op elk beeld), chat met
+  `thinking`. Getest in een render (stills + review).
 - **Animatic:** `scripts/placeholders.mjs` maakt placeholders voor shots die nog niet bestaan; `fallback` in de
   timeline. Getest op een clip van 47 s (19 shots, 9 placeholders, 6 graphics): stills en MP4 renderen zonder fouten.
 
@@ -239,6 +242,7 @@ Uitbreiding (2026-10-19, eigenaar: "goed om in deze video skills dit soort infor
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-19 | Nieuwe skill `ibs-videomontage` (F5): alleen monteren, hele clip; genereren en storyboard later als aparte skills. |
+| 2026-10-21 | AI (gen-AI tool, assistent, agent) wordt in beeld altijd de thinking-orbs-orb in IBS-geel (MIT, gebundeld in `ibs-videomontage/engine/vendor/`): graphic `orb`, overlay `orb` in een glazen schijf, `thinking` in de chat; ook in `ibs-huisstijl` (software-web) voor AI-states. p5.brush niet als stijl (eigenaar). |
 | 2026-10-20 | Nieuwe skill `ibs-storyboard` (F6): storyboard + shotlijst in één HTML met beelden, goedkeuring per shot; daarna (later) videogeneratie. Retro-verbeteringen in F5. |
 | 2026-10-20 | Eerst een grilling-sessie als het verhaal nog niet helder is (product, kijker, gebruiker, doel), pas dan monteren. Tension en release moeten voelbaar verschillen; leestijd voor captions en graphics (eigenaar na testmontage v3). |
 | 2026-10-19 | Footage blijft leesbaar: looks zijn accenten (FX-flash, detect-kader), standaard `look: none`, shots met verhaal 1,5–3 s (eigenaar na testmontage: "ik zie vrijwel nooit het daadwerkelijke video element"). |

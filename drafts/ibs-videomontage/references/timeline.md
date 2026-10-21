@@ -43,7 +43,7 @@ in frames (24 fps).
   A graphic shot has `graphic: { type, …options }` instead of `src`/`in` (see `assets.md`).
   Optional: `look`, `lookAmt` (0–1), `zoom` `[from, to]`, `audio` (keep the source sound; default true for
   A-roll, false for B-roll), `gain`, `transition` (`{ type, look, frames, params }`, into this shot).
-- **overlays** · `type` `captions` | `detect` | `glass` | `riser`, `at` and `dur` in seconds from the start
+- **overlays** · `type` `captions` | `detect` | `glass` | `orb` | `riser`, `at` and `dur` in seconds from the start
   of the clip; fields per type in `assets.md`.
 
 Transitions take their frames from the start of the shot they lead into; the double wipe also keeps playing

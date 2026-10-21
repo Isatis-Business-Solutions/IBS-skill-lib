@@ -64,6 +64,20 @@
             return { x: c.x - w / 2, y: c.y - h / 2, w: w, h: h };
           } };
         }) });
+      } else if (o.type === "orb") {
+        // A small AI orb over the footage or a graphic: x, y (centre, fractions of the frame), size (fraction of width).
+        var ob = { st: o.state || "working", x: (o.x == null ? 0.5 : o.x), y: (o.y == null ? 0.5 : o.y), s: o.size || 0.25 };
+        ov.asset = { total: len, render: function (c, lf, src) {
+          var Wc = c.canvas.width, Hc = c.canvas.height, a = Math.min(1, lf / 6, (len - lf) / 6);
+          c.drawImage(src.A, 0, 0);
+          // Glass disc behind the orb, so it reads on any footage: blurred backdrop, dark tint, light rim.
+          var cx = ob.x * Wc, cy = ob.y * Hc, rad = ob.s * Wc * 0.62;
+          c.save(); c.globalAlpha = a; c.beginPath(); c.arc(cx, cy, rad, 0, Math.PI * 2); c.clip();
+          c.filter = "blur(" + Math.round(Wc / 90) + "px)"; c.drawImage(src.A, 0, 0); c.filter = "none";
+          c.fillStyle = "rgba(23,23,23,.62)"; c.fillRect(cx - rad, cy - rad, rad * 2, rad * 2); c.restore();
+          c.save(); c.globalAlpha = a * 0.5; c.beginPath(); c.arc(cx, cy, rad, 0, Math.PI * 2); c.strokeStyle = "#FEF9ED"; c.lineWidth = Wc / 360; c.stroke(); c.restore();
+          window.IBSGraphics.drawOrb(c, ob.st, cx, cy, ob.s * Wc, (start + lf) / fps, a);
+        } };
       } else if (o.type === "riser") {
         plan.events.push({ type: "riser", frame: start, len: len });
         return;
