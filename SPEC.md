@@ -69,9 +69,9 @@ Besloten (eigenaar, 2026-11-03):
   steampunk de toekomst met stoommachines is, is dit de toekomst met Y2K-objecten, in het hier en nu.
 - **Mensen:** standaard geen. Als de boodschap een persoon nodig heeft: één hoofdpersoon, een
   hedendaagse professional in moderne kleding, natuurlijk en niet geposeerd.
-- **Apparaten:** hedendaagse apparaten (zoals een laptop of telefoon) mogen in beeld waar ze in de scène
-  horen, maar hoeven nooit (eigenaar, 2026-11-03: "niet altijd een laptop of telefoon"). Geen data visuals,
-  dashboards of leesbare schermen.
+- **Apparaten worden in de skill niet genoemd** (eigenaar, 2026-11-03). Hedendaagse apparaten waren een
+  voorbeeld van "modern mag", geen opdracht; door ze te noemen kwamen ze in elk beeld terug. Wel blijft: geen
+  data visuals, dashboards of leesbare schermen.
 - **Blijft:** golden hour, natuur zonder groene tint, rust, geen tekst of logo's.
 
 Getest: 1 echt beeld via Codex (een AI-engineer in een moderne thuiswerkplek met een doorschijnend
@@ -165,6 +165,6 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | Fix: zonder ingestelde beeldservice vragen `image-generator` en `ibs-stockbeeld` eerst of de gebruiker er een wil instellen; pas na akkoord een prompt plus placeholder. Gaat mee in v1.3.0. Getest: 3 runs, alle drie vragen eerst. |
 | 2026-10-03 | Integratietest (one-pager met alle vier de skills) goedgekeurd; `ibs-stockbeeld` en de speelsheid samen uitgebracht als v1.3.0. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
-| 2026-11-03 | `ibs-stockbeeld` (F4): hedendaags modern als basis; de toekomst van gisteren wordt één Y2K-object (eind jaren 80 en jaren 90) dat bij het onderwerp past; één moderne hoofdpersoon mag als de boodschap dat vraagt; hedendaagse apparaten mogen in beeld, maar hoeven nooit. Vervangt de jaren-70/80-hint van 2026-10-03. Eigenaar: "die moet zo blijven". |
+| 2026-11-03 | `ibs-stockbeeld` (F4): hedendaags modern als basis; de toekomst van gisteren wordt één Y2K-object (eind jaren 80 en jaren 90) dat bij het onderwerp past; één moderne hoofdpersoon mag als de boodschap dat vraagt; apparaten worden in de skill niet genoemd. Vervangt de jaren-70/80-hint van 2026-10-03. Eigenaar: "die moet zo blijven". |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |
