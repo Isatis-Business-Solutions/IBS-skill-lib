@@ -14,12 +14,13 @@ future**. Calm, warm, modern and recognisable.
 - **Sector** — the field in which the user's data or AI solution is applied, taken from the request. The image
   shows the physical world of that field: the places, infrastructure and objects that people working in it
   recognise as their own. Not the technology itself: no data visuals, dashboards, servers, robots or glowing
-  networks, and no readable screen content. Everyday devices may appear as part of modern life.
+  networks, and no readable screen content.
   If the sector is unclear, ask once.
 - **Contemporary modern** — the base of every image. The place, the people and the things in it look like
-  today at its most current: modern buildings and interiors, current devices (laptops, phones) used as people
-  really use them, current clothing. Never manual craft or workshop scenes, never old, industrial-looking or
-  conservative settings, never vintage props, unless the request is explicitly about them.
+  today at its most current: modern buildings and interiors, current clothing, and current devices only where
+  they belong in the scene (allowed, never required). Never manual craft or workshop scenes, never old,
+  industrial-looking or conservative settings, never vintage props, unless the request is explicitly about
+  them.
 - **People** — none by default; the sector itself is the subject. When the message needs a person to carry
   the feeling, show one protagonist: a present-day professional in modern clothing, in a modern setting,
   natural rather than posed.
