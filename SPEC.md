@@ -18,6 +18,7 @@ release.
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
+| v1.4.0 | F4 `ibs-stockbeeld`: hedendaags modern als basis, één object uit de toekomst van gisteren (Y2K), een moderne hoofdpersoon mag | testen |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -50,6 +51,31 @@ Codex-login): de skill werd elke keer geladen en riep zelf `image-generator` aan
 elementen: een herkenbare scène uit de sector, geen mensen, golden hour, natuur zonder groene tint, één
 retro-futuristisch detail, rust, geen tekst of logo's. Zonder beeldmodel kwam er telkens een prompt plus
 placeholder, en de vraag of de scène klopt. Nog niet getest: echte beelden.
+
+### F4. Moderne uitstraling en Y2K-object in `ibs-stockbeeld`
+
+**Status:** testen. **Release:** v1.4.0.
+
+Aanleiding (eigenaar, 2026-11-03): bij elk gebruik kwamen er beelden met handwerk, werkplaatsen, iets
+industrieels of iets ouderwets. Dat is niet wat IBS wil uitstralen. Golden hour, scherpte, scenery en color
+grading waren wel precies goed.
+
+Besloten (eigenaar, 2026-11-03):
+- **Hedendaags modern is de basis.** Moderne huizen en werkplekken, gewone laptops en telefoons, moderne
+  kleding. Geen handwerk, werkplaats, industrieel, conservatief of vintage.
+- **De toekomst van gisteren is één object, in Y2K-stijl.** Niet meer "jaren 70 en 80", maar de toekomst
+  zoals men die eind jaren 80 en in de jaren 90 voor zich zag (Y2K): glanzend, rond, doorschijnend, chroom of
+  iriserend. Het object past bij het onderwerp, en de hoofdpersoon is er bij voorkeur mee in aanraking. Zoals
+  steampunk de toekomst met stoommachines is, is dit de toekomst met Y2K-objecten, in het hier en nu.
+- **Mensen:** standaard geen. Als de boodschap een persoon nodig heeft: één hoofdpersoon, een
+  hedendaagse professional in moderne kleding, natuurlijk en niet geposeerd.
+- **Schermen:** alledaagse apparaten mogen in beeld als deel van het moderne leven; geen data visuals,
+  dashboards of leesbare schermen.
+- **Blijft:** golden hour, natuur zonder groene tint, rust, geen tekst of logo's.
+
+Getest: 1 echt beeld via Codex (een AI-engineer in een moderne thuiswerkplek met een doorschijnend
+Y2K-platenspelertje, voor een LinkedIn-post van de eigenaar). Nog te doen: 3 headless runs in verschillende
+sectoren, volgens de werkwijze.
 
 ### F2. Speelsheid in de huisstijl
 
@@ -138,5 +164,6 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | Fix: zonder ingestelde beeldservice vragen `image-generator` en `ibs-stockbeeld` eerst of de gebruiker er een wil instellen; pas na akkoord een prompt plus placeholder. Gaat mee in v1.3.0. Getest: 3 runs, alle drie vragen eerst. |
 | 2026-10-03 | Integratietest (one-pager met alle vier de skills) goedgekeurd; `ibs-stockbeeld` en de speelsheid samen uitgebracht als v1.3.0. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
+| 2026-11-03 | `ibs-stockbeeld` (F4): hedendaags modern als basis; de toekomst van gisteren wordt één Y2K-object (eind jaren 80 en jaren 90) dat bij het onderwerp past; één moderne hoofdpersoon mag als de boodschap dat vraagt; alledaagse apparaten mogen in beeld. Vervangt de jaren-70/80-hint van 2026-10-03. |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |

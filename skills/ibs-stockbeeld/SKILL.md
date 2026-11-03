@@ -5,32 +5,43 @@ description: Visual direction for photos and mood images of IBS – Isatis Busin
 
 # IBS stock images
 
-An IBS image shows **the world of the reader's sector**, in **golden-hour light**, as a realistic, contemporary
-photograph with **nature around it** and **a faint echo of yesterday's future**. Calm, warm and recognisable.
+An IBS image shows **the world of the reader's sector as it looks today**, in **golden-hour light**, as a
+realistic, **contemporary and modern** photograph with **nature around it** and **one object from yesterday's
+future**. Calm, warm, modern and recognisable.
 
 ## The image, defined
 
 - **Sector** — the field in which the user's data or AI solution is applied, taken from the request. The image
   shows the physical world of that field: the places, infrastructure and objects that people working in it
-  recognise as their own. Not the technology: no screens, servers, data visuals, robots or glowing networks.
+  recognise as their own. Not the technology itself: no data visuals, dashboards, servers, robots or glowing
+  networks, and no readable screen content. Everyday devices may appear as part of modern life.
   If the sector is unclear, ask once.
-- **People** — none. The sector itself is the subject.
-- **Realistic and contemporary** — a plausible place as it looks today, photographed with the quality of a
-  good editorial stock photo. No illustration, no 3D-render look, no fantasy.
+- **Contemporary modern** — the base of every image. The place, the people and the things in it look like
+  today at its most current: modern buildings and interiors, current devices (laptops, phones) used as people
+  really use them, current clothing. Never manual craft or workshop scenes, never old, industrial-looking or
+  conservative settings, never vintage props, unless the request is explicitly about them.
+- **People** — none by default; the sector itself is the subject. When the message needs a person to carry
+  the feeling, show one protagonist: a present-day professional in modern clothing, in a modern setting,
+  natural rather than posed.
+- **Realistic** — a plausible scene, photographed with the quality of a good editorial stock photo. No
+  illustration, no 3D-render look, no fantasy.
 - **Golden hour** — low sun near the horizon, long soft shadows, warm yellow-to-orange light. This light sets
   the colour of the whole image.
 - **Nature** — the subject sits in a living landscape: vegetation and open land around it, part of the scene,
   not decoration. Nature is shown by what is in the image, never by colour: no green tint or green grading;
   under golden-hour light greens turn warm.
-- **Yesterday's future** — exactly one subtle detail in form, material or finish that recalls how the 1970s
-  and 1980s imagined the future. Easy to miss, never the subject; the image still reads as today.
+- **Yesterday's future** — exactly one object in the scene, ideally one the protagonist or the subject is in
+  contact with, that looks like the future as the late 1980s and the 1990s imagined it, up to the Y2K era:
+  glossy, rounded, translucent, chrome or iridescent, more future than present. It fits the topic of the
+  request. Everything around it stays today's modern world; the object is a small accent, not the subject.
 - **Calm** — one clear subject, room around it, an uncluttered background. No text, no logos, no
   watermarks in the image.
 
 ## How to work
 
 1. Establish the sector from the request.
-2. Choose one scene that people in that sector would recognise at a glance.
+2. Choose one scene that people in that sector would recognise at a glance, in its modern form today, and
+   decide whether the message needs a protagonist.
 3. Write the image prompt with every element above, plus what to avoid. Write it in English.
 4. Make the image with the `image-generator` skill if it is available; it asks the user before it ever falls
    back to a prompt. If that skill is not installed, ask the user whether they want the prompt and a
@@ -42,8 +53,10 @@ photograph with **nature around it** and **a faint echo of yesterday's future**.
 - Would someone from this sector recognise their own world?
 - Golden-hour light, warm colour, no green cast?
 - Nature visible as part of the scene?
-- One faint retro-future detail, no more?
-- No people, text, logos, screens or data visuals?
+- Contemporary modern: no craft, workshop, industrial or old-fashioned look?
+- Exactly one object from yesterday's future (late 1980s–1990s, Y2K), fitting the topic?
+- No people unless the message needs one, and then one modern professional?
+- No text, logos, data visuals or readable screens?
 - Calm, with one clear subject?
 
 ## Not for
