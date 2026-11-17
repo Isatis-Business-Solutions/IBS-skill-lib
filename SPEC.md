@@ -18,7 +18,7 @@ release.
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
-| v1.4.0 | F4 `ibs-stockbeeld`: hedendaags modern als basis, één object uit de toekomst van gisteren (Y2K), een moderne hoofdpersoon mag | testen |
+| v1.4.0 | F4 + F5 `ibs-stockbeeld`: hedendaags modern, één Y2K-object, het beeld draagt de hook, mensen en techniek mogen (niet verplicht), één gedurfde ingreep | testen, PR open |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -77,6 +77,24 @@ Besloten (eigenaar, 2026-11-03):
 Getest: 1 echt beeld via Codex (een AI-engineer in een moderne thuiswerkplek met een doorschijnend
 Y2K-platenspelertje, voor een LinkedIn-post van de eigenaar). Nog te doen: 3 headless runs in verschillende
 sectoren, volgens de werkwijze.
+
+### F5. Het beeld draagt de hook (`ibs-stockbeeld`)
+
+**Status:** testen. **Release:** v1.4.0 (samen met F4).
+
+Aanleiding (eigenaar, 2026-11-17): voor een LinkedIn-post over "AI-savvy personeel" leverde de skill (v1.3.0, F4 nog niet uitgebracht) een lege vergaderruimte met een tafel en twee stoelen. Mooi beeld, maar het had niets met de boodschap te maken. Oorzaak: de regels "geen mensen" en "geen schermen of techniek" haalden precies weg wat de boodschap zichtbaar maakt, en de check keek alleen naar de stijl. Eigenaar: "wat in hemelsnamen heeft die foto met AI-savvy te maken?" en "deze stockfoto's moeten extreem uitnodigen, herkenbaar zijn, en dat je denkt: ik wil dit heel graag lezen."
+
+Besloten (eigenaar, grilling 2026-11-17):
+- **Het beeld draagt de hook of de kern** van de content. De check begint met: snap je het zonder tekst, en wil je het lezen? Hinten, geen clickbait. Waarde boven entertainment, maar nooit zonder entertainment.
+- **Sector als het over een use case of voorbeeld gaat**; anders de wereld van de lezer. De agent kiest zelf en zegt welke.
+- **Mensen welkom**, zoveel als het verhaal nodig heeft, niet verplicht; naturel en hedendaags.
+- **Techniek ondersteunt, neemt nooit de overhand.** Geen mensen die standaard naar een scherm kijken. De interactie tussen mens en machine zit vooral in het Y2K-object, en machines mogen een beetje magisch zijn. Gewone apparaten mogen, niet standaard (sluit aan bij F4: apparaten niet als opdracht noemen).
+- **Fotorealistisch met hooguit één gedurfde, licht surrealistische ingreep** die de hoek overdrijft.
+- **"Rust" wordt "emotie met professionaliteit"**: herkenning, verbazing of een glimlach, en toch verzorgd; één sterk idee, leesbaar als thumbnail.
+- **Blijft altijd:** golden hour, natuur in de scène (buiten, door ramen of in de ruimte), precies één Y2K-object (rond, blobby, glanzend), hedendaags modern.
+- **Compositie:** geen vaste lege ruimte voor een kop; tekst staat in de layout. Formaat volgt de layout.
+
+Getest: nog niet. Eerste echte test: de cover van de AI-savvy-post (twee concepten). Nog te doen: 3 headless runs volgens de werkwijze.
 
 ### F2. Speelsheid in de huisstijl
 
@@ -165,6 +183,7 @@ Geen eigen release; gaat mee in de eerstvolgende release.
 | 2026-10-03 | Fix: zonder ingestelde beeldservice vragen `image-generator` en `ibs-stockbeeld` eerst of de gebruiker er een wil instellen; pas na akkoord een prompt plus placeholder. Gaat mee in v1.3.0. Getest: 3 runs, alle drie vragen eerst. |
 | 2026-10-03 | Integratietest (one-pager met alle vier de skills) goedgekeurd; `ibs-stockbeeld` en de speelsheid samen uitgebracht als v1.3.0. |
 | 2026-10-03 | Skills zonder IBS-binding krijgen geen `ibs-`-voorvoegsel. |
+| 2026-11-17 | `ibs-stockbeeld` (F5): het beeld draagt de hook; sector bij een use case, anders de wereld van de lezer; mensen welkom, niet verplicht; techniek ondersteunt en neemt nooit de overhand, het Y2K-object draagt de interactie mens-machine; één gedurfde ingreep mag; "rust" wordt "emotie met professionaliteit". Vervangt "geen mensen" en "geen schermen of techniek" uit v1.3.0. Gaat mee in v1.4.0. |
 | 2026-11-03 | `ibs-stockbeeld` (F4): hedendaags modern als basis; de toekomst van gisteren wordt één Y2K-object (eind jaren 80 en jaren 90) dat bij het onderwerp past; één moderne hoofdpersoon mag als de boodschap dat vraagt; apparaten worden in de skill niet genoemd. Vervangt de jaren-70/80-hint van 2026-10-03. Eigenaar: "die moet zo blijven". |
 | 2026-10-03 | Instructies: woorden goed definiëren, geen voorbeeldlijsten (bijv. geen lijst van sectoren). |
 | 2026-10-03 | Speelsheid in de huisstijl: merkteken als terugkerend detail en als geometrisch herhaalpatroon met verloop van IBS-geel naar amber, kleine animaties; geen tweede accentkleur. |
