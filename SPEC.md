@@ -93,6 +93,8 @@ Besloten (eigenaar, grilling 2026-11-17):
 - **"Rust" wordt "emotie met professionaliteit"**: herkenning, verbazing of een glimlach, en toch verzorgd; één sterk idee, leesbaar als thumbnail.
 - **Blijft altijd:** golden hour, natuur in de scène (buiten, door ramen of in de ruimte), precies één Y2K-object (rond, blobby, glanzend), hedendaags modern.
 - **Compositie:** geen vaste lege ruimte voor een kop; tekst staat in de layout. Formaat volgt de layout.
+- **Het Y2K-object is een icoon** (eigenaar, 2026-11-18, na twee beelden met "two very big blobs and I don't know what it means"): een alledaags ding dat je in één woord benoemt en dat hoort bij de handeling of het idee van de post, of de bekendste beeldconventie ervoor. Eén object, één betekenis, nooit twee objecten samengesmolten. Stileer het oppervlak, niet de structuur: silhouet en bepalende delen blijven heel. Onderbouwing: onderzoek naar iconen (Peirce, semantische afstand, basisniveau van Rosch, canoniek aanzicht, Apple HIG en Material), samengevat in `social_media_manager/docs/research/iconen-en-betekenis.md` van de eigenaar.
+- **Mensen met een duidelijke uitdrukking** die de emotie van de hook draagt (eigenaar, 2026-11-18: "they show specific expression, that's cool").
 
 Getest: nog niet. Eerste echte test: de cover van de AI-savvy-post (twee concepten). Nog te doen: 3 headless runs volgens de werkwijze.
 

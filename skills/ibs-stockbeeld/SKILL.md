@@ -22,8 +22,9 @@ the scene and **one object from yesterday's future**. It stirs an emotion and st
   the places and objects people working there recognise as their own, in their modern form. When the content
   names no sector, choose the world of the reader of the content and say which you chose.
 - **People** — welcome, as many as the story needs, never required. Present-day people in modern clothing,
-  natural rather than posed. They look at the world, at each other, at the camera, or interact with the
-  object from yesterday's future; they are not shown simply looking at a screen.
+  natural rather than posed, each with a clear, specific expression that carries the emotion of the hook.
+  They look at the world, at each other, at the camera, or interact with the object from yesterday's future;
+  they are not shown simply looking at a screen.
 - **Technology** — supports the story and never takes over the image. The interaction between people and
   machines is shown first of all through the object from yesterday's future, which may feel a little magical.
   Ordinary devices may appear when the story needs them, never by default. No data visuals, dashboards or
@@ -38,10 +39,16 @@ the scene and **one object from yesterday's future**. It stirs an emotion and st
 - **Nature** — a living landscape is part of the scene: outdoors, seen through windows, or growing in the
   space itself; never mere decoration. Nature is shown by what is in the image, never by colour: no green
   tint or green grading; under golden-hour light greens turn warm.
-- **Yesterday's future** — exactly one object that looks like the future as the late 1980s and the 1990s
-  imagined it, up to the Y2K era: glossy, rounded, blobby, translucent, chrome or iridescent, more future than
-  present. Preferably it takes part in the story (the machine the people interact with); it fits the topic.
-  Everything around it stays today's modern world.
+- **Yesterday's future, as an icon** — exactly one object in the styling of the future as the late 1980s and
+  the 1990s imagined it, up to the Y2K era: glossy, rounded, translucent, chrome or iridescent. The object
+  works as an icon for the message: name the core action or idea of the content in one word, then choose the
+  ordinary, everyday thing a person would hold or use for exactly that, or for an abstract idea the most
+  familiar existing visual convention for it. One object, one meaning: never merge two objects into one. Choose
+  it at the level of a word anyone would say, not a category or a special model, and show its typical shape
+  from the angle it is usually seen, whole and uncropped. Style the surface, not the structure: the gloss,
+  rounded edges and translucent or chrome skin are welcome, but the silhouette and the few parts that define
+  the object stay intact and in proportion; it never melts into a blob. Preferably the people interact with
+  it. Everything around it stays today's modern world.
 - **Emotion with professionalism** — the image stirs an emotion (recognition, surprise, a smile) and stays
   professional: one strong idea, an uncluttered background, warm and well made, never loud. The subject is
   large enough to read at thumbnail size in a feed.
@@ -69,6 +76,9 @@ the scene and **one object from yesterday's future**. It stirs an emotion and st
 - Golden-hour light, warm colour, no green cast? Nature visible as part of the scene?
 - Contemporary modern: no craft, workshop, industrial or old-fashioned look?
 - Exactly one object from yesterday's future (late 1980s–1990s, Y2K), ideally part of the story?
+- Can a stranger name that object in one word within a second, and does the text make the link to the
+  message obvious? Its silhouette and defining parts intact, no blob, no two objects merged?
+- Do the people show a clear expression that fits the hook?
 - Technology supporting, not dominating; nobody simply staring at a screen?
 - Realistic, with at most one bold intervention?
 - No text, logos, data visuals or readable screens?
