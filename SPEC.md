@@ -18,7 +18,7 @@ release.
 | v1.1.0 | `ibs-schrijfstijl` | op `main`, nog niet getagd |
 | v1.2.0 | F3 `image-generator` | klaar, PR open |
 | v1.3.0 | F1 `ibs-stockbeeld` (inclusief verwijzing vanuit `ibs-huisstijl`) + F2 speelsheid in de huisstijl | klaar, PR open |
-| v1.4.0 | F4 + F5 `ibs-stockbeeld`: hedendaags modern, één Y2K-object, het beeld draagt de hook, mensen en techniek mogen (niet verplicht), één gedurfde ingreep | testen, PR open |
+| v1.4.0 | F6 point-cloud-landschap in `ibs-huisstijl`; F4 + F5 `ibs-stockbeeld`: hedendaags modern, één Y2K-object, het beeld draagt de hook, mensen en techniek mogen (niet verplicht), één gedurfde ingreep | testen, PR open |
 
 Versienummers: nieuwe skill of nieuwe functie = minor (1.x.0), alleen reparaties = patch (1.1.x), iets dat
 bestaand gebruik breekt (bijv. een skill hernoemen) = major (2.0.0).
@@ -97,6 +97,16 @@ Besloten (eigenaar, grilling 2026-11-17):
 - **Mensen met een duidelijke uitdrukking** die de emotie van de hook draagt (eigenaar, 2026-11-18: "they show specific expression, that's cool").
 
 Getest: nog niet. Eerste echte test: de cover van de AI-savvy-post (twee concepten). Nog te doen: 3 headless runs volgens de werkwijze.
+
+### F6. Point-cloud-landschap in de huisstijl
+
+**Status:** testen. **Release:** v1.4.0.
+
+Aanleiding (eigenaar, 2026-11-18): het wireframe-landschap met punten (zoals in de IBS-e-mailhandtekening) is typerend voor het merk. Gewenst "als een tool die verschillende van dit soort wavy landscapes kan maken": de skill roept een script aan dat het landschap willekeurig maakt en tekent, zodat de achtergrond herkenbaar IBS is maar steeds anders.
+
+Besloten (eigenaar, 2026-11-18): signature touch in `ibs-huisstijl` met `scripts/landscape.py` (SVG, standaardbibliotheek). Templates voor specifieke kanalen (zoals LinkedIn-covers) horen niet in de huisstijl; die staan bij de gebruiker.
+
+Getest: drie seeds als banner (1335×260) naast het voorbeeld van de eigenaar; dichter grid en sterkere golving na de eerste versie.
 
 ### F2. Speelsheid in de huisstijl
 

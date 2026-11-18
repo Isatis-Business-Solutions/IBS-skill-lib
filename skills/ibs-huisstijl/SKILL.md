@@ -64,6 +64,11 @@ on light backgrounds.
   `›` chevron; tertiary = yellow text link.
 - **Icons:** thin line icons (≈2px stroke) in cream, optionally inside a rounded-square outline.
 - **Big numbers:** key figures large, SemiBold, in yellow or cream, with a small muted label underneath.
+- **Point-cloud landscape:** a faint wireframe of a rolling landscape with a small dot on every grid point,
+  low and quiet on the dark background, fading out to the sides and into the distance. Make a new one each
+  time, so the backdrop is recognisably IBS but never the same twice: `scripts/landscape.py OUT.svg` draws a
+  random landscape as a transparent SVG (options for size, horizon, how strongly it rolls, strength, and a
+  few yellow dots). Keep it behind text faint enough that the text keeps its contrast.
 
 ## Playful touches
 
@@ -120,6 +125,7 @@ the medium itself, in this house style.
   pattern and the full logo bottom-right.
 - `assets/tokens/tokens.json`: the same values for any code or tool.
 - `assets/tokens/tailwind.preset.js`: Tailwind preset.
+- `scripts/landscape.py`: draws a random point-cloud landscape as SVG (Python, standard library only).
 
 Copy the assets you need **into the output or project**. Do not link to this skill folder from a deliverable.
 
